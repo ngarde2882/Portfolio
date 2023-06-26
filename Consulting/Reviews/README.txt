@@ -1,0 +1,1 @@
+This was a contract consulting job where I wrote a script to sort review data onto a spreadsheet

@@ -1,0 +1,30 @@
+recipe book + search published recipes / meal planner / kitchen inventory / grocery list
+-> user can stock the recipe book with many of their recipies, perhaps even images or default images so lighting etc is better
+Recipe Book
+-> allow for sharing recipe book filetype for social aspect but not in your face
+-> converter for copy/paste to directly convert recipies from websites into it
+-> recipe filetype would hold ingredient amounts as well as directions to complete the dish, maybe also mealtype, breakfast/lunch/dinner/snack/sides/drink
+Meal Planner
+-> meal planner is a 7-day look ahead (drag for more) where you can pin meals that you want to plan to cook as well as mark grocery store trips
+-> tap a day to add a meal/snack to it
+--> prioritize snacks chosen multiple times a week and things in stock but not immediately used
+-> allow the OPTION for calorie counting
+--> see if you can calculate calories purely based on ingredients
+Kitchen Inventory
+-> kitchen inventory should keep track of spices, oils, grains, everything, but only log amounts for perishables like fruits, veggies, and meat
+-> this is kinda a name for the personal database for the user, but probably shouldn't be seen by the user
+-> maybe shows only perishables to the user
+-> empty at first
+Grocery List
+-> the user's interface with the kitchen inventory
+-> adding a recipe to the meal planner will add all of its ingredients to the grocery list
+-> at first spices and oils will be added, but once a non-perishable is 'checked' off its boolean will flip until a user adds it back to the list manually
+
+-> build a little kindle tablet sorta thing like electronic paper
+--> give it a little swivel dock that stays on a countertop
+--> design UI
+--> make an app&webapp for phone and computer integration and design a way for users to be texted their list and maybe also a scheduled send
+--> maybe do an 'ok google' sorta voice control for saying im out of x
+--> this can be implemented in houses through the ebook, phones, computers, and smart devices
+--> this can be implemented in restaurants by increasing scale of dishes made and logging all ingredients to make managing easier
+--> white/dark greay background choices, pastel orange blue green pink.. trim

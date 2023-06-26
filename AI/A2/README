@@ -1,0 +1,27 @@
+ttt
+The goal of ttt is to search through game states using a minimax algorithm to choose an optimal move based on your opponent's most optimal possible moves
+alpha/beta pruning is used to rule out unoptimal branches based on their scoring being outside the range of their parent, therefore one player choosing their optimal move in an instance would mean a very unoptimal choice for the other, so the decision will never be reached
+the functions minscore() and maxscore() are named mini() and maxi() respectively
+
+running 'make' will compile the program
+running 'make clean' will remove all .o files as well as the ttt executable
+
+executing './ttt' will execute the program and begin a game
+typing 'show' will display the board
+typing 'reset' will wipe the board clean to begin a new game
+typing 'move <P> <R> <C>' will place the piece P (only 'X' or 'O') in row R (only 'A', 'B', or 'C') and column C ('1', '2', or '3')
+    typing an incorrect character for P will result in 'invalid input' being displayed, allowing you to enter another attempt
+    R and C do not have these checks, so please make sure you are inputting these correctly
+typing 'choose <P>' will ask the minimax algorithm to place piece P (only 'X' or 'O') onto an optimal unoccupied position on the board
+typing 'pruning' will display whether or not pruning is on
+    displays 'pruning on' or 'pruning off'
+typing 'pruning on' will turn pruning on
+    by default pruning is on
+typing 'pruning off' will turn pruning off
+    using one of these two commands while it is already in the state is is attempting to change to will keep the value like it is
+typing 'quit' will display 'Thanks for Playing!' and end the program
+
+due to the minimax algorithm as well as the formulas given in class (win = 1 - 0.1*depth, loss = -1 + 0.1*depth, draw = 0) using the choose command will attempt to find the shortest depth win condition if possible and prioritize a longer depth loss rather than a shorter one
+in game 4 pruning results in a loss for X, but no pruning results in a draw
+in game 5 pruning results in a draw, but no pruning results in a win for X
+    these are likely an error in how alpha and beta are stored
