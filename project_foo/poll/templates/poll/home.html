@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Foo</title>
+</head>
+<body>
+    <h1>Poll Home!</h1>
+    <body>
+        Poll choices listed below
+    </body>
+    {% for genre, poll in polls.items %}
+        <h2>Poll {{ genre }}</h2>
+        {% for key, option in poll.items %}
+            <input type="radio" name={{ genre }} value={{ option }}>{{ option }}
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>

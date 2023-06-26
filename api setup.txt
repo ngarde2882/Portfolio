@@ -1,0 +1,30 @@
+https://console.cloud.google.com/apis
+
+Create Project
+
+Go to Credentials
+
+Create an OAuth 2.0 Client ID
+
+authorized JS origins:
+https://django-smart-scheduler.herokuapp.com (the current hosted site)
+http://127.0.0.1:8000 (for local testing)
+http://localhost:8000 (alternate local testing)
+
+Authorized redirect URIs:
+https://django-smart-scheduler.herokuapp.com/pull_in_between
+https://django-smart-scheduler.herokuapp.com/push_in_between
+https://django-smart-scheduler.herokuapp.com/attendee_landing
+(you can also add these three replacing 'https://django-smart-scheduler.herokuapp.com' with 'http://127.0.0.1:8000' and/or 'http://localhost:8000' for local testing)
+
+replace the 'credentials.json' file with the one you created. It must be named 'credentials.json'.
+
+The 'credentials_original.json' file was left as an example file and can be removed if you would like
+
+Create an API key
+
+HTTP referrs
+
+API restrictions:
+Restrict Key
+1 API: Google Calendar API
