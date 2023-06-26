@@ -1,0 +1,80 @@
+ . . .
+ . . .
+ . . .
+pruning on
+Pruning is on
+ . . .
+ . . .
+ . . .
+move X B 2
+ . . .
+ . X .
+ . . .
+move O A 2
+ . O .
+ . X .
+ . . .
+choose X
+move (A,1) mm-score: 0.5
+move (A,3) mm-score: 0.5
+move (B,1) mm-score: 0.5
+move (B,3) mm-score: 0.5
+move (C,1) mm-score: 0.5
+move (C,2) mm-score: 0.3
+move (C,3) mm-score: 0.3
+number of nodes searched: 956
+ X O .
+ . X .
+ . . .
+choose O
+move (A,3) mm-score: -0.5
+move (B,1) mm-score: -0.5
+move (B,3) mm-score: -0.5
+move (C,1) mm-score: -0.5
+move (C,2) mm-score: -0.5
+move (C,3) mm-score: -0.3
+number of nodes searched: 323
+ X O .
+ . X .
+ . . O
+choose X
+move (A,3) mm-score: 0.3
+move (B,1) mm-score: 0.3
+move (B,3) mm-score: 0.3
+move (C,1) mm-score: 0.3
+move (C,2) mm-score: -0.2
+number of nodes searched: 119
+ X O X
+ . X .
+ . . O
+choose O
+move (B,1) mm-score: -0.3
+move (B,3) mm-score: -0.3
+move (C,1) mm-score: 0.2
+move (C,2) mm-score: -0.3
+number of nodes searched: 40
+ X O X
+ . X .
+ O . O
+choose X
+move (B,1) mm-score: -0.2
+move (B,3) mm-score: -0.2
+move (C,2) mm-score: 0
+number of nodes searched: 13
+ X O X
+ . X .
+ O X O
+choose O
+move (B,1) mm-score: 0
+move (B,3) mm-score: 0
+number of nodes searched: 4
+ X O X
+ O X .
+ O X O
+choose X
+move (B,3) mm-score: 0
+number of nodes searched: 1
+ X O X
+ O X X
+ O X O
+Draw

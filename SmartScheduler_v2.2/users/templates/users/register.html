@@ -1,0 +1,57 @@
+{% extends "smart_scheduler/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <body class="background_color">
+        <div class="content-section">
+            <form method="POST" enctype="multipart/form-data" class="form_register" autocomplete="off">
+                <div class="img-overlay_register"</div>
+                <br>
+                <h1>Register</h1>
+                {% csrf_token %}
+                <div class="inputs3" style="float:left">
+                    <label for="{{ form.first_name.id_for_label }}" class="label">First name</label> 
+                    <input minlength="1" maxlength="15" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.html_name }}" value="{{ form.first_name.value|default_if_none:"" }}" type="text" class="django_form" required oninvalid="this.setCustomValidity('Enter a valid first name')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="inputs2">
+                    <label for="{{ form.last_name.id_for_label }}" class="label">Last Name</label> 
+                    <input minlength="1" maxlength="15" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.html_name }}" value="{{ form.last_name.value|default_if_none:"" }}" type="text" class="django_form" required oninvalid="this.setCustomValidity('Enter a valid last name')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="inputs">
+                    <label for="{{ form.username.id_for_label }}" class="label">Username</label> 
+                    <input maxlength="20" minlength="6" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:"" }}" type="text" class="django_form" required oninvalid="this.setCustomValidity('Enter a valid username')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="inputs">
+                    <label for="{{ form.email.id_for_label }}" class="label">Email</label> 
+                    <input id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" value="{{ form.email.value|default_if_none:"" }}" type="email" class="django_form" required oninvalid="this.setCustomValidity('Enter a valid email')" oninput="this.setCustomValidity('')" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|&quot;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" maxlength="50">
+                </div>
+                <div class="inputs">
+                    <label for="{{ form.password1.id_for_label }}" class="label">Password</label> 
+                    <input type="password" spellcheck="false" minlength="8" id="{{ form.password1.id_for_label }}" maxlength="40" name="{{ form.password1.html_name }}" value="{{ form.password1.value|default_if_none:"" }}" class="django_form" required oninvalid="this.setCustomValidity('Enter a valid password')" oninput="this.setCustomValidity('')">
+                </div>
+                <h5 style="color: red; text-align: center;">{{form.password1.errors|striptags}}</h5>
+                <div class="inputs">
+                    <label for="{{ form.password2.id_for_label }}" class="label">Confirm Password</label> 
+                    <input type="password" spellcheck="false" minlength="6" id="{{ form.password2.id_for_label }}" maxlength="40" name="{{ form.password2.html_name }}" value="{{ form.password2.value|default_if_none:"" }}" type="password" class="django_form" required oninvalid="this.setCustomValidity('Enter a valid password')" oninput="this.setCustomValidity('')">
+                </div>
+                <h4 style="color: red; text-align: center;">{{form.password2.errors|striptags}}</h4>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="form_error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <div class="form-group">
+                    <button class="button_create" type="submit">Sign Up</button>
+                </div>
+            </form>
+            <br>
+            <div>
+                <a class="bottom_text" href="{% url 'login' %}">
+                    <small class="bottom_text">
+                        <br>
+                        Already Have An Account? Sign In
+                    </small>
+                </a>
+            </div>
+        </div>
+    </body>
+{% endblock content %}

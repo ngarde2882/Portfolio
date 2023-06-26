@@ -1,0 +1,63 @@
+{% extends "smart_scheduler/base.html" %}
+{% block content%}
+<body class="background_color">
+    <!-- Hero Section -->
+    <div class="main">
+        <div class="main__container">
+            <div class="main__content">
+                <h1>Smart</h1>
+                <h2>Scheduling,</h2>
+                <p>Without the hassle</p>
+                <button class="main__btn"><a href="{% url 'register' %}">Get Started</a></button>
+            </div>
+            <div class="main__img--container">
+                {% load static %}
+                <img src="{% static "smart_scheduler/media/calendar.svg" %}" alt="pic" id="main__img">
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="services">
+        <h1>Do away with the tedious back-and-forth typically associated with scheduling meetings.</h1>
+        <br> <br> <br>
+        <h1>Get started by registering for an account, then log in.</h1>
+        <br>
+        <img class="center_image2" height="899" width="593" src="{% static "smart_scheduler/media/register.jpg" %}">
+        <br>
+        <h1>Create some contacts under the "Contacts" tab. You'll need them to create meetings.</h1>
+        <br>
+        <img class="center_image2" height="554" width="553" src="{% static "smart_scheduler/media/create_contact.jpg" %}">
+        <br>
+        <h1>Add your contacts to a meeting.</h1>
+        <br>
+        <img class="center_image2" height="450" width="825" src="{% static "smart_scheduler/media/add_contacts.jpg" %}">
+        <br>
+        <h1>Enter your meeting details and press "Create Meeting".</h1>
+        <br>
+        <img class="center_image2" height="1430" width="885" src="{% static "smart_scheduler/media/create_meeting.jpg" %}">
+        <br>
+        <h1>Give Google permission to access your calendar event.</h1>
+        <br>
+        <img class="center_image2" height="500" width="433" src="{% static "smart_scheduler/media/api.jpg" %}">
+        <br>
+        <h1>Email invites will be sent to the participants. They can decide if they want to accept or decline.</h1>
+        <br>
+        <img class="center_image2" height="500" width="433" src="{% static "smart_scheduler/media/email.jpg" %}">
+        <br>
+        <h1>When you are ready to schedule a time, choose one that best works for you.</h1>
+        <br>
+        <img class="center_image2" height="750" width="650" src="{% static "smart_scheduler/media/schedule.jpg" %}">
+        <br>
+        <h1>The event will be sent to all calendars.</h1>
+        <br>
+        <img class="center_image2" height="500" width="433" src="{% static "smart_scheduler/media/event.jpg" %}">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</body>
+{% endblock content %}

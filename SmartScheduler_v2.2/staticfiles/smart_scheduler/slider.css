@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+.range {
+  height: 80px;
+  background: #111827;
+  border-radius: 40px;
+  padding: 0 65px 0 45px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.range .sliderValue {
+  position: relative;
+  width: 100%;
+}
+
+.range .sliderValue span {
+  text-align: center;
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  transform: translateX(-70%);
+  font-weight: 500;
+  top: -40px;
+  line-height: 55px;
+  z-index: 2;
+  color: #fff;
+  transform-origin: bottom;
+  transition: transform 0.3s ease-in-out;
+}
+
+.range .sliderValue span:after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: #23a6d5;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border: 3px solid #fff;
+  z-index: -1;
+  border-bottom-left-radius: 50%;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.range .field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 700px;
+}
+
+.field .value {
+  position: absolute;
+  font-size: 18px;
+  font-weight: 600;
+  color: #23a6d5;
+}
+
+.value_left {
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #23a6d5;
+}
+
+.value_right {
+  margin-left: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #23a6d5;
+}
+
+.range .field input {
+  -webkit-appearance: none;
+  height: 3px;
+  width: 100%;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.sliderValue {
+  color: #fff;
+  position: relative;
+  width: 100%;
+}
+
+.sliderValue span.show {
+  transform: translateX(-70%) scale(1);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+}
+.field .value {
+  position: absolute;
+  font-size: 18px;
+  background-color: #23a6d5;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+.field .value_left {
+  left: -22px;
+}
+.field .value_right {
+  right: 400px;
+}
+
+

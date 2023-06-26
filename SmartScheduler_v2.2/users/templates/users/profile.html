@@ -1,0 +1,69 @@
+{% extends "smart_scheduler/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <body class='background_color'>   
+    <div class="content-section">
+      <div class="media">
+      <!-- FORM HERE -->
+      <form method="POST" enctype="multipart/form-data" class="form_profile" autocomplete="off">
+        <div class="img-overlay_profile"</div>
+        <h1 class="profile-title"> Profile </h1>
+        <img width='150' height='150' class="img_profile" src="{{ user.profile.image.url }}">
+        <br>
+        {% csrf_token %}
+            <div class="inputs3" style="float:left">
+              <label for="{{ u_form.first_name.id_for_label }}" class="label">First name</label> 
+              <input id="{{ u_form.first_name.id_for_label }}" maxlength="15" name="{{ u_form.first_name.html_name }}" value="{{ u_form.first_name.value|default_if_none:"" }}" type="text" required oninvalid="this.setCustomValidity('Enter a valid first name')" oninput="this.setCustomValidity('')" class="django_form">
+            </div>
+            <div class="inputs2">
+              <label for="{{ u_form.last_name.id_for_label }}" class="label">Last name</label> 
+              <input id="{{ u_form.last_name.id_for_label }}" maxlength="15" name="{{ u_form.last_name.html_name }}" value="{{ u_form.last_name.value|default_if_none:"" }}" type="text" required oninvalid="this.setCustomValidity('Enter a valid last name')" oninput="this.setCustomValidity('')" class="django_form">
+            </div>
+            <div class="inputs">
+              <label for="{{ u_form.username.id_for_label }}" class="label">Username</label> 
+              <input id="{{ u_form.username.id_for_label }}" maxlength="20" name="{{ u_form.username.html_name }}" value="{{ u_form.username.value|default_if_none:"" }}" type="text" required oninvalid="this.setCustomValidity('Enter a valid username')" oninput="this.setCustomValidity('')" class="django_form">
+            </div>
+            <div class="inputs">
+              <label for="{{ u_form.email.id_for_label }}" class="label">Email</label>
+              <input id="{{ u_form.email.id_for_label }}" maxlength="50" name="{{ u_form.email.html_name }}" value="{{ u_form.email.value|default_if_none:"" }}" type="text" required pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|&quot;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" oninvalid="this.setCustomValidity('Enter a valid email')" oninput="this.setCustomValidity('')" class="django_form">
+            </div>
+            <div class="inputs">
+              <label for="{{ p_form.image.id_for_label }}" class="label">Profile image</label>
+              <input id="{{ p_form.image.id_for_label }}" name="{{ p_form.image.html_name }}" value="{{ p_form.image.value|default_if_none:"" }}" type="file" class="django_form">
+            </div>
+            <div class="inputs3" style="float:left">
+              <label for="{{ p_form.start_time.id_for_label }}" class="label">Start Time</label>
+              <input id="{{ p_form.start_time.id_for_label }}" name="{{ p_form.start_time.html_name }}" value="{{ p_form.start_time.value|time:'H:i' }}" type="time" min="1" max="24" step="3600" required class="django_form">
+            </div>
+            <div class="inputs2">
+              <label for="{{ p_form.end_time.id_for_label }}" class="label">End Time</label>
+              <input id="{{ p_form.end_time.id_for_label }}" name="{{ p_form.end_time.html_name }}" value="{{ p_form.end_time.value|time:'H:i' }}" type="time" min="1" max="24" step="3600" required class="django_form">
+            </div>
+        <div class="form-group">
+            <button class="button_create" type="submit">Update</button>
+        </div>
+        <h3 style="color: red; text-align: center;">{{ form.non_field_errors|striptags }}</h3>
+      </form>
+    </div>
+  <body>
+
+  <script>
+    const dateInput = document.getElementById('date');
+    // ✅ Using the visitor's timezone
+    dateInput.value = formatDate();
+
+    console.log(formatDate());
+
+    function padTo2Digits(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date = new Date()) {
+      return [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth() + 1),
+        padTo2Digits(date.getDate()),
+      ].join('-');
+    }
+  </script>
+{% endblock content %}

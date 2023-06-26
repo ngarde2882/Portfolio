@@ -1,0 +1,5 @@
+streamlit
+firebase_admin
+pyrebase4
+google-auth-oauthlib
+sympy

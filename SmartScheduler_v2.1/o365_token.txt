@@ -1,0 +1,13 @@
+{
+ "token_type": "Bearer",
+ "scope": [
+  "https://graph.microsoft.com/.default",
+  "https://graph.microsoft.com/User.Read",
+  "https://graph.microsoft.com/Calendars.Read",
+  "https://graph.microsoft.com/Calendars.ReadWrite"
+ ],
+ "expires_in": 3600,
+ "ext_expires_in": 3600,
+ "access_token": ,
+ "expires_at": 1651009845.7827458
+}

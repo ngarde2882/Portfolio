@@ -1,0 +1,153 @@
+Date : 2022-11-07 11:47:34
+Directory : c:\Users\colli\Documents\GitHub\SmartSchedulerVer2
+Total : 100 files,  5760 codes, 1227 comments, 915 blanks, all 7902 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Python           |         55 |      2,565 |        817 |        551 |      3,933 |
+| CSS              |          3 |      1,588 |          4 |        232 |      1,824 |
+| HTML             |         28 |      1,226 |         65 |         41 |      1,332 |
+| PowerShell       |          1 |        108 |        277 |         35 |        420 |
+| pip requirements |          1 |         90 |          0 |          1 |         91 |
+| Markdown         |          2 |         67 |          0 |         26 |         93 |
+| Batch            |          2 |         41 |          0 |         17 |         58 |
+| YAML             |          1 |         31 |          0 |          1 |         32 |
+| JavaScript       |          1 |         31 |         64 |         10 |        105 |
+| Properties       |          2 |          9 |          0 |          1 |         10 |
+| JSON             |          3 |          3 |          0 |          0 |          3 |
+| XML              |          1 |          1 |          0 |          0 |          1 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                |        100 |      5,760 |      1,227 |        915 |      7,902 |
+| .elasticbeanstalk                                                                                                                |          1 |         31 |          0 |          1 |         32 |
+| django_project                                                                                                                   |          5 |        111 |         50 |         49 |        210 |
+| eb-virt                                                                                                                          |         11 |        940 |        420 |        208 |      1,568 |
+| eb-virt\Scripts                                                                                                                  |          9 |        899 |        420 |        196 |      1,515 |
+| eb-virt\share                                                                                                                    |          1 |         38 |          0 |         11 |         49 |
+| eb-virt\share\doc                                                                                                                |          1 |         38 |          0 |         11 |         49 |
+| eb-virt\share\doc\jwcrypto                                                                                                       |          1 |         38 |          0 |         11 |         49 |
+| smart_scheduler                                                                                                                  |         52 |      4,064 |        739 |        552 |      5,355 |
+| smart_scheduler\migrations                                                                                                       |          9 |        194 |          8 |         50 |        252 |
+| smart_scheduler\static                                                                                                           |          5 |      1,620 |         68 |        242 |      1,930 |
+| smart_scheduler\static\smart_scheduler                                                                                           |          5 |      1,620 |         68 |        242 |      1,930 |
+| smart_scheduler\static\smart_scheduler\media                                                                                     |          1 |          1 |          0 |          0 |          1 |
+| smart_scheduler\templates                                                                                                        |         20 |      1,007 |         59 |         36 |      1,102 |
+| smart_scheduler\templates\smart_scheduler                                                                                        |         20 |      1,007 |         59 |         36 |      1,102 |
+| users                                                                                                                            |         25 |        477 |         15 |         84 |        576 |
+| users\migrations                                                                                                                 |          9 |        161 |          8 |         50 |        219 |
+| users\templates                                                                                                                  |          8 |        219 |          6 |          5 |        230 |
+| users\templates\users                                                                                                            |          8 |        219 |          6 |          5 |        230 |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                                                         | language         | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\.elasticbeanstalk\config.yml                                                  | YAML             |         31 |          0 |          1 |         32 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\README.md                                                                     | Markdown         |         29 |          0 |         15 |         44 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\credentials.json                                                              | JSON             |          1 |          0 |          0 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\credentials_original.json                                                     | JSON             |          1 |          0 |          0 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\data.json                                                                     | JSON             |          1 |          0 |          0 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\django_project\__init__.py                                                    | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\django_project\asgi.py                                                        | Python           |          4 |          8 |          5 |         17 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\django_project\settings.py                                                    | Python           |         83 |         33 |         34 |        150 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\django_project\urls.py                                                        | Python           |         20 |          1 |          4 |         25 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\django_project\wsgi.py                                                        | Python           |          4 |          8 |          5 |         17 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\Activate.ps1                                                  | PowerShell       |        108 |        277 |         35 |        420 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\activate.bat                                                  | Batch            |         25 |          0 |         10 |         35 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\deactivate.bat                                                | Batch            |         16 |          0 |          7 |         23 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\django-admin.py                                               | Python           |         16 |          2 |          4 |         22 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\futurize-script.py                                            | Python           |         22 |          3 |          9 |         34 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\jp.py                                                         | Python           |         46 |          2 |          7 |         55 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\pasteurize-script.py                                          | Python           |         22 |          3 |          9 |         34 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\pywin32_postinstall.py                                        | Python           |        557 |        120 |         95 |        772 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\Scripts\pywin32_testall.py                                            | Python           |         87 |         13 |         20 |        120 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\pyvenv.cfg                                                            | Properties       |          3 |          0 |          1 |          4 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\eb-virt\share\doc\jwcrypto\README.md                                          | Markdown         |         38 |          0 |         11 |         49 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\manage.py                                                                     | Python           |         15 |          3 |          5 |         23 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\requirements.txt                                                              | pip requirements |         90 |          0 |          1 |         91 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\__init__.py                                                   | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\admin.py                                                      | Python           |         16 |          0 |          5 |         21 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\apps.py                                                       | Python           |          4 |          0 |          3 |          7 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\auth_helper.py                                                | Python           |         58 |          7 |         15 |         80 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\config.cfg                                                    | Properties       |          6 |          0 |          0 |          6 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\configure.py                                                  | Python           |          2 |          0 |          0 |          2 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\email_alerts.py                                               | Python           |         51 |          0 |          7 |         58 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\forms.py                                                      | Python           |         29 |          5 |          6 |         40 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\google.py                                                     | Python           |        172 |        187 |         28 |        387 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\graph.py                                                      | Python           |         35 |          4 |          8 |         47 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\graph_helper.py                                               | Python           |         44 |         13 |          6 |         63 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0001_initial.py                                    | Python           |         98 |          1 |          7 |        106 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0002_rename_conflict_conflict_name.py              | Python           |         12 |          1 |          6 |         19 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0003_conflict_meeting.py                           | Python           |         13 |          1 |          6 |         20 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0004_event_event_tz.py                             | Python           |         12 |          1 |          6 |         19 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0005_attendee_required_pendingattendee_required.py | Python           |         17 |          1 |          6 |         24 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0006_remove_event_event_tz.py                      | Python           |         11 |          1 |          6 |         18 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0007_time.py                                       | Python           |         21 |          1 |          6 |         28 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\0008_delete_time.py                                | Python           |         10 |          1 |          6 |         17 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\migrations\__init__.py                                        | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\models.py                                                     | Python           |         92 |          4 |         30 |        126 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\ms_graph.py                                                   | Python           |         29 |          6 |          9 |         44 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\numeric_search.py                                             | Python           |        172 |         80 |         13 |        265 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\outlook.py                                                    | Python           |          0 |        161 |          1 |        162 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\static\smart_scheduler\app.js                                 | JavaScript       |         31 |         64 |         10 |        105 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\static\smart_scheduler\contact_page.css                       | CSS              |        151 |          0 |         30 |        181 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\static\smart_scheduler\media\calendar.svg                     | XML              |          1 |          0 |          0 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\static\smart_scheduler\slider.css                             | CSS              |         97 |          0 |          2 |         99 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\static\smart_scheduler\styles.css                             | CSS              |      1,340 |          4 |        200 |      1,544 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\403.html                            | HTML             |         16 |          0 |          0 |         16 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\404.html                            | HTML             |         16 |          0 |          0 |         16 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\500.html                            | HTML             |         16 |          0 |          0 |         16 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\about.html                          | HTML             |         34 |          2 |          1 |         37 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\accept.html                         | HTML             |         25 |          0 |          1 |         26 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\add_attendees.html                  | HTML             |        113 |          0 |          2 |        115 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\base.html                           | HTML             |        128 |         57 |          4 |        189 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\contact_confirm_delete.html         | HTML             |         26 |          0 |          0 |         26 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\contact_detail.html                 | HTML             |         24 |          0 |          6 |         30 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\contact_form.html                   | HTML             |         22 |          0 |          0 |         22 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\decline.html                        | HTML             |         25 |          0 |          1 |         26 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\does_not_exist.html                 | HTML             |         25 |          0 |          1 |         26 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\home.html                           | HTML             |          3 |          0 |          0 |          3 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\meeting_confirm_delete.html         | HTML             |         26 |          0 |          0 |         26 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\meeting_detail.html                 | HTML             |         20 |          0 |          0 |         20 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\meeting_form.html                   | HTML             |         73 |          0 |          6 |         79 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\meeting_status_schedule.html        | HTML             |        209 |          0 |         10 |        219 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\rsvp.html                           | HTML             |         75 |          0 |          1 |         76 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\user_contacts.html                  | HTML             |         55 |          0 |          1 |         56 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\templates\smart_scheduler\user_meetings.html                  | HTML             |         76 |          0 |          2 |         78 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\tests.py                                                      | Python           |          1 |          1 |          2 |          4 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\urls.py                                                       | Python           |         70 |         14 |         14 |         98 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\smart_scheduler\views.py                                                      | Python           |        462 |        122 |         76 |        660 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\__init__.py                                                             | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\admin.py                                                                | Python           |          3 |          0 |          2 |          5 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\apps.py                                                                 | Python           |          6 |          0 |          4 |         10 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\forms.py                                                                | Python           |         21 |          0 |          4 |         25 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0001_initial.py                                              | Python           |         18 |          1 |          7 |         26 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0002_profile_time_end_profile_time_start_profile_timezone.py | Python           |         22 |          1 |          6 |         29 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0003_auto_20221011_2057.py                                   | Python           |         31 |          1 |          6 |         38 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0004_remove_profile_time_end.py                              | Python           |         11 |          1 |          6 |         18 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0005_auto_20221013_1018.py                                   | Python           |         33 |          1 |          6 |         40 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0006_auto_20221013_1106.py                                   | Python           |         17 |          1 |          6 |         24 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0007_auto_20221013_1147.py                                   | Python           |         17 |          1 |          6 |         24 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\0008_alter_profile_token.py                                  | Python           |         12 |          1 |          6 |         19 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\migrations\__init__.py                                                  | Python           |          0 |          0 |          1 |          1 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\models.py                                                               | Python           |         21 |          0 |          8 |         29 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\signals.py                                                              | Python           |         11 |          0 |          2 |         13 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\contacts.html                                           | HTML             |         28 |          0 |          1 |         29 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\login.html                                              | HTML             |         34 |          5 |          1 |         40 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\logout.html                                             | HTML             |         17 |          0 |          0 |         17 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\password_reset.html                                     | HTML             |         16 |          0 |          1 |         17 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\password_reset_confirm.html                             | HTML             |         16 |          0 |          1 |         17 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\password_reset_done.html                                | HTML             |          6 |          0 |          1 |          7 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\profile.html                                            | HTML             |         48 |          1 |          0 |         49 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\templates\users\register.html                                           | HTML             |         54 |          0 |          0 |         54 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\tests.py                                                                | Python           |          1 |          1 |          2 |          4 |
+| c:\Users\colli\Documents\GitHub\SmartSchedulerVer2\users\views.py                                                                | Python           |         34 |          0 |          6 |         40 |
+| Total                                                                                                                            |                  |      5,760 |      1,227 |        915 |      7,902 |
++----------------------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

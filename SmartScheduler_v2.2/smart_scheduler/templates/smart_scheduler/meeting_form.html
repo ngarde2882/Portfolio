@@ -1,0 +1,128 @@
+{% extends "smart_scheduler/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <body class="background_color">
+        <div class="containment">
+            <div class="confinement">
+                <div class="spacing">
+                    <br />
+                    <br />
+                    <header>
+                        <h1>Current meeting contacts</h1>
+
+                        {% for pending_attendee in pending_attendees %}
+                        <div class="temp_list">
+                        <div class="parent">
+                            <div class="child">
+                            <h2>{{pending_attendee.attendee_name}} has been added</h2>
+                            </div>
+                        </div>
+                        </div>
+                        {% endfor %}
+                    </header>
+                    <form action="{% url 'add-meeting-contacts' %}">
+                        <button class="button_create" type="submit">
+                            Return to contacts page
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="confinement">
+                <div class="content-section">
+                    <form method="POST" class="form_meeting_create" autocomplete="off">
+                        <div class="img-overlay_meeting_create"</div>
+                        <h1>Meeting Details</h1>
+                        {% csrf_token %}
+                        <div class="inputs">
+                            <label for="{{ form.meeting_name.id_for_label }}" class="label">Meeting name</label> 
+                            <input id="{{ form.meeting_name.id_for_label }}" name="{{ form.meeting_name.html_name }}" value="{{ form.meeting_name.value|default_if_none:"" }}" type="text" class="django_form" required maxlength="20">
+                        </div>
+                        <div class="inputs">
+                            <label for="{{ form.meeting_description.id_for_label }}" class="label">Meeting description (Optional)</label> 
+                            <input id="{{ form.meeting_description.id_for_label }}" name="{{ form.meeting_description.html_name }}" value="{{ form.meeting_description.value|default_if_none:"" }}" type="text" class="django_form" maxlength="280">
+                        </div>
+                        <div class="inputs3" style="float:left">
+                            <label for="{{ form.meeting_start.id_for_label }}" class="label">Meeting start</label> 
+                            <input id="date_start" name="{{ form.meeting_start.html_name }}" type="date" class="django_form" required>
+                        </div>
+                        <div class="inputs2">
+                            <label for="{{ form.meeting_deadline.id_for_label }}" class="label">Meeting deadline</label> 
+                            <input id="date_deadline" name="{{ form.meeting_deadline.html_name }}" type="date" class="django_form" required>
+                        </div>
+                        <div class="inputs3" style="float:left">
+                            <label for="{{ form.meeting_duration_hours.id_for_label }}" class="label">Duration - Hours</label> 
+                            <input id="{{ form.meeting_duration_hours.id_for_label }}" name="{{ form.meeting_duration_hours.html_name }}" value="{{ form.meeting_duration_hours.value|default_if_none:"1" }}" type="number" min="0" max="8" class="django_form" required>
+                        </div>
+                        <div class="inputs2">
+                            <label for="{{ form.meeting_duration_minutes.id_for_label }}" class="label">Duration - Minutes</label> 
+                            <input id="{{ form.meeting_duration_minutes.id_for_label }}" name="{{ form.meeting_duration_minutes.html_name }}" value="{{ form.meeting_duration_minutes.value|default_if_none:"00" }}" type="number" step="15" min="0" max="45" class="django_form" required>
+                        </div>
+                        <div class="inputs">
+                            <label for="{{ form.meeting_link_location.id_for_label }}" class="label">Meeting link/location (Optional)</label> 
+                            <input id="{{ form.meeting_link_location.id_for_label }}" maxlength="200" name="{{ form.meeting_link_location.html_name }}" value="{{ form.meeting_link_location.value|default_if_none:"" }}" type="text" class="django_form">
+                        </div>
+                        <div class="form-group=">
+                            <button class="button_create" type="submit">Create Meeting {{day_length}}</button>
+                        </div>
+                        <br>
+                        <h3 style="color: red; text-align: center;">{{ form.non_field_errors|striptags }}</h3>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        const dateInput = document.getElementById('date_start');
+        dateInput.value = formatDate();
+
+        console.log("The first date input is ", dateInput.value);
+
+        function formatDate(date = new Date()) {
+            return [
+                padTo2Digits(date.getFullYear()),
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate()),
+            ].join('-');
+        }
+
+        function padTo2Digits(num) {
+            return num.toString().padStart(2, '0');
+        }
+
+        const dateInput2 = document.getElementById('date_deadline');
+        dateInput2.value = formatDate2();
+        console.log("The second date input is ", formatDate2());
+        //console.log("Format date 2: ", formatDate2());
+        function formatDate2(date = new Date()) {
+            if (date.getDay() == 5) {
+                console.log("It is a Friday");
+                var today = new Date()
+                today.setDate(date.getDate() + 7);
+                // return one week from today
+                return [
+                    padTo2Digits(today.getFullYear()),
+                    padTo2Digits(today.getMonth() + 1),
+                    padTo2Digits(today.getDate()),
+                ].join('-');
+            }
+            else {
+                console.log("It is not a Friday");
+                // return the upcoming friday
+                console.log("Date day for today: ", date.getDay());
+                var today = new Date()
+                days_until_friday = 5 - date.getDay();
+                console.log("Days until friday: ", days_until_friday);
+                today.setDate(date.getDate() + days_until_friday);
+                console.log("Next Friday is: ", today);
+                return [
+                    padTo2Digits(today.getFullYear()),
+                    padTo2Digits(today.getMonth() + 1),
+                    padTo2Digits(today.getDate()),
+                ].join('-');
+            }
+        }
+        
+
+
+    </script>
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends "smart_scheduler/base.html" %} {% load static %} {% block content%}
+<body class="background_color">
+  <br />
+  <br />
+  <form action="{% url 'add-meeting-contacts' %}">
+    <button class="button_create" type="submit">Create New Meeting</button>
+  </form>
+  <section class="task-list">
+    <div id="tasks">
+      {% if page_obj.paginator.count == 0 %}
+      <br/>
+      <h1 class="form_alert">There are no meetings. Create one using the button above!</h1>
+      <br />
+      {% else %} 
+        {% for meeting in meetings %}
+          <div id="div1">
+            <a href="{% url 'meeting-delete' meeting.id %}">
+              <div class="task_meetings">
+                  <div class="actions">
+                      <button class="delete">Delete</button>
+                  </div>
+              </div>
+            </a>
+          </div>
+          <div id="div2">
+              <div class="task_meetings">
+                <div class="content">
+                  <input type="text" class="text" value="{{ meeting.meeting_name }}" readonly/>
+                </div>
+                <div class="actions">
+                  {% for meeting_info in meeting_list_info %} 
+                    {% if meeting_info.id == meeting.id %}
+                      <h1 class="accepted_icon">{{ meeting_info.accepted }}</h1>
+                      <i id="thumbs_up" class="fas fa-thumbs-up fa-2x"></i>
+                      <h1 class="pending_icon">{{ meeting_info.pending }}</h1>
+                      <i id="spinner" class="fas fa-spinner fa-spin fa-2x"></i>
+                      <h1 class="declined_icon">{{ meeting_info.declined }}</h1>
+                      <i id="thumbs_down" class="fas fa-thumbs-down fa-2x"></i>
+                    {% endif %} 
+                  {% endfor %}
+                </div>
+              </div>
+              
+          </div>
+          <div id="div3">
+            <a href="{% url 'meeting-status-schedule' meeting.id %}">
+              <div class="task_meetings">
+                  <div class="actions">
+                      <button class="schedule_icon">Set up</button>
+                  </div>
+              </div>
+            </a>
+          </div>
+      <br/>
+        {% endfor %} 
+      {% endif %}
+    </div>
+  </section>
+  {% if is_paginated %} 
+    {% if page_obj.has_previous %}
+      <a class="previous_page" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %} 
+    {% for num in page_obj.paginator.page_range %} 
+      {% if page_obj.number == num %}
+        <a class="page_number_selected" href="?page={{ num }}">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+        <a class="page_number" href="?page={{ num }}">{{ num }}</a>
+      {% endif %} 
+    {% endfor %} 
+    {% if page_obj.has_next %}
+      <a class="next_page" href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %} 
+  {% endif %}
+</body>
+{% endblock content %}

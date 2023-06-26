@@ -1,0 +1,30 @@
+{% extends "smart_scheduler/base.html" %}
+{% block content%}
+
+
+
+<body class="background_color">
+    <br>
+    <br>
+    <section class="task-list">
+        <div id="tasks">
+            <div class="task">
+                <div class="content">
+                <input 
+                    type="text" 
+                    class="text" 
+                    value="{{ contact.contact_name }}                        {{ contact.email_address }}"
+                    readonly>
+                </div>
+                
+                <div class="actions">
+                    <button> <a href="{% url 'contact-update' contact.id %}" class="edit">Update</a></button>
+                    <button> <a href="{% url 'contact-delete' contact.id %}" class="delete">Delete</a></button>
+                </div>
+            </div> 
+        </div>
+    </section>
+</body>
+
+
+{% endblock content %}

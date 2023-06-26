@@ -1,0 +1,17 @@
+{% extends "smart_scheduler/base.html" %}
+{% load static %}
+{% block content %}
+    <body class="background_color">
+        <br>
+        <br>
+        <br>
+        <img class="center_image" height="250" width="250" src="{% static "smart_scheduler/media/anya_dog.jpg" %}">
+        <br>
+        <br>
+        <h2 class="center_image"> You have been logged out. </h2>
+        <div class="center_image">
+            <br>
+            <a class="center_log_in_again" href="{% url 'login' %}">Log in again</a>
+        </div>
+    </body>
+{% endblock content %}

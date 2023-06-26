@@ -1,0 +1,294 @@
+:root {
+    --dark: #374151;
+    --darker: #1f2937;
+    --darkest: #111827;
+    --gray: #6B7280
+    --light: #eee;
+    --pink: #ec4899;
+    --purple: #8b5cf6;
+	--red: #e62929;
+	--orange: #e46b08;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	color: #FFF;
+	background-color: var(--dark);
+}
+
+header {
+	padding: 2rem 1rem;
+	max-width: 800px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+header h1{ 
+	font-size: 2.5rem;
+	font-weight: 300;
+	color: var(--grey);
+	margin-bottom: 1rem;
+}
+
+#new-task-form {
+	display: flex;
+}
+
+input, button {
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+}
+
+#new-task-input {
+	flex: 1 1 0%;
+	background-color: var(--darker);
+	padding: 1rem;
+	border-radius: 1rem;
+	margin-right: 1rem;
+	color: var(--light);
+	font-size: 1.25rem;
+}
+
+#new-task-input::placeholder {
+	color: var(--grey);
+}
+
+#new-task-submit {
+	color: var(--pink);
+	font-size: 1.25rem;
+	font-weight: 700;
+	background-color: #23d5ab;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	cursor: pointer;
+	transition: 0.4s;
+}
+
+#new-task-submit:hover {
+	opacity: 0.8;
+}
+
+#new-task-submit:active {
+	opacity: 0.6;
+}
+
+main {
+	flex: 1 1 0%;
+	max-width: 800px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.task-list {
+	padding: 1rem;
+}
+
+.task-list h2 {
+	font-size: 1.5rem;
+	font-weight: 300;
+	color: var(--grey);
+	margin-bottom: 1rem;
+}
+
+#tasks .task {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--darkest);
+	padding: 1rem;
+	border-radius: 2rem;
+}
+
+#tasks .task_meetings {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--darkest);
+	padding: 1rem;
+	border-radius: 2rem;
+}
+
+#tasks .task2 {
+	display: flex;
+	justify-content: space-between;
+	background-color: #23a6d5;
+	padding: 1rem;
+	border-radius: 2rem;
+}
+
+.task .content {
+	flex: 1 1 0%;
+}
+
+.task .content .text {
+	color: var(--light);
+	font-size: 1.125rem;
+	font-weight: bold;
+	width: 100%;
+	display: block;
+	transition: 0.4s;
+	cursor: auto;
+}
+
+.task .content .text:not(:read-only) {
+	color: var(--pink);
+}
+
+.task .actions {
+	display: flex;
+	margin: 0 -0.5rem;
+}
+
+.task .actions button {
+	cursor: pointer;
+	margin: 0 0.5rem;
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	transition: 0.4s;
+}
+
+.task .actions button:hover {
+	opacity: 0.8;
+}
+
+.task .actions button:active {
+	opacity: 0.6;
+}
+
+.task .actions .edit {
+	background-color: #23a6d5;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	padding-left: 0px;
+}
+
+.task .actions .edit2 {
+	background-color: #23d5ab;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	padding-right: 5px;
+}
+
+
+
+.task .actions .delete {
+	color: #e73c7e;
+	padding-left: 10px;
+}
+
+.task .actions .accept_google {
+	color: #4fffb0;
+}
+
+.task .actions .yellow {
+	color: #23a6d5;
+}
+
+.task:hover {
+	opacity: 75%;
+	cursor: pointer;
+}
+
+
+#tasks .task_meetings {
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--darkest);
+	padding: 1.5rem;
+	border-radius: 2rem;
+}
+
+.task_meetings .content {
+	flex: 1 1 0%;
+}
+
+.task_meetings .content .text {
+	color: var(--light);
+	font-size: 1.125rem;
+	font-weight: bold;
+	width: 100%;
+	display: block;
+	transition: 0.4s;
+	cursor: auto;
+}
+
+.task_meetings .content .text:not(:read-only) {
+	color: var(--pink);
+}
+
+.task_meetings .actions {
+	display: flex;
+	margin: 0 -0.5rem;
+}
+
+.task_meetings .actions button {
+	cursor: pointer;
+	margin: 0 0.5rem;
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	transition: 0.4s;
+}
+
+.task_meetings .actions button:hover {
+	opacity: 0.8;
+}
+
+.task_meetings .actions button:active {
+	opacity: 0.6;
+}
+
+.task_meetings .actions .edit {
+	background-color: #23a6d5;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	padding-left: 25px;
+}
+
+.task_meetings .actions .edit2 {
+	background-color: #23d5ab;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	padding-left: 25px;
+}
+
+
+
+.task_meetings .actions .delete {
+	color: #e73c7e;
+}
+
+.task_meetings .actions .accept_google {
+	color: #4fffb0;
+}
+
+.task_meetings .actions .yellow {
+	color: yellow;
+}
+
+.task_meetings .actions .accept_outlook {
+	color: blue;
+}
+
+.task_meetings:hover {
+	opacity: 75%;
+	cursor: pointer;
+}
+
+.listings_required {
+	padding-left: 12px;
+}
+
+.listings_optional {
+	padding-left: 15px;
+}
+
+.has_been_added {
+	font-size: 1.01em;
+	font-weight: bold;
+	color: #000;
+}
