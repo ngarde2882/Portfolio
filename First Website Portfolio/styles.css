@@ -1,0 +1,169 @@
+* {box-sizing: border-box;}
+
+head {
+    background-color: #500000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body p {
+    font-size: large;
+}
+
+.dark-mode {
+    background-color: #5D5D5D;
+    color: #FFFFFF;
+}
+
+bg {
+    color: #FFFFFF;
+}
+
+cc {
+    color: black;
+}
+
+.btn {
+    border-radius: 15px;
+  }
+
+.default {
+    border-color: #e7e7e73f;
+    background-color: #5D5D5D;
+    color: #F2EFE9;
+  }
+
+.topnav {
+    width: 100%;
+    background-color: #500000;
+    overflow: auto;
+  }
+
+.topnav a {
+    float: left;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px;
+    text-decoration: none;
+    width: 25%;
+    font-size: 20px;
+}
+
+.topnav a:hover {
+    background-color: #FFFFFF;
+    color: #5D5D5D;
+}
+
+.topnav a.active {
+    background-color: #5D5D5D;
+    color: #FFFFFF;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left {
+    flex: 20%;
+    padding-top: 25px;
+    padding-left: 250px;
+}
+
+.right {
+    flex: 40%;
+    padding-top: 50px;
+    padding-left: 25px;
+    padding-right: 125px;
+}
+
+.right p {
+    padding-right: 125px;
+}
+
+.center {
+    margin: auto;
+    width: 75%;
+    padding-top: 50px;
+}
+
+.center h1 {
+    position: relative;
+    top: 50px;
+}
+
+.center iframe {
+    position: relative;
+    top: 50px;
+}
+
+.center h2 {
+    font-size: large;
+    position: relative;
+    top: 50px;
+    left: 25px;
+}
+
+.center p {
+    position:relative;
+    top: 50px;
+    padding-left: 125px;
+    padding-right: 125px;
+}
+
+.project {
+    position: relative;
+    top: 75px;
+    margin: auto;
+    width: 75%;
+    padding-top: 75px;
+    background-color: #333;
+    text-align: center;
+    height: 350px;
+}
+
+.project p {
+    top: 75px;
+    color: #FFFFFF;
+}
+
+.icon-bar {
+    position: relative;
+    top: 75px;
+    width: 25%;
+    overflow: auto;
+    margin-right: auto;
+    margin-left: 37.5%;
+    bottom: 0;
+}
+
+.icon-bar a {
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding: 12px 0;
+    color: #FFFFFF;
+    font-size: 36px;
+}
+  
+  iframe {
+    float: left;
+    width: 50%;
+    position:relative;
+    top: 75px;
+    display:inline;
+    margin-left: 12.5%;
+}
+
+p2 {
+    float: left;
+    display: inline;
+    margin-left: 10%;
+    margin-top: 50px;
+    width: 20%;
+    top: 150px;
+}

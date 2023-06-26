@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_account"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button_favorites"
+            android:layout_width="131dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="10dp"
+            android:text="Favorites"
+            app:layout_constraintBottom_toTopOf="@+id/button_blocked"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_changePassword" />
+
+        <Button
+            android:id="@+id/button_blocked"
+            android:layout_width="124dp"
+            android:layout_height="42dp"
+            android:text="Blocked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_favorites" />
+
+        <ImageView
+            android:id="@+id/imageView_increaseText2"
+            android:layout_width="77dp"
+            android:layout_height="53dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView_changeEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.809"
+            app:srcCompat="@drawable/increase_text_button" />
+
+        <TextView
+            android:id="@+id/textView_changeEmail"
+            android:layout_width="139dp"
+            android:layout_height="31dp"
+            android:gravity="center"
+            android:text="Change Email"
+            android:textColor="#0645AD"
+            android:textSize="40px"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_accountEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView_accountEmail"
+            app:layout_constraintTop_toTopOf="@+id/textView_accountEmail" />
+
+        <TextView
+            android:id="@+id/textView_emailLabel"
+            android:layout_width="82dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="5dp"
+            android:text="Email:"
+            android:textSize="40px"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_accountEmail"
+            app:layout_constraintEnd_toStartOf="@+id/textView_accountEmail"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_accountEmail" />
+
+        <TextView
+            android:id="@+id/textView_accountEmail"
+            android:layout_width="147dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="50dp"
+            android:text="Email"
+            android:textSize="40px"
+            app:layout_constraintBottom_toTopOf="@+id/textView_changePassword"
+            app:layout_constraintEnd_toStartOf="@+id/textView_changeEmail"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView_emailLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textView_logOut"
+            android:layout_width="133dp"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:text="Log Out"
+            android:textSize="40px"
+            android:textColor="#0645AD"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_blocked" />
+
+        <TextView
+            android:id="@+id/textView_changePassword"
+            android:layout_width="236dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="Change Password"
+            android:textSize="40px"
+            android:textColor="#0645AD"
+            app:layout_constraintBottom_toTopOf="@+id/button_favorites"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accountEmail" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

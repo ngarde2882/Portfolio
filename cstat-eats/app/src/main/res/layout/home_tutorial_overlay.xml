@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha=".75"
+    android:background="#808080">
+
+
+    <ImageView
+        android:id="@+id/imageView_tutorialLeft"
+        android:layout_width="108dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_tutorialLeft"
+        app:layout_constraintStart_toStartOf="@+id/guideline_tutorialLeft"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+    <ImageView
+        android:id="@+id/imageView_tutorialUp"
+        android:layout_width="75dp"
+        android:layout_height="99dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_tutorialOverlay"
+        app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
+
+    <ImageView
+        android:id="@+id/imageView_tutorialRight"
+        android:layout_width="113dp"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_tutorialRight"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_tutorialRight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+    <TextView
+        android:id="@+id/textView_tutorialLeft"
+        android:layout_width="157dp"
+        android:layout_height="85dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Swiping to the left will add the current restaurant to your blocked list."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_tutorialLeft"
+        app:layout_constraintStart_toStartOf="@+id/imageView_tutorialLeft"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_tutorialLeft" />
+
+    <TextView
+        android:id="@+id/textView_tutorialUp"
+        android:layout_width="166dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Swiping up will open up Google Maps and map you to the restaurants location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_tutorialUp" />
+
+    <TextView
+        android:id="@+id/textView_tutorialRight"
+        android:layout_width="148dp"
+        android:layout_height="75dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Swiping to the right will addd the current restaurant to your favorites list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_tutorialRight"
+        app:layout_constraintStart_toStartOf="@+id/imageView_tutorialRight"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_tutorialRight" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_tutorialLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_tutorialRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_tutorialBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".9" />
+
+    <TextView
+        android:id="@+id/textView_tutorialStar"
+        android:layout_width="224dp"
+        android:layout_height="76dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Tapping a My Rating star will create a rating for the current restaurant. You can rate and re-rate restaurants as many times as you want."
+        app:layout_constraintBottom_toTopOf="@+id/guideline_tutorialBottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_tutorialRight"
+        app:layout_constraintStart_toStartOf="@+id/guideline_tutorialLeft" />
+
+    <TextView
+        android:id="@+id/textView_tutorialOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text=""
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_tutorialContinue"
+        android:layout_width="200dp"
+        android:layout_height="47dp"
+        android:gravity="center"
+        android:text="Touch Anywhere to continue!"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_tutorialStar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_tutorialLeft" />
+
+    <TextView
+        android:id="@+id/textViewTutorialResponse"
+        android:layout_width="116dp"
+        android:layout_height="52dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="Click on the Image to open up that restaurant in Yelp!"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_tutorialLeft"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_tutorialRight"
+        app:layout_constraintStart_toEndOf="@+id/imageView_tutorialLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView_tutorialUp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

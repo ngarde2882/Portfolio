@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/nick2/Desktop/School Stuff/Year 4/CSCE 315/cstat-eats/app/src/main/res/drawable/dim_popup.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/nick2/Desktop/School Stuff/Year 4/CSCE 315/cstat-eats/app/src/main/res/layout/activity_account.xml" value="0.1" />
+        <entry key="..\:/Users/nick2/Desktop/School Stuff/Year 4/CSCE 315/cstat-eats/app/src/main/res/layout/activity_main.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/nick2/Desktop/School Stuff/Year 4/CSCE 315/cstat-eats/app/src/main/res/layout/dim_popup.xml" value="0.694078947368421" />
+        <entry key="..\:/Users/nick2/Desktop/School Stuff/Year 4/CSCE 315/cstat-eats/app/src/main/res/layout/show_blocked_popup.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/nick2/Desktop/School Stuff/Year 4/CSCE 315/cstat-eats/app/src/main/res/layout/show_favorites_popup.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/drawable/bordered_layout.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/drawable/eats_element.xml" value="0.146875" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/drawable/ic_baseline_star_border_24.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/activity_account.xml" value="0.2128623188405797" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/activity_login.xml" value="0.2128623188405797" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/activity_main.xml" value="0.2128623188405797" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/activity_register.xml" value="0.2128623188405797" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/change_email_popup.xml" value="0.2128623188405797" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/change_password_popup.xml" value="0.223731884057971" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/eats_card.xml" value="0.2" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/eats_element.xml" value="0.13072916666666667" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/eats_info_popup.xml" value="0.24592391304347827" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/fragment_account.xml" value="0.3671875" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/fragment_home.xml" value="0.3671875" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/fragment_map.xml" value="0.3671875" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/home_tutorial_overlay.xml" value="0.2418478260869565" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/show_blocked_popup.xml" value="0.223731884057971" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/layout/show_favorites_popup.xml" value="0.1" />
+        <entry key="..\:/Users/wjpas/OneDrive/Documents/A_Fall_2021/CSCE_315/cstat-eats/app/src/main/res/menu/bottom_nav.xml" value="0.3671875" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/change_email_popup.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/change_password_popup.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/eats_card.xml" value="0.6472790782481099" />
+        <entry key="app/src/main/res/layout/eats_element.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/eats_info_popup.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.3200943844507933" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/landing_page.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/landing_page2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/show_blocked_popup.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/show_favorites_popup.xml" value="0.3098958333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

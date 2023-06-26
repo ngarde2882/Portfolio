@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/button_removeEat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_baseline_delete_24" />
+
+    <TextView
+        android:id="@+id/textView_eatsName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:gravity="center"
+        android:layout_toEndOf="@+id/button_removeEat"
+        android:layout_toStartOf="@+id/button_eatsInfo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textSize="24sp"/>
+
+
+    <ImageButton
+        android:id="@+id/button_eatsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_baseline_info_24" />
+
+    <TextView
+        android:id="@+id/textView_eatsURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_eatsName"
+        android:layout_centerHorizontal="true"
+        android:text="URL" />
+
+</RelativeLayout>
