@@ -28,3 +28,6 @@ Grocery List
 --> this can be implemented in houses through the ebook, phones, computers, and smart devices
 --> this can be implemented in restaurants by increasing scale of dishes made and logging all ingredients to make managing easier
 --> white/dark greay background choices, pastel orange blue green pink.. trim
+
+TO ACTIVATE VENV: .\ReBook\Scripts\activate
+TO LAUNCH WEBAPP: python manage.py runserver
