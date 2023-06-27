@@ -31,3 +31,5 @@ Grocery List
 
 TO ACTIVATE VENV: .\ReBook\Scripts\activate
 TO LAUNCH WEBAPP: python manage.py runserver
+
+- PART 2: CREATING THE CATALOG APPLICATION    for creating apps
