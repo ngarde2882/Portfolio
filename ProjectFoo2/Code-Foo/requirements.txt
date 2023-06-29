@@ -1,0 +1,5 @@
+streamlit
+matplotlib
+numpy
+st_btn_select
+firebase_admin

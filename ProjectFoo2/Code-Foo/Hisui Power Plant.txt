@@ -1,0 +1,15 @@
+voltorb    energy    voltorb
+_______ X  _______ = _______
+energy     village   village
+
+First we need to figure out how much energy the average voltorb can generate. We can do this by catching a few voltorbs and measuring their output (remember to stay grounded while handeling voltorbs). While the Galaxy Team has members working on that, another group needs go go around the village and approximate the total energy needed for the village to function. This team should be able to do this by measuring total energy consumption of every building, and should probably take guesses on how much energy is used in peoples homes, as to grant them their privacy. The results should look like below vvv
+
+energy     energy      energy       energy                       energy
+_______ = ________ + ___________ + ________ + ... + (numHouses)* ______
+village   GalaxyHQ   Arezu Salon   clothier                      House
+
+It would be a good idea to round upwards a few voltorb since we are making approximations.
+
+After that, the equation at the top of the page should result in the number of voltorbs required to power the whole village.
+
+Happy Catching!
