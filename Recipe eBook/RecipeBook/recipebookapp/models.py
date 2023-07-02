@@ -17,6 +17,9 @@ class RecipeIngredientModel(models.Model): # TODO: Maybe split this into 2 diffe
 class RecipeAuthor(models.Model):
     Name = models.CharField(max_length=25, help_text='Author Name', blank=True)
     Org = models.CharField(max_length=25, help_text='Organization Name', blank=True) # can be null
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)."""
+        return self.Name
 
 class RecipeModel(models.Model):
     """A typical class defining a model, derived from the Model class."""
@@ -25,7 +28,7 @@ class RecipeModel(models.Model):
     Name = models.CharField(max_length=20, help_text='Recipe Name')
     # use recipeObj.ingredients.create(Name=,Quantity=) to generate ingredients or recipeObj.ingredients.add(ingredientObj) to add existing ones
     Ingredients = models.ManyToManyField(RecipeIngredientModel, help_text='Recipe Ingredients')
-    Author = models.ManyToManyField(RecipeAuthor, help_text='Recipe Author', blank=True)
+    Author = models.ManyToManyField(RecipeAuthor, help_text='Recipe Authors', blank=True)
     Directions = models.TextField(help_text='Recipe Directions')
     img = models.ImageField(upload_to='images/', help_text='Recipe Image')
     mealType = models.CharField(max_length=20, help_text='Type of Meal: entree, snack, bread, drink') # entree, snack, bread, drink
@@ -34,9 +37,11 @@ class RecipeModel(models.Model):
         max_length=1,
         choices=MEALTYPES,
         blank=True,
-        default='n',
         help_text='Type of Meal: entree, snack, bread, drink',
     )
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)."""
+        return self.Name
     # …
 
     # Metadata
