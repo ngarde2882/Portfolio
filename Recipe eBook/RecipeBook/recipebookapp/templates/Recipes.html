@@ -1,76 +1,259 @@
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-size: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    .spacer{
-      width: 8vw;
-      height: 8vh;
-      display: inline-block;
-      background-color: #f2f2f2;
-    }
-    
-    .left {
-      overflow: hidden;
-      background-color: #f2f2f2;
-      display: inline-block;
-      height: 8vh;
-      font-size: 6vh;
-      color: black;
-      text-align: center;
-      width: 28vw;
-    }
-    
-    .middle {
-      overflow: hidden;
-      background-color: #f2f2f2;
-      display: inline-block;
-      height: 8vh;
-      font-size: 6vh;
-      color: black;
-      text-align: center;
-      width: 28vw;
-    }
-    
-    .right {
-      overflow: hidden;
-      background-color: #f2f2f2;
-      display: inline-block;
-      height: 8vh;
-      font-size: 6vh;
-      color: black;
-      text-align: center;
-      width: 28vw;
-    }
-    
-    .right:hover, .left:hover, .middle:hover {
-      background-color: #ddd;
-      border-bottom-color: rgb(99, 133, 255);
-      border-bottom-width: 1vh;
-      border-bottom-style: solid;
-    }
-    
-    .left.active, .right.active, .middle.active {
-      border-bottom-color: rgb(95, 170, 255);
-      border-bottom-width: 1vh;
-      border-bottom-style: solid;
-    }
+:root {
+/* colors */
+  --navbar_background: #f2f2f2;
+  --text_black: black;
+  --hover_background: #ddd;
+  --accent: #5faaff;
+  --dark_accent: #6385ff;
+/* nums */
+}
 
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+.spacer{
+  width: 8vw;
+  height: 8vh;
+  display: inline-block;
+  background-color: var(--navbar_background);
+}
+
+.left {
+  overflow: hidden;
+  background-color: var(--navbar_background);
+  display: inline-block;
+  height: 8vh;
+  font-size: 6vh;
+  color: var(--text_black);
+  text-align: center;
+  width: 28vw;
+}
+
+.middle {
+  overflow: hidden;
+  background-color: var(--navbar_background);
+  display: inline-block;
+  height: 8vh;
+  font-size: 6vh;
+  color: var(--text_black);
+  text-align: center;
+  width: 28vw;
+}
+
+.right {
+  overflow: hidden;
+  background-color: var(--navbar_background);
+  display: inline-block;
+  height: 8vh;
+  font-size: 6vh;
+  color: var(--text_black);
+  text-align: center;
+  width: 28vw;
+}
+
+.right:hover, .left:hover, .middle:hover {
+  height: 7vh;
+  background-color: var(--hover_background);
+  border-bottom-color: var(--dark_accent);
+  border-bottom-width: 1vh;
+  border-bottom-style: solid;
+}
+
+.left.active, .right.active, .middle.active {
+  height: 7vh;
+  border-bottom-color: var(--accent);
+  border-bottom-width: 1vh;
+  border-bottom-style: solid;
+}
+
+.leftsideMenu {
+  width: 25vw;
+  height: 92vh;
+  float: left;
+  background-color: lightblue;
+}
+.leftsideMenu searchcontainer {
+  display: block;
+  background-color: peru;
+  height: 3vh;
+  text-align: right;
+  font-size: 3vh;
+}
+
+.leftsideMenu ul {
+    padding-left: 0;
+    list-style-type: none;
+    width: 25vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.leftsideMenu ul li {
+  border-bottom: 1px dashed lightgray;
+  background-color: cadetblue;
+}
+
+.leftsideMenu ul li a {
+  font-size: 5vh;
+  padding-left: 5vw;
+  padding-top: .5vh;
+  padding-bottom: .5vh;
+  /* float: right; */
+  color: white;
+  display: block;
+}
+
+.leftsideMenu ul li a:hover {
+  background-color: lightgreen;
+  transition: 0.25s;
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+.leftsideMenu ul li a.active {
+  background-color: rgb(57, 105, 107);
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+.rightsideMenu {
+  color: black;
+  float: right;
+  display: block;
+  height: 92vh;
+  width: 75vw;
+  background-color: peru;
+}
+
+.rightsideMenu r {
+  color: black;
+  float: right;
+  display: block;
+  height: 92vh;
+  width: 28vw;
+}
+.rightsideMenu r imagecontainer {
+  background-color: lightgreen;
+  display: block;
+  height: 45vh;
+  padding-top: 10vh;
+}
+.rightsideMenu r imagecontainer img {
+    max-width: 37.5vw;
+    max-height: 45vh;
+}
+
+.rightsideMenu l {
+  background-color: #c14eef;
+  color: black;
+  float: left;
+  display: block;
+  height: 92vh;
+  width: 47vw;
+  word-wrap: break-word;
+}
+
+.rightsideMenu l h1 {
+    font-size: 4.5vh;
+    font-style: oblique;
+    margin: 0;
+}
+.rightsideMenu l h2 {
+    font-size: 4vh;
+    font-style: normal;
+    margin-left: 3vw;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.rightsideMenu l ul {
+    padding-left: 0;
+}
+.rightsideMenu l ul li {
+    font-size: 3vh;
+    font-style: normal;
+    margin-left: 6vw;
+    margin-top: 0;
+    list-style: none;
+    /* list-style-image: ; */
+}
+
+.rightsideMenu l ol {
+    padding-left: 0;
+    list-style: none;
+}
+.rightsideMenu l ol li {
+    font-size: 3vh;
+    font-style: normal;
+    margin-left: 6vw;
+    margin-top: 0;
+}
+.rightsideMenu l ol li:before {
+    content: '-';
+    position: absolute;
+    margin-left: -1vw;
+}
 </style>
 </head>
 <body>
 <div class="spacer"></div>
 <div class="left active">Recipes</div>
 <div class="middle">Schedule</div>
-<div class="right">Grocery List</div>
+<div class="right">Groceries</div>
 <div class="spacer"></div>
+<div class="leftsideMenu">
+    <searchcontainer>Search</searchcontainer>
+    <ul>
+        <li><a>Recipe 1</a></li>
+        <li><a>Recipe 2</a></li>
+        <li><a>Recipe 3</a></li>
+        <li><a>Recipe 4</a></li>
+        <li><a>Recipe 1</a></li>
+        <li><a>Recipe 2</a></li>
+        <li><a>Recipe 3</a></li>
+        <li><a>Recipe 4</a></li>
+        <li><a>Recipe 1</a></li>
+        <li><a>Recipe 2</a></li>
+        <li><a>Recipe 3</a></li>
+        <li><a>Recipe 4</a></li>
+        <li><a>Recipe 1</a></li>
+        <li><a>Recipe 2</a></li>
+        <li><a>Recipe 3</a></li>
+        <li><a>Recipe 4</a></li>
+    </ul>
 </div>
+<div class="rightsideMenu">
+    <r>
+        <imagecontainer>
+            <p style="text-align:center;"><img src="../hd_boof.png" alt="dog boof"></p>
+        </imagecontainer>
+    </r>
+    <l>
+        <h1>{Recipe Name}</h1>
+        <h2>Ingredients</h2>
+        <ul>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+        </ul>
+        <h2>Directions</h2>
+        <ol>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+        </ol>
+    </l>
+</div>
+
 
 
 
