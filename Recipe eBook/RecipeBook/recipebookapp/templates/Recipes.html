@@ -22,6 +22,7 @@ body {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
 }
+.element::-webkit-scrollbar { width: 0 !important }
 
 .spacer{
   width: 8vw;
@@ -84,6 +85,7 @@ body {
   float: left;
   background-color: lightblue;
   overflow: hidden;
+  position: fixed;
 }
 .leftsideMenu searchcontainer {
   display: block;
@@ -97,9 +99,11 @@ body {
     padding-left: 0;
     list-style-type: none;
     width: 20vw;
+    height: 89vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+.leftsideMenu ul::-webkit-scrollbar { width: 0 !important }
 
 .leftsideMenu ul li {
   border-bottom: 1px dashed lightgray;
@@ -155,6 +159,13 @@ body {
     max-width: 37.5vw;
     max-height: 45vh;
 }
+.rightsideMenu r buttoncontainer {
+  width: 28vw;
+  height: 37vh;
+  background-color: brown;
+  float: right;
+  display: block;
+}
 
 .rightsideMenu l {
   background-color: #c14eef;
@@ -164,7 +175,9 @@ body {
   height: 92vh;
   width: 52vw;
   word-wrap: break-word;
+  overflow-y: scroll;
 }
+.rightsideMenu l::-webkit-scrollbar { width: 0 !important }
 
 .rightsideMenu l h1 {
     font-size: 4.5vh;
@@ -233,6 +246,10 @@ body {
         <li><a>Recipe 2</a></li>
         <li><a>Recipe 3</a></li>
         <li><a>Recipe 4</a></li>
+        <li><a>Recipe 1</a></li>
+        <li><a>Recipe 2</a></li>
+        <li><a>Recipe 3</a></li>
+        <li><a>Recipe 4</a></li>
     </ul>
 </div>
 <div class="rightsideMenu">
@@ -240,6 +257,7 @@ body {
         <imagecontainer>
             <p style="text-align:center;"><img src="../hd_boof.png" alt="dog boof"></p>
         </imagecontainer>
+        <buttoncontainer></buttoncontainer>
     </r>
     <l>
         <h1>{Recipe Name}</h1>
@@ -248,11 +266,39 @@ body {
             <li>{Ingredient}</li>
             <li>{Ingredient}</li>
             <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
+            <li>{Ingredient}</li>
         </ul>
         <h2>Directions</h2>
         <ol>
             <li>{Directions}</li>
             <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{very very very very very very very very very very very very LONG Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Directions}</li>
+            <li>{Last}</li>
         </ol>
     </l>
 </div>
