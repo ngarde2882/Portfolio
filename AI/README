@@ -1,0 +1,5 @@
+This folder contains my 2 favorite projects from my AI class at TAMU
+
+A2 has my code and tests for a Tic-Tac-Toe bot where a user could play against a minimax algorithm (with or without Alpha-Beta pruning)
+
+A4 has my solution to the nqueens problem: fitting n queens on an nxn sized chessboard without any of them being to attack eachother

@@ -1,0 +1,5 @@
+This folder contains the scripts I have completed for my consulting work that do not violate an NDA
+
+GMap Scraper uses the Google API to find sub-regions for clients' addresses and exports them to a csv file
+
+Reviews contains a script to sort review data from a webpage into a csv file
