@@ -1,0 +1,31 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+<style>
+.header{
+    width: 100vw;
+    height: auto;
+    text-align: center;
+    background-color: blueviolet;
+}
+.header img{
+    max-width: 70vw;
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <p style="text-align:center;"><img src="../static/img/RecipeBook.png" alt="dog boof"></p>
+</div>
+<form action="/team_name_url/" method="post">
+    <label for="team_name">Enter name: </label>
+    <input
+      id="team_name"
+      type="text"
+      name="name_field"
+      value="Default name for team." />
+    <input type="submit" value="OK" />
+  </form>
+</body>
+</html>

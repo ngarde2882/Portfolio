@@ -1,1 +1,216 @@
-
+:root {
+  /* colors */
+    --navbar_background: #f2f2f2;
+    --text_black: black;
+    --hover_background: #ddd;
+    --accent: #5faaff;
+    --dark_accent: #6385ff;
+  /* nums */
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .element::-webkit-scrollbar { width: 0 !important }
+  
+  .spacer{
+    width: 8vw;
+    height: 8vh;
+    display: inline-block;
+    background-color: var(--navbar_background);
+  }
+  
+  .left {
+    overflow: hidden;
+    background-color: var(--navbar_background);
+    display: inline-block;
+    height: 8vh;
+    font-size: 6vh;
+    color: var(--text_black);
+    text-align: center;
+    width: 28vw;
+  }
+  
+  .middle {
+    overflow: hidden;
+    background-color: var(--navbar_background);
+    display: inline-block;
+    height: 8vh;
+    font-size: 6vh;
+    color: var(--text_black);
+    text-align: center;
+    width: 28vw;
+  }
+  
+  .right {
+    overflow: hidden;
+    background-color: var(--navbar_background);
+    display: inline-block;
+    height: 8vh;
+    font-size: 6vh;
+    color: var(--text_black);
+    text-align: center;
+    width: 28vw;
+  }
+  
+  .right:hover, .left:hover, .middle:hover {
+    height: 7vh;
+    background-color: var(--hover_background);
+    border-bottom-color: var(--dark_accent);
+    border-bottom-width: 1vh;
+    border-bottom-style: solid;
+  }
+  
+  .left.active, .right.active, .middle.active {
+    height: 7vh;
+    border-bottom-color: var(--accent);
+    border-bottom-width: 1vh;
+    border-bottom-style: solid;
+  }
+  
+  .leftsideMenu {
+    width: 20vw;
+    height: 92vh;
+    float: left;
+    background-color: lightblue;
+    overflow: hidden;
+    position: fixed;
+  }
+  .leftsideMenu searchcontainer {
+    display: block;
+    background-color: peru;
+    height: 3vh;
+    text-align: right;
+    font-size: 3vh;
+  }
+  
+  .leftsideMenu ul {
+      padding-left: 0;
+      list-style-type: none;
+      width: 20vw;
+      height: 89vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+  }
+  .leftsideMenu ul::-webkit-scrollbar { width: 0 !important }
+  
+  .leftsideMenu ul li {
+    border-bottom: 1px dashed grey;
+    background-color: var(--navbar_background);
+  }
+  
+  .leftsideMenu ul li a {
+    font-size: 5vh;
+    padding-left: 5vw;
+    padding-top: .5vh;
+    padding-bottom: .5vh;
+    /* float: right; */
+    color: black;
+    display: block;
+  }
+  
+  .leftsideMenu ul li a:hover {
+    background-color: var(--hover_background);
+    border-right-color: var(--dark_accent);
+    border-right-width: 1vh;
+    border-right-style: solid;
+  }
+  
+  .leftsideMenu ul li a.active {
+    border-right-color: var(--accent);
+    border-right-width: 1vh;
+    border-right-style: solid;
+  }
+  
+  .rightsideMenu {
+    color: black;
+    float: right;
+    display: block;
+    height: 92vh;
+    width: 80vw;
+    background-color: peru;
+  }
+  
+  .rightsideMenu r {
+    color: black;
+    float: right;
+    display: block;
+    height: 92vh;
+    width: 28vw;
+  }
+  .rightsideMenu r imagecontainer {
+    background-color: lightgreen;
+    display: block;
+    height: 45vh;
+    padding-top: 10vh;
+  }
+  .rightsideMenu r imagecontainer img {
+      max-width: 37.5vw;
+      max-height: 45vh;
+  }
+  .rightsideMenu r buttoncontainer {
+    width: 28vw;
+    height: 37vh;
+    background-color: brown;
+    float: right;
+    display: block;
+  }
+  
+  .rightsideMenu l {
+    background-color: #c14eef;
+    color: black;
+    float: left;
+    display: block;
+    height: 92vh;
+    width: 52vw;
+    word-wrap: break-word;
+    overflow-y: scroll;
+  }
+  .rightsideMenu l::-webkit-scrollbar { width: 0 !important }
+  
+  .rightsideMenu l h1 {
+      font-size: 4.5vh;
+      font-style: oblique;
+      margin: 0;
+  }
+  .rightsideMenu l h2 {
+      font-size: 4vh;
+      font-style: normal;
+      margin-left: 3vw;
+      margin-top: 0;
+      margin-bottom: 0;
+  }
+  
+  .rightsideMenu l ul {
+      padding-left: 0;
+  }
+  .rightsideMenu l ul li {
+      font-size: 3vh;
+      font-style: normal;
+      margin-left: 6vw;
+      margin-top: 0;
+      list-style: none;
+      /* list-style-image: ; */
+  }
+  
+  .rightsideMenu l ol {
+      padding-left: 0;
+      list-style: none;
+  }
+  .rightsideMenu l ol li {
+      font-size: 3vh;
+      font-style: normal;
+      margin-left: 6vw;
+      margin-top: 0;
+  }
+  .rightsideMenu l ol li:before {
+      content: '- ';
+      /* position: absolute; */
+      margin-left: -1vw;
+  }

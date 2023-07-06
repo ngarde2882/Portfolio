@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from .models import RecipeIngredientModel, RecipeAuthor, RecipeModel
+from .models import RecipeAuthor, RecipeModel
 
 def recipes(request):
     """View function for recipes page of site."""
