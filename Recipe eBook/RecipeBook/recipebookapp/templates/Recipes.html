@@ -106,8 +106,8 @@ body {
 .leftsideMenu ul::-webkit-scrollbar { width: 0 !important }
 
 .leftsideMenu ul li {
-  border-bottom: 1px dashed lightgray;
-  background-color: cadetblue;
+  border-bottom: 1px dashed grey;
+  background-color: var(--navbar_background);
 }
 
 .leftsideMenu ul li a {
@@ -116,21 +116,21 @@ body {
   padding-top: .5vh;
   padding-bottom: .5vh;
   /* float: right; */
-  color: white;
+  color: black;
   display: block;
 }
 
 .leftsideMenu ul li a:hover {
-  background-color: lightgreen;
-  transition: 0.25s;
-  padding-left: 30px;
-  padding-right: 10px;
+  background-color: var(--hover_background);
+  border-right-color: var(--dark_accent);
+  border-right-width: 1vh;
+  border-right-style: solid;
 }
 
 .leftsideMenu ul li a.active {
-  background-color: rgb(57, 105, 107);
-  padding-left: 30px;
-  padding-right: 10px;
+  border-right-color: var(--accent);
+  border-right-width: 1vh;
+  border-right-style: solid;
 }
 
 .rightsideMenu {
@@ -215,8 +215,8 @@ body {
     margin-top: 0;
 }
 .rightsideMenu l ol li:before {
-    content: '-';
-    position: absolute;
+    content: '- ';
+    /* position: absolute; */
     margin-left: -1vw;
 }
 </style>
@@ -230,7 +230,7 @@ body {
 <div class="leftsideMenu">
     <searchcontainer>Search</searchcontainer>
     <ul>
-        <li><a>Recipe 1</a></li>
+        <li><a class="active">Recipe 1</a></li>
         <li><a>Recipe 2</a></li>
         <li><a>Recipe 3</a></li>
         <li><a>Recipe 4</a></li>
