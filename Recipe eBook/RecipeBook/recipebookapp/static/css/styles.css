@@ -107,12 +107,12 @@
   
   .leftsideMenu ul li a {
     font-size: 5vh;
-    padding-left: 5vw;
     padding-top: .5vh;
     padding-bottom: .5vh;
-    /* float: right; */
     color: black;
     display: block;
+    overflow-x: hidden;
+    white-space: nowrap;
   }
   
   .leftsideMenu ul li a:hover {
@@ -185,6 +185,11 @@
       margin-left: 3vw;
       margin-top: 0;
       margin-bottom: 0;
+  }
+  .rightsideMenu l p {
+      font-size: 2vh;
+      color: black;
+      font-style: normal;
   }
   
   .rightsideMenu l ul {

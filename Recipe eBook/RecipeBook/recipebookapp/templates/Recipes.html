@@ -15,39 +15,27 @@
 <div class="leftsideMenu">
     <searchcontainer>Search</searchcontainer>
     <ul>
-        <li><a class="active">Recipe 1</a></li>
-        <li><a>Recipe 2</a></li>
-        <li><a>Recipe 3</a></li>
-        <li><a>Recipe 4</a></li>
-        <li><a>Recipe 1</a></li>
-        <li><a>Recipe 2</a></li>
-        <li><a>Recipe 3</a></li>
-        <li><a>Recipe 4</a></li>
-        <li><a>Recipe 1</a></li>
-        <li><a>Recipe 2</a></li>
-        <li><a>Recipe 3</a></li>
-        <li><a>Recipe 4</a></li>
-        <li><a>Recipe 1</a></li>
-        <li><a>Recipe 2</a></li>
-        <li><a>Recipe 3</a></li>
-        <li><a>Recipe 4</a></li>
-        <li><a>Recipe 1</a></li>
-        <li><a>Recipe 2</a></li>
-        <li><a>Recipe 3</a></li>
-        <li><a>Recipe 4</a></li>
+        {% for r in Recipes %}
+        <li><a>{{ r }}</a></li>
+        {% endfor %}
+        <!-- <li><a class="active">Recipe 1</a></li> -->
     </ul>
 </div>
 <div class="rightsideMenu">
     <r>
         <imagecontainer>
-            <p style="text-align:center;"><img src="../hd_boof.png" alt="dog boof"></p>
+            <p style="text-align:center;"><img src="../static/img/RecipeBook.png" alt="img"></p>
         </imagecontainer>
         <buttoncontainer></buttoncontainer>
     </r>
     <l>
-        <h1>{Recipe Name}</h1>
+        <h1>{{ Recipes.0.Name }}</h1>
+        <p>{{Recipes.0.Author}}</p>
         <h2>Ingredients</h2>
         <ul>
+            {% for i in Recipes.0.Ingredients %}
+            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
+            {% endfor %}
             <li>{Ingredient}</li>
             <li>{Ingredient}</li>
             <li>{Ingredient}</li>
@@ -87,8 +75,3 @@
         </ol>
     </l>
 </div>
-
-
-
-
-</body>
