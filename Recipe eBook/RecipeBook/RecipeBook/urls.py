@@ -28,11 +28,13 @@ urlpatterns = [
 # Use include() to add paths from the catalog application
 urlpatterns += [
     path('recipebookapp/', include('recipebookapp.urls')),
+    path('login/', include('recipebookapp.urls')),
 ]
 
 #Add URL maps to redirect the base URL to our application
 urlpatterns += [
     path('', RedirectView.as_view(url='recipebookapp/', permanent=True)),
+    path('', RedirectView.as_view(url='login/', permanent=True)),
 ]
 
 # Use static() to add URL mapping to serve static files during development (only)
