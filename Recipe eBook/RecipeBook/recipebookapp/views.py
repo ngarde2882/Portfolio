@@ -9,12 +9,16 @@ def recipes(request):
     recipes = RecipeModel.objects.all()
 
     context = {}
-    context['Recipes'] = {}
+    recipeNameList = []
+    recipeList = {}
+    recipe = {}
     i=0
     for r in recipes:
-        context['Recipes'][r.Name] = {'Ingredients':r.Ingredients, 'Author':r.Author, 'Directions':r.Directions, 'Img':r.img, 'Mealtype':r.mealtype}
-        i+=1
-    # context['First'] = RecipeModel.objects.get(Users__contains=request.user.id)
+        recipeNameList.append(r.Name)
+        recipe = {'Ingredients':r.Ingredients, 'Author':r.Author, 'Directions':r.Directions, 'Img':r.img, 'Mealtype':r.mealtype}
+        recipeList[r.Name] = recipe
+    context['NameList'] = recipeNameList
+    context['List'] = recipeList
     print(context)
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'Recipes.html', context=context)

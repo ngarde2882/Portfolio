@@ -153,6 +153,8 @@
   .rightsideMenu r imagecontainer img {
       max-width: 37.5vw;
       max-height: 45vh;
+      overflow: auto;
+      resize: both;
   }
   .rightsideMenu r buttoncontainer {
     width: 28vw;

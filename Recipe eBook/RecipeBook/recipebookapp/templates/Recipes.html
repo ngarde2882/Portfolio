@@ -15,7 +15,7 @@
 <div class="leftsideMenu">
     <searchcontainer>Search</searchcontainer>
     <ul>
-        {% for r in Recipes %}
+        {% for r in NameList %}
         <li><a>{{ r }}</a></li>
         {% endfor %}
         <!-- <li><a class="active">Recipe 1</a></li> -->
@@ -28,18 +28,18 @@
         </imagecontainer>
         <buttoncontainer></buttoncontainer>
     </r>
-    <l>
-        <h1>{{ Recipes.0.Name }}</h1>
-        <p>{{Recipes.0.Author}}</p>
+    <!-- <l>
+        <h1>{{ List.Name }}</h1>
+        <p>{{List.Author}}</p>
         <h2>Ingredients</h2>
         <ul>
-            {% for i in Recipes.0.Ingredients %}
-            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
+            {% for i in List.0.Ingredients %}
+            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>   # so this needs to auto-select the first and then change to display List.{Name}.
             {% endfor %}
         </ul>
         <h2>Directions</h2>
         <ol>
             <li>{Directions}</li>
         </ol>
-    </l>
+    </l> -->
 </div>
