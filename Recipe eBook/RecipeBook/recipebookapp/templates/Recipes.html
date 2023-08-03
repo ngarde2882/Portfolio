@@ -2,6 +2,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+  {% load recipes %}
 <style>
 
 </style>
@@ -29,17 +30,35 @@
         <buttoncontainer></buttoncontainer>
     </r>
     <!-- <l>
-        <h1>{{ List.Name }}</h1>
-        <p>{{List.Author}}</p>
+        <h1>{{ First.Name }}</h1>
+        <p>{{First.Author}}</p>
         <h2>Ingredients</h2>
         <ul>
-            {% for i in List.0.Ingredients %}
-            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>   # so this needs to auto-select the first and then change to display List.{Name}.
+            {% for i in First.Ingredients %}
+            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
             {% endfor %}
         </ul>
         <h2>Directions</h2>
         <ol>
-            <li>{Directions}</li>
+            {% for i in First.Directions %}
+            <li>{{ i }}</li>
+            {% endfor %}
         </ol>
     </l> -->
+    <l>
+        <h1>{{ First }}</h1>
+        <p>{{List|get_item:}}</p>
+        <h2>Ingredients</h2>
+        <ul>
+            {% for i in First.Ingredients %}
+            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Directions</h2>
+        <ol>
+            {% for i in First.Directions %}
+            <li>{{ i }}</li>
+            {% endfor %}
+        </ol>
+    </l>
 </div>

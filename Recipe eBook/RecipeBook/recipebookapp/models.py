@@ -28,7 +28,7 @@ class RecipeModel(models.Model):
     # use recipeObj.ingredients.create(Name=,Quantity=) to generate ingredients or recipeObj.ingredients.add(ingredientObj) to add existing ones
     Ingredients = models.JSONField(help_text='Recipe Ingredients')
     Author = models.ForeignKey(RecipeAuthor, help_text='Recipe Author', blank=True, on_delete=models.DO_NOTHING, null=True)
-    Directions = models.JSONField(help_text='Recipe Directions')
+    Directions = models.CharField(max_length=999, help_text='Recipe Directions')
     img = models.ImageField(upload_to='images/', help_text='Recipe Image')
     # mealType = models.CharField(max_length=20, help_text='Type of Meal: entree, snack, bread, drink') # entree, snack, bread, drink
     MEALTYPES = (('e','Entree'), ('b','Bread'), ('s', 'Snack'), ('d', 'Drink'), ('t','Dessert'))

@@ -15,8 +15,19 @@ def recipes(request):
     i=0
     for r in recipes:
         recipeNameList.append(r.Name)
-        recipe = {'Ingredients':r.Ingredients, 'Author':r.Author, 'Directions':r.Directions, 'Img':r.img, 'Mealtype':r.mealtype}
+        D = list(r.Directions.strip('][').split(', '))
+        I = []
+        for key, val in r.Ingredients.items():
+            val['Name'] = key
+            I.append(val)
+        recipe = {'Ingredients':I, 'Author':r.Author, 'Directions':D, 'Img':r.img, 'Mealtype':r.mealtype}
         recipeList[r.Name] = recipe
+        # if i==0:
+        #     context['First'] = {'Name':r.Name, 'Ingredients':I, 'Author':r.Author, 'Directions':D, 'Img':r.img, 'Mealtype':r.mealtype}
+        #     i+=1
+        if i==0:
+            context['First'] = r.Name
+            i+=1
     context['NameList'] = recipeNameList
     context['List'] = recipeList
     print(context)
