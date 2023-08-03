@@ -47,16 +47,16 @@
     </l> -->
     <l>
         <h1>{{ First }}</h1>
-        <p>{{List|get_item:}}</p>
+        <p>{{List|lookup_author:First}}</p>
         <h2>Ingredients</h2>
         <ul>
-            {% for i in First.Ingredients %}
+            {% for i in List|lookup_ingredients:First %}
             <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
             {% endfor %}
         </ul>
         <h2>Directions</h2>
         <ol>
-            {% for i in First.Directions %}
+            {% for i in List|lookup_directions:First %}
             <li>{{ i }}</li>
             {% endfor %}
         </ol>
