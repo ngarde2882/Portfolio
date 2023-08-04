@@ -15,36 +15,32 @@
 <div class="spacer"></div>
 <div class="leftsideMenu">
     <searchcontainer>Search</searchcontainer>
-    <ul>
+    <ul id="RList">
         {% for r in NameList %}
-        <li><a>{{ r }}</a></li>
+        <li><a class="btn">{{ r }}</a></li>
         {% endfor %}
         <!-- <li><a class="active">Recipe 1</a></li> -->
     </ul>
 </div>
+<script>
+    // Add active class to the current button (highlight it)
+    var header = document.getElementById("RList");
+    var btns = header.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName(" active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+      });
+    }
+    </script>
 <div class="rightsideMenu">
     <r>
         <imagecontainer>
-            <p style="text-align:center;"><img src="../static/img/RecipeBook.png" alt="img"></p>
+            <p><img src="../static/img/RecipeBook.png" alt="img"></p>
         </imagecontainer>
         <buttoncontainer></buttoncontainer>
     </r>
-    <!-- <l>
-        <h1>{{ First.Name }}</h1>
-        <p>{{First.Author}}</p>
-        <h2>Ingredients</h2>
-        <ul>
-            {% for i in First.Ingredients %}
-            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
-            {% endfor %}
-        </ul>
-        <h2>Directions</h2>
-        <ol>
-            {% for i in First.Directions %}
-            <li>{{ i }}</li>
-            {% endfor %}
-        </ol>
-    </l> -->
     <l>
         <h1>{{ First }}</h1>
         <p>{{List|lookup_author:First}}</p>

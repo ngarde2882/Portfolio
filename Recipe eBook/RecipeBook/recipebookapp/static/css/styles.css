@@ -105,7 +105,7 @@
     background-color: var(--navbar_background);
   }
   
-  .leftsideMenu ul li a {
+  .leftsideMenu ul li a.btn {
     font-size: 5vh;
     padding-top: .5vh;
     padding-bottom: .5vh;
@@ -115,14 +115,14 @@
     white-space: nowrap;
   }
   
-  .leftsideMenu ul li a:hover {
+  .leftsideMenu ul li a.btn:hover {
     background-color: var(--hover_background);
     border-right-color: var(--dark_accent);
     border-right-width: 1vh;
     border-right-style: solid;
   }
   
-  .leftsideMenu ul li a.active {
+  .leftsideMenu ul li a.btn.active {
     border-right-color: var(--accent);
     border-right-width: 1vh;
     border-right-style: solid;
@@ -154,10 +154,8 @@
       max-width: 37.5vw;
       max-height: 45vh;
       overflow: auto;
-      resize: both;
   }
   .rightsideMenu r buttoncontainer {
-    width: 28vw;
     height: 37vh;
     background-color: brown;
     float: right;
