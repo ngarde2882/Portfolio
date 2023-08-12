@@ -9,13 +9,14 @@ def recipes(request):
 
     recipes = RecipeModel.objects.all()
 
-    if request.method == 'POST':
-        # Get the value of the button that was clicked
-        button_value = request.POST.get("my_button")
+    # if request.method == 'POST':
+    #     # Get the value of the button that was clicked
+    #     button_value = request.POST.get("my_button")
 
-        # Do something with the value of the button
-        print(button_value)
-        return HttpResponse("Hello World")
+    #     # Do something with the value of the button
+    #     print(button_value)
+    #     print('post')
+    #     return HttpResponse("Hello World")
 
 
     context = {}
@@ -33,7 +34,7 @@ def recipes(request):
             val['Name'] = key
             I.append(val)
         recipe = {'Ingredients':I, 'Author':r.Author, 'Directions':D, 'Img':r.img, 'Mealtype':r.mealtype} # you should only need the list of names and then selecting one should do a lookup for it
-        recipeList[r.Name] = recipe
+        recipeList[r.Name] = recipe                                                                                   
         if i==0:
             context['First'] = r.Name
             i+=1

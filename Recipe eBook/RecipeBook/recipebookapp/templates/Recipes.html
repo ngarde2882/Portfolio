@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="spacer"></div>
-<div class="left active">Recipes</div>
+<div class="left on">Recipes</div>
 <div class="middle">Schedule</div>
 <div class="right">Groceries</div>
 <div class="spacer"></div>
@@ -17,22 +17,30 @@
     <searchcontainer>Search</searchcontainer>
     <ul id="RList">
         {% for r in NameList %}
+        {% if forloop.first %}
+        <li><a class="btn active">{{ r }}</a></li>
+        {% else %}
         <li><a class="btn">{{ r }}</a></li>
+        {% endif %}
         {% endfor %}
         <!-- <li><a class="active">Recipe 1</a></li> -->
     </ul>
 </div>
 <script>
-    // Add active class to the current button (highlight it)
-    var header = document.getElementById("RList");
-    var btns = header.getElementsByClassName("btn");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName(" active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-      });
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add active class to the current button (highlight it)
+        var header = document.getElementById("RList");
+        var btns = header.getElementsByClassName("btn");
+        for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        console.log(btns);
+        console.log(current);
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+        });
+        }
+    });
     </script>
 <div class="rightsideMenu">
     <r>
@@ -42,16 +50,17 @@
         <buttoncontainer></buttoncontainer>
     </r>
     <l>
-        <h1>{{ First }}</h1>
-        <p>{{List|lookup_author:First}}</p>
+        <!-- set IDs for all of these positions so you can make functions to change them -->
+        <h1 id="Title">{{ First }}</h1>
+        <p id="Author">{{List|lookup_author:First}}</p>
         <h2>Ingredients</h2>
-        <ul>
+        <ul id="Ingredients">
             {% for i in List|lookup_ingredients:First %}
             <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
             {% endfor %}
         </ul>
         <h2>Directions</h2>
-        <ol>
+        <ol id="Directions">
             {% for i in List|lookup_directions:First %}
             <li>{{ i }}</li>
             {% endfor %}

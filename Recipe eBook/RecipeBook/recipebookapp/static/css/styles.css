@@ -67,7 +67,7 @@
     border-bottom-style: solid;
   }
   
-  .left.active, .right.active, .middle.active {
+  .left.on, .right.on, .middle.on {
     height: 7vh;
     border-bottom-color: var(--accent);
     border-bottom-width: 1vh;
@@ -122,7 +122,7 @@
     border-right-style: solid;
   }
   
-  .leftsideMenu ul li a.btn.active {
+  .leftsideMenu ul li a.btn:active {
     border-right-color: var(--accent);
     border-right-width: 1vh;
     border-right-style: solid;
