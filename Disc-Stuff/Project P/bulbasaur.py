@@ -26,6 +26,21 @@
 # print(find_betweens("<b>", "</b>", stringy))
 
 
-string = ['one', 'two', 'three']
-string = list(str)
-print(string)
+def lower(string_in):
+    if type(string_in) == list: # list
+        for i in range(len(string_in)):
+            for c in string_in[i]:
+                string_in[i] = string_in[i].replace(c, c.lower())
+            print('s:',string_in[i])
+        print('s_i',string_in)
+        return string_in
+    elif type(string_in) == str: # string
+        for c in string_in:
+            string_in = string_in.replace(c, c.lower())
+        return string_in
+    else:
+        raise('ONLY STRINGS AND LISTS OF STRINGS CAN BE INPUT IN THIS FUNCTION')
+    
+string = ['oNe', 'Two', 'thrEE']
+
+print(lower(string))

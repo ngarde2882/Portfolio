@@ -10,8 +10,8 @@ from firebase_admin import db
 
 import klefkeys
 
-# cred = credentials.Certificate("project-p-4c372-firebase-adminsdk-rkjmv-e4e44aece1.json") old cert
-firebase_admin.initialize_app(klefkeys.firebase_cert, {'databaseURL':klefkeys.firebase_url})
+# cred = credentials.Certificate("project-p-4c372-firebase-adminsdk-rkjmv-e4e44aece1.json") old cred
+firebase_admin.initialize_app(credentials.Certificate(klefkeys.firebase_cred), {'databaseURL':klefkeys.firebase_url})
 
 url = "https://serebii.net"
 
@@ -70,15 +70,14 @@ def starter_display():
 
 def lower(string_in):
     if type(string_in) == list: # list
-        string_in = type(list(str))
-        for s in string_in:
-            for c in s:
-                s = s.replace(c, c.lower())
-        return s
-    elif type(string_in) == str:
+        for i in range(len(string_in)):
+            for c in string_in[i]:
+                string_in[i] = string_in[i].replace(c, c.lower())
+        return string_in
+    elif type(string_in) == str: # string
         for c in string_in:
             string_in = string_in.replace(c, c.lower())
-        return s
+        return string_in
     else:
         raise('ONLY STRINGS AND LISTS OF STRINGS CAN BE INPUT IN THIS FUNCTION')
 
@@ -313,7 +312,7 @@ async def catch(message):
     if tr is None:
         await message.channel.send(f"@{message.author} you are not yet registered. Do \"p!init\" to begin your journey!")
         return
-    content = lower(message.message.content[8:]) # LOWER CONTENT
+    content = lower(message.message.content[8:])
     global active_spawns
     actives = active_spawns[message.guild]
     valid_names = []
@@ -322,8 +321,9 @@ async def catch(message):
         fr = dex[num]['Name']['French']
         ge = dex[num]['Name']['German']
         ja = dex[num]['Name']['Japan']
-        valid_names += [[num, lower([en,fr,ge,ja])]] # LOWER LIST
-    for mon in valid_names: # TODO lower the content to check
+        valid_names += [[num, lower([en,fr,ge,ja])]]
+        print(valid_names)
+    for mon in valid_names:
         if content in mon[1]:
             active_spawns[message.guild].remove(mon[0])
             print(f"{message.author} caught a {mon[1][0]}")
