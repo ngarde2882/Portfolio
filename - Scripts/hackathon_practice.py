@@ -56,6 +56,40 @@ def factor_pairs(m):
         out.append((l[int(len(l)/2)],l[int(len(l)/2)]))
     return out
 
-print(list_to_dict_with_location([1,1,1,2,3,4,7]))
-print(factor_pairs(12))
-print(factor_pairs(9))
+# print(list_to_dict_with_location([1,1,1,2,3,4,7]))
+# print(factor_pairs(12))
+# print(factor_pairs(9))
+
+# s = 'abcba'
+s = 'abccba'
+def expand(l,r):
+    while l>=0 and r<len(s) and s[l]==s[r]:
+        l-=1
+        r+=1
+    return s[l+1:r]
+# print(expand(5,6))
+
+def combinationSum(candidates, target):
+    out = set()
+    
+    def backtrack(t, comb):
+        nonlocal out, candidates
+        for i in range(len(candidates)+1):
+            if candidates[-i]>t:
+                pass
+            elif candidates[-i]==t:
+                out.add(tuple(sorted(comb+[t])))
+            elif candidates[-i]<t:
+                backtrack(t-candidates[-i], comb+[candidates[-i]])
+        
+    backtrack(target, [])
+    return out
+# print(combinationSum([2,3,6,7], 9))
+
+height = [1,0,2,1,0,1,3,2,1,2,1]
+def recur(h,l,r):
+    i = (height.index(max(h)))
+    print(h[0:i],h[i],h[i+1:])
+# recur(height,0,len(height)-1)
+m = height.index(max(height))
+h = height[m+1:]

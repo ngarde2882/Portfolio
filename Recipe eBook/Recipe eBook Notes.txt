@@ -29,7 +29,8 @@ Grocery List
 --> this can be implemented in restaurants by increasing scale of dishes made and logging all ingredients to make managing easier
 --> white/dark greay background choices, pastel orange blue green pink.. trim
 
-TO ACTIVATE VENV: .\ReBook\Scripts\activate
-TO LAUNCH WEBAPP: python manage.py runserver
+TO ACTIVATE VENV from Portfolio directory: '.\Recipe eBook\ReBook\Scripts\activate'
+TO LAUNCH WEBAPP:       cd '.\Recipe eBook\RecipeBook\'
+                        python manage.py runserver
 
 - PART 2: CREATING THE CATALOG APPLICATION    for creating apps

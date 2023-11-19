@@ -8,12 +8,13 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-cred = credentials.Certificate("C:/Users/nick2/Desktop/Disc-Stuff/Project P/project-p-4c372-firebase-adminsdk-rkjmv-e4e44aece1.json")
+cred = credentials.Certificate("project-p-4c372-firebase-adminsdk-rkjmv-e4e44aece1.json")
 firebase_admin.initialize_app(cred, {'databaseURL':'https://project-p-4c372-default-rtdb.firebaseio.com/'})
 
 url = "https://serebii.net"
 
-client = commands.Bot(command_prefix = 'p!')
+intents = discord.Intents.all()
+client = commands.Bot(command_prefix = 'p!',intents=intents)
 guilds = {}
 active_spawns = {}
 ref = db.reference("/dex/")
@@ -46,7 +47,7 @@ def spawn(num):
         description = "Say its name first to catch it",
         # url = url+'/swordshield/pokemon/001.png'
     )
-    imageurl = url+dex[num]['Sprite']
+    imageurl = url+dex[num]['Sprite'] # TODO gen random sprites, growlithe meowth show only paldean and hisuan forms
     embed.set_image(url = imageurl)
     # embed.set_footer(text = 'This is a footer')
     # embed.set_author(name = 'Author name')
@@ -65,11 +66,26 @@ def starter_display():
     # embed.set_author(name = 'Author name')
     return embed
 
+def lower(string_in):
+    if type(string_in) == list: # list
+        string_in = type(list(str))
+        for s in string_in:
+            for c in s:
+                s = s.replace(c, c.lower())
+        return s
+    elif type(string_in) == str:
+        for c in string_in:
+            string_in = string_in.replace(c, c.lower())
+        return s
+    else:
+        raise('ONLY STRINGS AND LISTS OF STRINGS CAN BE INPUT IN THIS FUNCTION')
+
 def make_evostring(arry):
     s = arry[0]
     i = 1
     while(i<len(arry)):
         s+=' => '+arry[i]
+        i+=1
     return s
 
 def info_caught(author_id, i):
@@ -100,7 +116,7 @@ def info_caught(author_id, i):
         embed = discord.Embed(
             title = mon['name'],
             description = 'Species: ' + str(mon['species']) +
-                            '\nType(s)' + typestring +
+                            '\nType(s): ' + typestring +
                             '\nNumber: ' + str(mon['number']) +
                             '\nItem: ' + str(mon['item']) +
                             '\nAbility: ' + str(mon['ability']) +
@@ -119,47 +135,34 @@ def info_caught(author_id, i):
 
 def info_name(n):
     global pokedex
-    ref = db.reference('/dex/'+str(pokedex[n]))
+    num = pokedex[n]
+    ref = db.reference('/dex/'+str(num))
+    # print('HERE:','/dex/'+str(num))
     mon = ref.get()
-    types = dex[mon['number']]['Types']
+    types = mon['Types']
     if len(types) == 2:
         typestring = types[0]+', '+types[1]
     else:
         typestring = types[0]
-    if('EvoCondition' in mon):
-        embed = discord.Embed(
-            title = mon['name'],
-            description = 'Species: ' + str(mon['species']) +
-                            '\nType(s)' + typestring +
-                            '\nNumber: ' + str(mon['number']) +
-                            '\nItem: ' + str(mon['item']) +
-                            '\nAbility: ' + str(mon['ability']) +
-                            '\nGender: ' + str(mon['gender']) +
-                            '\nLevel: ' + str(mon['lvl']) +
-                            '\nXP: ' + str(mon['xp']) +
-                            '\nNature: ' + str(mon['nature']) +
-                            '\nIVs: ' + str(mon['ivs']) +
-                            '\nEvo Line:\n' + make_evostring(mon['EvoCondition'])
-            # url = url+'/swordshield/pokemon/001.png'
-        )
-    else:
-        embed = discord.Embed(
-            title = mon['name'],
-            description = 'Species: ' + str(mon['species']) +
-                            '\nType(s)' + typestring +
-                            '\nNumber: ' + str(mon['number']) +
-                            '\nItem: ' + str(mon['item']) +
-                            '\nAbility: ' + str(mon['ability']) +
-                            '\nGender: ' + str(mon['gender']) +
-                            '\nLevel: ' + str(mon['lvl']) +
-                            '\nXP: ' + str(mon['xp']) +
-                            '\nNature: ' + str(mon['nature']) +
-                            '\nIVs: ' + str(mon['ivs']) +
-                            '\nEVs: ' + str(mon['evs']))
-    if mon['shiny']:
-        imageurl = url+dex[mon['number']]['Shiny']
-    else:
-        imageurl = url+dex[mon['number']]['Sprite']
+    abilitystring = ''
+    for a in mon['Abilities']:
+        abilitystring += a+','
+    if 'HiddenAbility' in mon:
+        abilitystring += f"({mon['HiddenAbility']}),"
+    abilitystring = abilitystring[:-1]
+    abilitystring.replace(',',', ')
+    genderstring = f"\u2642 {mon['Male']}%, \u2640 {mon['Female']}%"
+    embed = discord.Embed(
+        title = mon['Name'],
+        description = 'Species: ' + str(mon['Name']['English']) +
+                        '\nType(s): ' + typestring +
+                        '\nNumber: ' + str(num) +
+                        '\nAbility(s): ' + abilitystring +
+                        '\nGender: ' + genderstring +  # TODO ivs evs string
+                        '\nEvo Line:\n' + make_evostring(mon['EvoNames']) # TODO add evocondition
+        # url = url+'/swordshield/pokemon/001.png'
+    )
+    imageurl = url+mon['Sprite']
     embed.set_image(url = imageurl)
     # embed.set_author(name = 'Author name')
     return embed
@@ -308,7 +311,7 @@ async def catch(message):
     if tr is None:
         await message.channel.send(f"@{message.author} you are not yet registered. Do \"p!init\" to begin your journey!")
         return
-    content = message.message.content[8:]
+    content = lower(message.message.content[8:]) # LOWER CONTENT
     global active_spawns
     actives = active_spawns[message.guild]
     valid_names = []
@@ -317,8 +320,8 @@ async def catch(message):
         fr = dex[num]['Name']['French']
         ge = dex[num]['Name']['German']
         ja = dex[num]['Name']['Japan']
-        valid_names += [[num, [en,fr,ge,ja]]]
-    for mon in valid_names:
+        valid_names += [[num, lower([en,fr,ge,ja])]] # LOWER LIST
+    for mon in valid_names: # TODO lower the content to check
         if content in mon[1]:
             active_spawns[message.guild].remove(mon[0])
             print(f"{message.author} caught a {mon[1][0]}")
@@ -334,14 +337,14 @@ async def catch(message):
                 'item':'None',
                 'lvl':1, # TODO: assign random level (normal distribution?)
                 'ability':gen_ability(catch),
-                'gender':gen_der(),
+                'gender':gen_der(catch),
                 'xp':0,
                 'nature':gen_nature(),
                 'ivs':0, # TODO: assign random ivs (some sort of exponential distribution?)
                 'OT':message.author.name,
                 'shiny': gen_shiny()
             })
-            await message.channel.send(f"@{message.author} caught a {mon[1][0]}")
+            await message.channel.send(f"<@{message.author.id}> caught a {mon[1][0]}")
             return
 
 @client.command(aliases=['i'])
@@ -382,4 +385,4 @@ async def info(message):
 
 
 
-client.run('OTk2ODU1MTIyNjI3OTMyMTgw.GpI0ox.8U0PrA0ABYyZRSwf8bPk15SvD7b9n-_-Ncwgz8')
+client.run('OTk2ODU1MTIyNjI3OTMyMTgw.GX-TgP.IH9_UtW1B3ignnwfScAtdQkyKY35iBwoKkdcO8')

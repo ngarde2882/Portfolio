@@ -122,7 +122,7 @@
     border-right-style: solid;
   }
   
-  .leftsideMenu ul li a.btn:active {
+  .leftsideMenu ul li a.btn.active {
     border-right-color: var(--accent);
     border-right-width: 1vh;
     border-right-style: solid;

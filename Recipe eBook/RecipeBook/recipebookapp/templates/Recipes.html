@@ -18,12 +18,11 @@
     <ul id="RList">
         {% for r in NameList %}
         {% if forloop.first %}
-        <li><a class="btn active">{{ r }}</a></li>
+        <li><a class="btn active", id="{{ r }}">{{ r }}</a></li>
         {% else %}
-        <li><a class="btn">{{ r }}</a></li>
+        <li><a class="btn", id="{{ r }}">{{ r }}</a></li>
         {% endif %}
         {% endfor %}
-        <!-- <li><a class="active">Recipe 1</a></li> -->
     </ul>
 </div>
 <script>
@@ -34,14 +33,17 @@
         for (var i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {
         var current = document.getElementsByClassName("active");
-        console.log(btns);
-        console.log(current);
         current[0].className = current[0].className.replace(" active", "");
         this.className += " active";
         });
         }
     });
     </script>
+    <!-- This changes the display's title to the current pressed button, this method doesn't allow me to access data in specified places in the passed context
+        var id = String(current[0].id)
+        console.log(id)
+        document.getElementById("Title").innerHTML = id;
+        document.getElementById("Author").innerHTML = {{ List|lookup_author:'arroz con huevos' }}; -->
 <div class="rightsideMenu">
     <r>
         <imagecontainer>
@@ -51,19 +53,25 @@
     </r>
     <l>
         <!-- set IDs for all of these positions so you can make functions to change them -->
-        <h1 id="Title">{{ First }}</h1>
-        <p id="Author">{{List|lookup_author:First}}</p>
-        <h2>Ingredients</h2>
-        <ul id="Ingredients">
-            {% for i in List|lookup_ingredients:First %}
-            <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
+
+        <ul>
+            {% for R in NameList %}
+            <h1 id="{{ R }}">{{ R }}</h1>
+            <p>{{List|lookup_author:R}}</p>
+            <h2>Ingredients</h2>
+            <ul>
+                {% for i in List|lookup_ingredients:R %}
+                <li>{{i.Quantity}}{{i.Units}} {{ i.Name }}</li>
+                {% endfor %}
+            </ul>
+            <h2>Directions</h2>
+            <ol>
+                {% for i in List|lookup_directions:R %}
+                <li>{{ i }}</li>
+                {% endfor %}
+            </ol>
             {% endfor %}
         </ul>
-        <h2>Directions</h2>
-        <ol id="Directions">
-            {% for i in List|lookup_directions:First %}
-            <li>{{ i }}</li>
-            {% endfor %}
-        </ol>
     </l>
 </div>
+<!-- consider generating the page and then running script to activate the first recipe -->
