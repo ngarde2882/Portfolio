@@ -27,3 +27,5 @@
 
 
 string = ['one', 'two', 'three']
+string = list(str)
+print(string)

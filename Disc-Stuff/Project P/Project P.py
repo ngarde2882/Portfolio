@@ -8,8 +8,10 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-cred = credentials.Certificate("project-p-4c372-firebase-adminsdk-rkjmv-e4e44aece1.json")
-firebase_admin.initialize_app(cred, {'databaseURL':'https://project-p-4c372-default-rtdb.firebaseio.com/'})
+import klefkeys
+
+# cred = credentials.Certificate("project-p-4c372-firebase-adminsdk-rkjmv-e4e44aece1.json") old cert
+firebase_admin.initialize_app(klefkeys.firebase_cert, {'databaseURL':klefkeys.firebase_url})
 
 url = "https://serebii.net"
 
@@ -385,4 +387,5 @@ async def info(message):
 
 
 
-client.run('OTk2ODU1MTIyNjI3OTMyMTgw.GX-TgP.IH9_UtW1B3ignnwfScAtdQkyKY35iBwoKkdcO8')
+# client.run('OTk2ODU1MTIyNjI3OTMyMTgw.GX-TgP.IH9_UtW1B3ignnwfScAtdQkyKY35iBwoKkdcO8') old token
+client.run(klefkeys.discord_token)
