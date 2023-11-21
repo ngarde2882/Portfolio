@@ -92,40 +92,24 @@ def make_evostring(arry):
 def info_caught(author_id, i):
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(i))
     mon = ref.get()
+    print(sum(mon['ivs']))
     types = dex[mon['number']]['Types']
     if len(types) == 2:
         typestring = types[0]+', '+types[1]
     else:
         typestring = types[0]
-    if('EvoCondition' in mon):
-        embed = discord.Embed(
-            title = mon['name'],
-            description = 'Species: ' + str(mon['species']) +
-                            '\nType(s) ' + typestring +
-                            '\nNumber: ' + str(mon['number']) +
-                            '\nItem: ' + str(mon['item']) +
-                            '\nAbility: ' + str(mon['ability']) +
-                            '\nGender: ' + str(mon['gender']) +
-                            '\nLevel: ' + str(mon['lvl']) +
-                            '\nXP: ' + str(mon['xp']) +
-                            '\nNature: ' + str(mon['nature']) +
-                            '\nIVs: ' + str(mon['ivs']) +
-                            '\nEvo Line:\n' + make_evostring(mon['EvoCondition'])
-            # url = url+'/swordshield/pokemon/001.png'
-        )
-    else:
-        embed = discord.Embed(
-            title = mon['name'],
-            description = 'Species: ' + str(mon['species']) +
-                            '\nType(s): ' + typestring +
-                            '\nNumber: ' + str(mon['number']) +
-                            '\nItem: ' + str(mon['item']) +
-                            '\nAbility: ' + str(mon['ability']) +
-                            '\nGender: ' + str(mon['gender']) +
-                            '\nLevel: ' + str(mon['lvl']) +
-                            '\nXP: ' + str(mon['xp']) +
-                            '\nNature: ' + str(mon['nature']) +
-                            '\nIVs: ' + str(mon['ivs']))
+    embed = discord.Embed(
+        title = mon['name'],
+        description = 'Species: ' + str(mon['species']) +
+                        '\nType(s): ' + typestring +
+                        '\nNumber: ' + str(mon['number']) +
+                        '\nItem: ' + str(mon['item']) +
+                        '\nAbility: ' + str(mon['ability']) +
+                        '\nGender: ' + str(mon['gender']) +
+                        '\nLevel: ' + str(mon['lvl']) +
+                        '\nXP: ' + str(mon['xp']) +
+                        '\nNature: ' + str(mon['nature']) +
+                        '\nIVs: ' + str(round(sum(mon['ivs'])/(31*6)*100,4))) # TODO add stats and do a calculation with the ivs
     if mon['shiny']:
         imageurl = url+dex[mon['number']]['Shiny']
     else:
@@ -159,7 +143,7 @@ def info_name(n):
                         '\nType(s): ' + typestring +
                         '\nNumber: ' + str(num) +
                         '\nAbility(s): ' + abilitystring +
-                        '\nGender: ' + genderstring +  # TODO ivs evs string
+                        '\nGender: ' + genderstring +  # TODO add base stats
                         '\nEvo Line:\n' + make_evostring(mon['EvoNames']) # TODO add evocondition
         # url = url+'/swordshield/pokemon/001.png'
     )
@@ -221,6 +205,9 @@ def gen_shiny():
         return True
     return False
 
+def gen_IVs():
+    return [random.randint(0, 31),random.randint(0, 31),random.randint(0, 31),random.randint(0, 31),random.randint(0, 31),random.randint(0, 31)]
+
 def gen_xp(message,tr_str,tr): # TODO maybe start petering how much is gained in quick succession. horizontal sin wave?
     db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+str(db.reference('/trainer/'+str(message.author.id)+'/Walking/pkmn').get())+'/xp').set()
 
@@ -281,7 +268,7 @@ async def initialization(message):
                     'gender':gen_der(choice),
                     'xp':0,
                     'nature':gen_nature(),
-                    'ivs':0, # TODO: assign random ivs
+                    'ivs':gen_IVs(),
                     'OT':message.author.name,
                     'shiny': gen_shiny()
                 }
@@ -322,7 +309,6 @@ async def catch(message):
         ge = dex[num]['Name']['German']
         ja = dex[num]['Name']['Japan']
         valid_names += [[num, lower([en,fr,ge,ja])]]
-        print(valid_names)
     for mon in valid_names:
         if content in mon[1]:
             active_spawns[message.guild].remove(mon[0])
@@ -342,7 +328,7 @@ async def catch(message):
                 'gender':gen_der(catch),
                 'xp':0,
                 'nature':gen_nature(),
-                'ivs':0, # TODO: assign random ivs (some sort of exponential distribution?)
+                'ivs':gen_IVs(),
                 'OT':message.author.name,
                 'shiny': gen_shiny()
             })

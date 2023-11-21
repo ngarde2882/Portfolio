@@ -12,6 +12,7 @@ from firebase_admin import db
 import re
 
 # print("EN:",english,"JA:",japan,"FR:",french,"GE:",german,"NS:",normalSprite,"SS:",shinySprite,"M:",male,"F:",female,"CR:",capRate,"AB:",abilities,"HA:",hiddenAbilitity,"P:",points,"N:",nombre,"T:",types,"E:",evo,evoNames)
+# TODO add base stats
 class Poke: 
     def __init__(self, names, normalSprite, shinySprite, male, female, capRate, abilities, hiddenAbilitity, xpPoints, xpSpeed, types, evoCond, evoNames):
         self.names
