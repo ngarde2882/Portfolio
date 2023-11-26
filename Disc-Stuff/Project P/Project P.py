@@ -55,8 +55,12 @@ def spawn(num):
     # embed.set_author(name = 'Author name')
     return embed
 
+def xp(author_id):
+    mon = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get())).get()
+    print(mon['ivs'])
+
 def starter_display():
-    starters = {'bulbasaur':1,'charmander':4,'squirtle':7,'pikachu':25,'eevee':133,'totodile':152,'cyndaquil':155,'chikorita':158,'treeko':252,'torchic':255,'mudkip':258,'turtwig':387,'piplup':390,'chimchar':393,'snivy':495,'tepig':498,'oshawott':501,'chespin':650,'fennekin':653,'froakie':656,'rowlet':722,'litten':725,'popplio':728,'grookey':810,'scorbunny':813,'sobble':816}
+    # starters = {'bulbasaur':1,'charmander':4,'squirtle':7,'pikachu':25,'eevee':133,'totodile':152,'cyndaquil':155,'chikorita':158,'treeko':252,'torchic':255,'mudkip':258,'turtwig':387,'piplup':390,'chimchar':393,'snivy':495,'tepig':498,'oshawott':501,'chespin':650,'fennekin':653,'froakie':656,'rowlet':722,'litten':725,'popplio':728,'grookey':810,'scorbunny':813,'sobble':816}
     embed = discord.Embed(
         title = "Welcome to the world of Pokemon!",
         description = "Say \"p!init [name]\" of a starter to begin\nStarters:\nbulbasaur, charmander, squirtle\npikachu, eevee\ntotodile, cyndaquil, chikorita\ntreeko, torchic, mudkip\nturtwig, piplup, chimchar\nsnivy, tepig, oshawott\nchespin, fennekin, froakie\nrowlet, litten, popplio\ngrookey, scorbunny, sobble",
@@ -170,7 +174,11 @@ async def on_message(message):
         try:
             print(f"{message.guild.name}: {guilds[message.guild]}")
             # await channel.send(str(guilds[message.guild]))
-            mon = gen_wild()
+            
+            # mon = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0 TODO reactivate spawns
+            xp(message.author.id)
+            print('Done')
+            return
             global active_spawns
             if message.guild not in active_spawns:
                 active_spawns[message.guild] = []
@@ -207,9 +215,6 @@ def gen_shiny():
 
 def gen_IVs():
     return [random.randint(0, 31),random.randint(0, 31),random.randint(0, 31),random.randint(0, 31),random.randint(0, 31),random.randint(0, 31)]
-
-def gen_xp(message,tr_str,tr): # TODO maybe start petering how much is gained in quick succession. horizontal sin wave?
-    db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+str(db.reference('/trainer/'+str(message.author.id)+'/Walking/pkmn').get())+'/xp').set()
 
 @client.command(aliases=['w'])
 async def walk(message):
