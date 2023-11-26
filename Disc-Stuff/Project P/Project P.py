@@ -57,6 +57,8 @@ def spawn(num):
 
 def xp(author_id):
     mon = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get())).get()
+    xp_speed = dex[mon['number']]['XPSpeed']
+    xp_Points = dex[mon['number']]['XPPoints']
     print(mon['ivs'])
 
 def starter_display():
@@ -177,7 +179,7 @@ async def on_message(message):
             
             # mon = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0 TODO reactivate spawns
             xp(message.author.id)
-            print('Done')
+            print('\n')
             return
             global active_spawns
             if message.guild not in active_spawns:
