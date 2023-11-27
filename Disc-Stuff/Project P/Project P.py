@@ -1,6 +1,7 @@
 import discord
 import random
 import math
+import datetime
 from discord.ext import commands
 # discord.Permissions(permissions=126016)
 
@@ -55,10 +56,54 @@ def spawn(num):
     # embed.set_author(name = 'Author name')
     return embed
 
+trainer_logs = {} # hold bool and latest 5 timestamps for messages from a user: pop any later than 5m, then if length is 5 set bool true
+                    # if true once length<5 it is false
+                    # if true give nerf xp val instead of base
+                    # run function for each gain type through case
+                        # {
+                        #     ;
+                        # }
+                    # add base amount of xp gain and check level
+                    # if a level up, run a level up function to check for evolve
+
+def timeout(id): # report if user is being timed out for frequent usage
+    global trainer_logs
+    if len(trainer_logs[id]) == 5:
+        return True
+    return False
+
+def update_logs(id): # remove any datetime from this user's log that is over 5m old. Add datetime for now
+    global trainer_logs
+    now = datetime.datetime.now()
+    # print(now)
+    # print('id:',str(id))
+    for i in range(len(trainer_logs[id])): # store oldest at 0 and newest at append
+        if trainer_logs[id][0] > now - datetime.timedelta(minutes=5):
+            break
+        else:
+            trainer_logs[id].pop(0)
+    trainer_logs[id].append(now)
+    while len(trainer_logs[id])>5: # ensure max length is 5
+        trainer_logs[id].pop(0)
+
 def xp(author_id):
-    mon = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get())).get()
+    timeout = timeout(author_id)
+    gain = 500
+    if timeout: # TODO randomize these values
+        gain = 100
+    ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get()))
+    mon = ref.get()
     xp_speed = dex[mon['number']]['XPSpeed']
-    xp_Points = dex[mon['number']]['XPPoints']
+    xp_points = dex[mon['number']]['XPPoints'] # the max (lv100) amount of xp for this xp type (held above)
+    xp = mon['xp']
+    level = mon['lvl']
+    if mon['xp'] >= xp_points:
+        return
+    match xp_speed:
+        case 'Medium Fast':
+            mediumFast(xp+gain)
+
+        
     print(mon['ivs'])
 
 def starter_display():
@@ -171,9 +216,10 @@ async def on_message(message):
             guilds[message.guild] += 1
         else:
             guilds[message.guild] = 0
+        update_logs(message.author.id)
 
         channel = message.channel
-        try:
+        try: # TODO make message count spawn on increasing random chance
             print(f"{message.guild.name}: {guilds[message.guild]}")
             # await channel.send(str(guilds[message.guild]))
             
@@ -261,7 +307,7 @@ async def initialization(message):
     tr = ref.get()
     if tr is None:
         ref.set({
-            'Walking':{
+            'Walking':{ # TODO make walking into a list of 6 with equal xp gain
                 'pkmn':1
             },
             'pkmn':{
