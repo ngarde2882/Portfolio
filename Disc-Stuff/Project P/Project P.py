@@ -86,6 +86,71 @@ def update_logs(id): # remove any datetime from this user's log that is over 5m 
     while len(trainer_logs[id])>5: # ensure max length is 5
         trainer_logs[id].pop(0)
 
+def erratic(lv, xp):
+    nextlv = lv+1
+    if nextlv<50:
+        xp_nextlv = (nextlv**3 * (100-nextlv))/50
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+    elif nextlv<68:
+        xp_nextlv = (nextlv**3 * (150-nextlv))/100
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+    elif nextlv<98:
+        xp_nextlv = (nextlv**3 * math.floor((1911-10*nextlv)/3))/500
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+    else:
+        xp_nextlv = (nextlv**3 * (160-nextlv))/100
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+def mediumFast(lv, xp):
+    nextlv = lv+1
+    xp_nextlv = nextlv**3
+    if xp>=xp_nextlv:
+        return nextlv
+    return lv
+def fast(lv, xp):
+    nextlv = lv+1
+    xp_nextlv = 4*(nextlv**3)/5
+    if xp>=xp_nextlv:
+        return nextlv
+    return lv
+def mediumSlow(lv, xp):
+    nextlv = lv+1
+    xp_nextlv = (6*nextlv**3)/5 - 15*nextlv**2 + 100*nextlv - 140
+    if xp>=xp_nextlv:
+        return nextlv
+    return lv
+def slow(lv, xp):
+    nextlv = lv+1
+    xp_nextlv = (5*nextlv**3)/4
+    if xp>=xp_nextlv:
+        return nextlv
+    return lv
+def fluctuating(lv, xp):
+    nextlv = lv+1
+    if nextlv<15:
+        xp_nextlv = (nextlv**3 * math.floor((nextlv+1)/3)+24)/50
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+    elif nextlv<36:
+        xp_nextlv = (nextlv**3 * (nextlv + 14))/50
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+    else:
+        xp_nextlv = (nextlv**3 * math.floor(nextlv/2)+32)/50
+        if xp>=xp_nextlv:
+            return nextlv
+        return lv
+
+
 def xp(author_id):
     timeout = timeout(author_id)
     gain = 500
@@ -94,14 +159,28 @@ def xp(author_id):
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get()))
     mon = ref.get()
     xp_speed = dex[mon['number']]['XPSpeed']
-    xp_points = dex[mon['number']]['XPPoints'] # the max (lv100) amount of xp for this xp type (held above)
-    xp = mon['xp']
+    xp = mon['xp'] + gain
     level = mon['lvl']
-    if mon['xp'] >= xp_points:
+    if level == 100:
         return
     match xp_speed:
         case 'Medium Fast':
-            mediumFast(xp+gain)
+            lv = mediumFast(level, xp)
+        case 'Erratic':
+            lv = erratic(level, xp)
+        case 'Fast':
+            lv = fast(level, xp)
+        case 'Medium Slow':
+            lv = mediumSlow(level, xp)
+        case 'Slow':
+            lv = slow(level, xp)
+        case 'Fluctuating':
+            lv = fluctuating(level, xp)
+    if lv>level: # level current walking mon up
+        ref.update({'xp':xp,'lvl':lv}) # TODO increase stats and check evo
+        return
+    ref.update({'xp':xp})
+    # only add xp
 
         
     print(mon['ivs'])
