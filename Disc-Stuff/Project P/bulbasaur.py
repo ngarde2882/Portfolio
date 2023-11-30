@@ -45,10 +45,24 @@
 
 # print(lower(string))
 
-import klefkeys
+# import klefkeys
 
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import db
-firebase_admin.initialize_app(credentials.Certificate(klefkeys.firebase_cred), {'databaseURL':klefkeys.firebase_url})
+# import firebase_admin
+# from firebase_admin import credentials
+# from firebase_admin import db
+# firebase_admin.initialize_app(credentials.Certificate(klefkeys.firebase_cred), {'databaseURL':klefkeys.firebase_url})
 
+# function that checks for lowercase before an uppercase, then outputs position of uppercase
+def lower_to_upper(s):
+    for c in range(1, len(s)):
+        if s[c] == s[c].upper():
+            if s[c]=='-': return None # check against Ho-Oh and Porygon-Z that should return None
+            if s[c]==' ': return None # check against Mime Jr.
+            if s[c]=='.': return None # check against Mr. Mime and Mr. Rime
+            if s[c-1] == s[c-1].lower():
+                return c
+    return None
+
+mon = 'Mr. Mime'
+i = lower_to_upper(mon)
+print(mon[:i])

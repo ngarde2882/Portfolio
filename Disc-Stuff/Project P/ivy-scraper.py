@@ -13,26 +13,38 @@ import re
 
 import klefkeys
 
-def find_betweens(before, after, s):
-    result = []
-    b = len(before)
-    a = len(after)
-    i = 0
-    word = ""
-    while i<(len(s)-b):
-        if(s[i:i+b]==before):
-            i+=b
-            while i<(len(s)-a):
-                if(s[i:i+a]==after):
-                    result.append(word)
-                    word = ""
-                    i += a
-                    break
-                else:
-                    word+=s[i]
-                i+=1
-        i+=1
-    return result
+# def find_betweens(before, after, s):
+#     result = []
+#     b = len(before)
+#     a = len(after)
+#     i = 0
+#     word = ""
+#     while i<(len(s)-b):
+#         if(s[i:i+b]==before):
+#             i+=b
+#             while i<(len(s)-a):
+#                 if(s[i:i+a]==after):
+#                     result.append(word)
+#                     word = ""
+#                     i += a
+#                     break
+#                 else:
+#                     word+=s[i]
+#                 i+=1
+#         i+=1
+#     return result
+
+def lower_to_upper(s):
+    for c in range(1, len(s)):
+        if s[c] == s[c].upper():
+            if s[c]=='-': return None # check against Ho-Oh and Porygon-Z that should return None
+            if s[c]==' ': return None # check against Mime Jr.
+            if s[c]=='.': return None # check against Mr. Mime and Mr. Rime
+            if s[c]==':': return None # check against Type: Null
+            if s[c]=='\'': return None # check against Farfetch'd and Sirfetch'd
+            if s[c-1] == s[c-1].lower():
+                return c
+    return None
 
 firebase_admin.initialize_app(credentials.Certificate(klefkeys.firebase_cred), {'databaseURL':klefkeys.firebase_url})
 
@@ -49,60 +61,60 @@ all_matches = soup.find_all('table', attrs={'class':'roundy'})
 # for i in range(9):
 #     all_matches[i] = all_matches[i].getText()
 typeList = set(['Normal', 'Fire', 'Fighting', 'Water', 'Flying', 'Grass', 'Poison', 'Electric', 'Ground', 'Psychic', 'Ghost', 'Rock', 'Ice', 'Bug', 'Dragon', 'Dark', 'Steel', 'Fairy', 'Unknown', '???'])
-gen = list(filter(''.__ne__,all_matches[2].getText().split('\n'))) # [8] is paldea
-gen = gen[4:]
-print(gen)
 pokedex = {}
-pokemon = {}
-poketype = {}
-ignoretype = False
-form = None
-for num, i in enumerate(gen):
-    if i[0]=='#': # number found
-        if pokemon:
-            pokedex[pokemon['Number']] = pokemon # add previous pokemon to pokedex
-        pokemon = {} # begin with new pokemon
-        pokemon['Number'] = int(i[1:]) # set number
-    elif i in typeList: # type found
-        if ignoretype: # pass on second type (already added)
-            ignoretype = False
-            pass
-        else:
-            poketype[0] = i # set primary type
-            if num<len(gen)-1:
-                if gen[num+1] in typeList: # if next is a secondary type, set secondary type
-                    poketype[1] = gen[num+1]
-                    ignoretype = True # pass on next iteration
-            if form: # if type(s) are part of a form or variant set them under form
-                pokemon[form] = {'Types':poketype}
-                form = None # reset form
-            else: # set pokemon's type(s)
-                pokemon['Types'] = poketype
-            poketype = {} # clear types
-    else: # name found
-        if 'Name' not in pokemon: # name of base pokemon found
-            if '♀' in i or '♂' in i:
-                pokemon['Name'] = i[:-1] # remove m/f symbol from nidoran
-            elif 'One form' in i:
-                pokemon['Name'] = i[:-8] # remove 'One form' from unown
-            elif i=='CastformNormal':
-                pokemon['Name'] = 'Castform' # set default castform name
-            elif i=='DeoxysNormal Forme':
-                pokemon['Name'] = 'Deoxys' # set default deoxys name
-            elif i=='KyogreKyogre':
-                pokemon['Name'] = 'Kyogre' # set default kyogre name
-            elif i=='GroudonGroudon':
-                pokemon['Name'] = 'Groudon' # set default groudon name
-            # TODO burmy, wormadam, cherrim, shellos, gastrodon, rotom, giratina, shaymin, arceus, basculin, darmanitan, deerling, sawsbuck, tornadus, thundurus, landorus, kyurem, keldeo, meloetta, genesect (no drives), vivillon, flabebe (1 color and e accents), floette, florges, furfrou, meowstic MF, aegislash, xerneas (only active mode), zygarde, hoopa, oricorio, lycanrock, wishiwashi, silvally, minior, mimikyu, toxtricity, alcremie, eiscue, indeedee MF, morpeko, zacian zamazenta, urshifu, basculegion MF, oinkologne MF, maushold, squawkabilly, palafin, tatsugiri, dudunsparce, gimmighoul, koraidon, miraidon
-            # cloud dudes are all incarnate/therian formes
+for j in range(9):
+    gen = list(filter(''.__ne__,all_matches[j].getText().split('\n'))) # [8] is paldea
+    gen = gen[4:]
+    # print(gen)
+    pokemon = {}
+    poketype = {}
+    ignoretype = False
+    form = None
+    for num, i in enumerate(gen):
+        if i[0]=='#': # number found
+            if pokemon:
+                pokedex[pokemon['Number']] = pokemon # add previous pokemon to pokedex
+            pokemon = {} # begin with new pokemon
+            pokemon['Number'] = int(i[1:]) # set number
+        elif i in typeList: # type found
+            if ignoretype: # pass on second type (already added)
+                ignoretype = False
+                pass
             else:
-                pokemon['Name'] = i # set name
-        else: # form or variant found
-            form = i[len(pokemon['Name']):] # set form to the name of the form
-            while form in pokemon: # duplicate form name (different forms) add underscores until a new form is made
-                form += '_'
-pokedex[pokemon['Number']] = pokemon # add last pokemon to pokedex
+                poketype[0] = i # set primary type
+                if num<len(gen)-1:
+                    if gen[num+1] in typeList: # if next is a secondary type, set secondary type
+                        poketype[1] = gen[num+1]
+                        ignoretype = True # pass on next iteration
+                if form: # if type(s) are part of a form or variant set them under form
+                    pokemon[form] = {'Types':poketype}
+                    form = None # reset form
+                else: # set pokemon's type(s)
+                    pokemon['Types'] = poketype
+                poketype = {} # clear types
+        else: # name found
+            if 'Name' not in pokemon: # name of base pokemon found
+                index = lower_to_upper(i)
+                if not index:
+                    pokemon['Name'] = i
+                else:
+                    pokemon['Name'] = i[:index] # this cuts off Nidoran♀/♂ as well as any form names that are in the base version of a pokemon (CastformNormal or UnownOne form or KyogreKyogre)
+                    print('Cut Name:',pokemon['Name'])
+                # if '♀' in i or '♂' in i:
+                #     pokemon['Name'] = i[:-1] # remove m/f symbol from nidoran
+                # else:
+                #     pokemon['Name'] = i # set name
+            else: # form or variant found
+                form = i[len(pokemon['Name']):] # set form to the name of the form
+                while form in pokemon: # duplicate form name (different forms) add underscores until a new form is made
+                    form += '_'
+                print('FormName:',form, pokemon['Name'])
+    pokedex[pokemon['Number']] = pokemon # add last pokemon to pokedex
 print(pokedex)
+
+
+ref = db.reference('/dex2')
+ref.set(pokedex)
 
 
 
