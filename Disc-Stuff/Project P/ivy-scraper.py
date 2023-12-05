@@ -46,11 +46,27 @@ def lower_to_upper(s):
                 return c
     return None
 
+def ability_string_to_list(s):
+    # test cases: ['Pickup or Technician (Meowth', 'Pickup or Technician (Alolan Meowth', 'Pickup or Tough Claws (Galarian Meowth']
+    out = []
+    temp = ''
+    for c in s:
+        temp+=c
+        if ' or ' in temp: # first ability done
+            out.append(temp[:-4])
+            temp = ''
+        if c == '(': # second ability done
+            out.append(temp[:-2111])
+            temp = ''
+            break # no more abilities in string
+    if temp: # case of single ability or no forms, temp has ability left in it
+        out.append(temp)
+    return out
+
 firebase_admin.initialize_app(credentials.Certificate(klefkeys.firebase_cred), {'databaseURL':klefkeys.firebase_url})
 
 url = "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number"
 r = requests.get(url)
-# r = urllib.request.urlopen(pageurl)
 soup = BeautifulSoup(r.content, 'html.parser')
 # print(soup.prettify(),'\n')
 
@@ -63,7 +79,7 @@ all_matches = soup.find_all('table', attrs={'class':'roundy'})
 typeList = set(['Normal', 'Fire', 'Fighting', 'Water', 'Flying', 'Grass', 'Poison', 'Electric', 'Ground', 'Psychic', 'Ghost', 'Rock', 'Ice', 'Bug', 'Dragon', 'Dark', 'Steel', 'Fairy', 'Unknown', '???'])
 pokedex = {}
 for j in range(9):
-    gen = list(filter(''.__ne__,all_matches[j].getText().split('\n'))) # [8] is paldea
+    gen = list(filter(''.__ne__,all_matches[j].getText().split('\n'))) # all_matches[8] is paldea (last)
     gen = gen[4:]
     # print(gen)
     pokemon = {}
@@ -77,9 +93,9 @@ for j in range(9):
             pokemon = {} # begin with new pokemon
             pokemon['Number'] = int(i[1:]) # set number
         elif i in typeList: # type found
-            if ignoretype: # pass on second type (already added)
+            if ignoretype: # continue on second type (already added)
                 ignoretype = False
-                pass
+                continue
             else:
                 poketype[0] = i # set primary type
                 if num<len(gen)-1:
@@ -99,11 +115,7 @@ for j in range(9):
                     pokemon['Name'] = i
                 else:
                     pokemon['Name'] = i[:index] # this cuts off Nidoran♀/♂ as well as any form names that are in the base version of a pokemon (CastformNormal or UnownOne form or KyogreKyogre)
-                    print('Cut Name:',pokemon['Name'])
-                # if '♀' in i or '♂' in i:
-                #     pokemon['Name'] = i[:-1] # remove m/f symbol from nidoran
-                # else:
-                #     pokemon['Name'] = i # set name
+                    # print('Cut Name:',pokemon['Name'])
             else: # form or variant found
                 form = i[len(pokemon['Name']):] # set form to the name of the form
                 while form in pokemon: # duplicate form name (different forms) add underscores until a new form is made
@@ -111,10 +123,65 @@ for j in range(9):
                 print('FormName:',form, pokemon['Name'])
     pokedex[pokemon['Number']] = pokemon # add last pokemon to pokedex
 print(pokedex)
+url = 'https://bulbapedia.bulbagarden.net/wiki/'
+tail = '_(Pok%C3%A9mon)'
+# loop
+r = requests.get(url+pokedex[59]['Name']+tail)
+soup = BeautifulSoup(r.content, 'html.parser')
+table = soup.find('table', attrs={'class':'roundy'})
+img = 'https:' + soup.find('img', attrs={'alt':pokedex[59]['Name']})['src']
+a = []
+abilitesTable = table.find('b',string='Abilities').parent
+# print(abilitesTable.findAll('td'),len(abilitesTable.findAll('td')))
+for i in abilitesTable.findAll('td'):
+    s = i.getText()
+    s = s.replace(u'\xa0',u' ') # replace unicode nowrap space with regular space
+    s = s.replace('Gen IV+','') # delete gen4 qualifier
+    s = s.replace('\n','') # delete extra newlines
+    if 'Cacophony' in s: # Cacophony is used as a placeholder on source pages
+        continue
+    print(s)
+    if '('+pokedex[59]['Name']+')' in s: # form based abilities
+        line = s.split(')')
+        for j in line:
+            if j == '':
+                continue
+            if 'Alolan' in j: # write a function that takes in ability string and outputs list of abilities while removing names and ' or '
+                a = ability_string_to_list(j)
+                pokedex[59]['Alolan Form']['Abilities'] = a
+                print(pokedex[59]['Name'],'Alola',a)
+                a = []
+            elif 'Galarian' in j:
+                a = ability_string_to_list(j)
+                pokedex[59]['Galarian Form']['Abilities'] = a
+                print(pokedex[59]['Name'],'Galar',a)
+                a = []
+            elif 'Hisuian' in j:
+                a = ability_string_to_list(j)
+                pokedex[59]['Hisuian Form']['Abilities'] = a
+                print(pokedex[59]['Name'],'Hisui',a)
+                a = []
+            elif 'Paldean' in j:
+                a = ability_string_to_list(j)
+                pokedex[59]['Paldean Form']['Abilities'] = a
+                print(pokedex[59]['Name'],'Paldea',a)
+                a = []
+            else: # base form
+                a = ability_string_to_list(j)
+                pokedex[59]['Abilities'] = a
+                print(pokedex[59]['Name'],a)
+                a = []
+        print(line)
+    elif 'Hidden Ability' in s:
+        continue
+    else:
+        a = ability_string_to_list(s)
+        pokedex[59]['Abilities'] = a # if a form doesnt have unique abilities, inherit base abilities when calling
+        print(pokedex[59]['Name'],a)
+        a = []
 
-
-ref = db.reference('/dex2')
-ref.set(pokedex)
+# ref = db.reference('/dex2')
+# ref.set(pokedex)
 
 
 
