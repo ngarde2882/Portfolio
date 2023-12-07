@@ -65,4 +65,16 @@ def lower_to_upper(s):
 
 mon = 'Mr. Mime'
 i = lower_to_upper(mon)
-print(mon[:i])
+# print(mon[:i])
+pokedex = {
+    59:{
+        'Name':'Arcanine'
+    }
+}
+s = 'JustifiedArcanine Hidden Ability'
+t = 'Rock HeadHisuian Arcanine Hidden Ability'
+index = lower_to_upper(s)
+if s[index:index+len(pokedex[59]['Name'])]==pokedex[59]['Name']:
+    print(s[:index])
+if t[index:index+len(pokedex[59]['Name'])]==pokedex[59]['Name']:
+    print(t[:index])
