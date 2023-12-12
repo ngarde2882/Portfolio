@@ -138,7 +138,7 @@ print(pokedex)
 url = 'https://bulbapedia.bulbagarden.net/wiki/'
 tail = '_(Pok%C3%A9mon)'
 # loop
-for i in range(1,151): # 122 is wrong, paste into bulbapy
+for i in range(1,151): # TODO 122 is wrong, paste into bulbapy
     print(i)
     if i==29:
         r = requests.get(url+pokedex[i]['Name']+'♀'+tail)
