@@ -78,19 +78,12 @@
 #     print(s[:index])
 # if t[index:index+len(pokedex[59]['Name'])]==pokedex[59]['Name']:
 #     print(t[:index])
-<<<<<<< HEAD
 import requests
 import urllib.request
 from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
 from io import StringIO
-=======
-
-import requests
-import urllib.request
-from bs4 import BeautifulSoup
->>>>>>> 3f2fb97658c496a6cc23f68dccd3dd047ec4d2b5
 
 import firebase_admin
 from firebase_admin import credentials
@@ -98,11 +91,8 @@ from firebase_admin import db
 
 import re
 
-<<<<<<< HEAD
 import klefkeys
 
-=======
->>>>>>> 3f2fb97658c496a6cc23f68dccd3dd047ec4d2b5
 def ability_string_to_list(s):
     # test cases: ['Pickup or Technician (Meowth', 'Pickup or Technician (Alolan Meowth', 'Pickup or Tough Claws (Galarian Meowth']
     index = lower_to_upper_abilities(s)
@@ -130,7 +120,6 @@ def lower_to_upper_abilities(s):
                 if s[c-1]==' ': continue
                 return c
     return None
-<<<<<<< HEAD
 i=128
 pokedex = {}
 # pokedex[i] = {
@@ -177,91 +166,4 @@ if genderless:
     genderString = 'genderless'
 pokedex[i]['Gender'] = genderString
 
-=======
-
-pokedex = {}
-pokedex[122] = {
-    'Galarian Form':{
-        'Types':{
-            0:'Ice',
-            1:'Psychic'
-        }
-    },
-    'Name':'Mr. Mime',
-    'Number':122,
-    'Types':{
-        0:'Psychic',
-        1:'Fairy'
-    }
-}
-i = 122
-url = 'https://bulbapedia.bulbagarden.net/wiki/'
-tail = '_(Pok%C3%A9mon)'
-r = requests.get(url+pokedex[i]['Name']+tail)
-soup = BeautifulSoup(r.content, 'html.parser')
-table = soup.find('table', attrs={'class':'roundy'})
-# img = 'https:' + soup.find('img', attrs={'alt':pokedex[i]['Name']})['src']
-a = []
-try:
-    abilitesTable = table.find('b',string='Abilities').parent
-except:
-    abilitesTable = table.find('b',string='Ability').parent
-    # print(abilitesTable.findAll('td'),len(abilitesTable.findAll('td')))
-for ability in abilitesTable.findAll('td'):
-    s = ability.getText()
-    s = s.replace(u'\xa0',u' ') # replace unicode nowrap space with regular space
-    s = s.replace('Gen IV+','') # delete gen4+ qualifier
-    s = s.replace('\n','') # delete extra newlines
-    print(s)
-    if 'Cacophony' in s: # Cacophony is used as a placeholder on source pages
-        continue
-    if 'Mega '+pokedex[i]['Name'] in s:
-        continue
-    if '('+pokedex[i]['Name']+')' in s: # form based abilities
-        line = s.split(')')
-        for j in line:
-            if j == '':
-                continue
-            if 'Alolan' in j:
-                a = ability_string_to_list(j)
-                pokedex[i]['Alolan Form']['Abilities'] = a
-                a = []
-            elif 'Galarian' in j:
-                a = ability_string_to_list(j)
-                pokedex[i]['Galarian Form']['Abilities'] = a
-                a = []
-            elif 'Hisuian' in j:
-                a = ability_string_to_list(j)
-                pokedex[i]['Hisuian Form']['Abilities'] = a
-                a = []
-            elif 'Paldean' in j:
-                a = ability_string_to_list(j)
-                pokedex[i]['Paldean Form']['Abilities'] = a
-                a = []
-            else: # base form
-                a = ability_string_to_list(j)
-                pokedex[i]['Abilities'] = a
-                a = []
-    elif 'Hidden Ability' in s: # found HA
-        s = s.replace(' Hidden Ability','')
-        index = lower_to_upper_abilities(s)
-        if not index: # case: 'Chlorophyll Hidden Ability'
-            pokedex[i]['Hidden Ability'] = s
-        else: # either base name or form name tagged on end of ability
-            if s[index:index+len(pokedex[i]['Name'])]==pokedex[i]['Name']: # base name
-                pokedex[i]['Hidden Ability'] = s[:index]
-            else: # form name(s), can have multiple in 1 line
-                if 'Alolan' in s:
-                    pokedex[i]['Alolan Form']['Hidden Ability'] = s[:index]
-                if 'Galarian' in s:
-                    pokedex[i]['Galarian Form']['Hidden Ability'] = s[:index]
-                if 'Hisuian' in s:
-                    pokedex[i]['Hisuian Form']['Hidden Ability'] = s[:index]
-                if 'Paldean' in s:
-                    pokedex[i]['Paldean Form']['Hidden Ability'] = s[:index]
-    else:
-        a = ability_string_to_list(s)
-        pokedex[i]['Abilities'] = a # if a form doesnt have unique abilities, inherit base abilities when calling
-        a = []
->>>>>>> 3f2fb97658c496a6cc23f68dccd3dd047ec4d2b5
 print(pokedex[i])
