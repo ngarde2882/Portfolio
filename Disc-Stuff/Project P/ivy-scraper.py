@@ -234,7 +234,6 @@ for i in range(1,152):
     # CATCH RATE
     catchTable = table.find(href='/wiki/Catch_rate').parent.parent
     pokedex[i]['Catch Rate'] = catchTable.find('td').get_text().split(' ')[0]
-    print(pokedex[i])
 
     # GENDER RATIO
     genderTable = table.find(href="/wiki/List_of_Pok%C3%A9mon_by_gender_ratio").parent.parent
@@ -249,6 +248,22 @@ for i in range(1,152):
     if genderless:
         genderString = 'genderless'
     pokedex[i]['Gender'] = genderString
+
+    # XP GAIN
+    xp = table.find(string="Leveling rate").parent.parent.parent.parent.find('td').get_text()[:-1]
+    pokedex[i]['XP'] = xp
+
+    # STAT TABLE
+    stats = []
+    stats.append(int(soup.find('a', string='HP').parent.next_sibling.get_text()))
+    stats.append(int(soup.find('a', string='Attack').parent.next_sibling.get_text()))
+    stats.append(int(soup.find('a', string='Defense').parent.next_sibling.get_text()))
+    stats.append(int(soup.find('a', string='Sp. Atk').parent.next_sibling.get_text()))
+    stats.append(int(soup.find('a', string='Sp. Def').parent.next_sibling.get_text()))
+    stats.append(int(soup.find('a', string='Speed').parent.next_sibling.get_text()))
+    pokedex[i]['Stats'] = stats
+
+    print(pokedex[i])
 
 # print(pokedex)
 # ref = db.reference('/dex2')

@@ -120,7 +120,7 @@ def lower_to_upper_abilities(s):
                 if s[c-1]==' ': continue
                 return c
     return None
-i=128
+i=25
 pokedex = {}
 # pokedex[i] = {
 #     'Galarian Form':{
@@ -133,7 +133,7 @@ pokedex = {}
 #             0:'Electric',
 #             1:'Flying'}}
 pokedex[i] = {
-    'Name':'Tauros',
+    'Name':'Pikachu',
     'Number':i,
     'Types':{
         0:'Ghost',
@@ -153,17 +153,59 @@ table = soup.find('table', attrs={'class':'roundy'})
 # img = 'https:' + soup.find('img', attrs={'alt':pokedex[i]['Name']})['src']
 # catchTable = table.find(href='/wiki/Catch_rate').parent.parent
 # print(catchTable.find('td').get_text().split(' ')[0])
-genderTable = table.find(href="/wiki/List_of_Pok%C3%A9mon_by_gender_ratio").parent.parent
-genderless = True
-genderString = ''
-for g in genderTable.find_all('span')[2:]:
-    genderless = False
-    g = g.get_text()
-    if g == ',':
-        continue
-    genderString+=f'({g})'
-if genderless:
-    genderString = 'genderless'
-pokedex[i]['Gender'] = genderString
+# genderTable = table.find(href="/wiki/List_of_Pok%C3%A9mon_by_gender_ratio").parent.parent
+# genderless = True
+# genderString = ''
+# for g in genderTable.find_all('span')[2:]:
+#     genderless = False
+#     g = g.get_text()
+#     if g == ',':
+#         continue
+#     genderString+=f'({g})'
+# if genderless:
+#     genderString = 'genderless'
+# pokedex[i]['Gender'] = genderString
 
-print(pokedex[i])
+# xp = table.find(string="Leveling rate").parent.parent.parent.parent.find('td').get_text()[:-1]
+# pokedex[i]['XP'] = xp
+
+# stats = []
+# stats.append(int(soup.find('a', string='HP').parent.next_sibling.get_text()))
+# stats.append(int(soup.find('a', string='Attack').parent.next_sibling.get_text()))
+# stats.append(int(soup.find('a', string='Defense').parent.next_sibling.get_text()))
+# stats.append(int(soup.find('a', string='Sp. Atk').parent.next_sibling.get_text()))
+# stats.append(int(soup.find('a', string='Sp. Def').parent.next_sibling.get_text()))
+# stats.append(int(soup.find('a', string='Speed').parent.next_sibling.get_text()))
+# print(stats)
+
+evoData = soup.find('h3', string='Evolution data')
+evoTables = [] # holds each individual evolution table on a page (typically there is only 1, but more with forms)
+
+for tag in evoData.next_siblings:
+    if tag.name == 'h3': break
+    if tag.name == 'table': evoTables.append(tag)
+for evoTable in evoTables:
+    tbody = evoTable.find('tbody')
+    trList = tbody.find_all('tr', recursive=False)
+    for tr in trList:
+        tdList = tr.find_all('td', recursive=False)
+        for td in tdList:
+            spanList = td.find_all('span')
+            for span in spanList:
+                if span.get_text()[0]==u'\xa0': continue
+                # print(span.get_text())
+                if span.parent.find_next_sibling('big', recursive=False): # evo condition
+                    if span.parent.find_next_sibling('big', recursive=False).get_text() == '←': continue
+                    print('|',span.get_text(),'|')
+                elif len(span.parent.find_next_siblings('small', recursive=False)) > 1: # pokemon with a form
+                    print(span.parent.find_next_sibling('small').get_text(),span.get_text())
+                else: # pokemon
+                    print(span.get_text())
+
+# trList = evoTables.find_all('tr', recursive=False)
+# print(trList,len(trList))
+# for tr in trList:
+#     tdList = tr.find_all('td')
+#     for td in tdList:
+#         print(td.find_all('span'))
+# print(pokedex[i])
