@@ -106,7 +106,7 @@ def ability_string_to_list(s):
             out.append(temp[:-4])
             temp = ''
         if c == '(': # second ability done
-            out.append(temp[:-2111])
+            out.append(temp[:-2])
             temp = ''
             break # no more abilities in string
     if temp: # case of single ability or no forms, temp has ability left in it
@@ -120,7 +120,7 @@ def lower_to_upper_abilities(s):
                 if s[c-1]==' ': continue
                 return c
     return None
-i=25
+i=744
 pokedex = {}
 # pokedex[i] = {
 #     'Galarian Form':{
@@ -133,7 +133,7 @@ pokedex = {}
 #             0:'Electric',
 #             1:'Flying'}}
 pokedex[i] = {
-    'Name':'Pikachu',
+    'Name':'Rockruff',
     'Number':i,
     'Types':{
         0:'Ghost',
@@ -190,18 +190,25 @@ for evoTable in evoTables:
     for tr in trList:
         tdList = tr.find_all('td', recursive=False)
         for td in tdList:
-            spanList = td.find_all('span')
+            # spanList = td.find_all('span')
+            spanList = td.find_all(text=True)
             for span in spanList:
+                if span.get_text()=='\n': continue
+                if span.get_text()==' + ': continue
                 if span.get_text()[0]==u'\xa0': continue
-                # print(span.get_text())
-                if span.parent.find_next_sibling('big', recursive=False): # evo condition
-                    if span.parent.find_next_sibling('big', recursive=False).get_text() == '←': continue
-                    print('|',span.get_text(),'|')
-                elif len(span.parent.find_next_siblings('small', recursive=False)) > 1: # pokemon with a form
-                    print(span.parent.find_next_sibling('small').get_text(),span.get_text())
-                else: # pokemon
-                    print(span.get_text())
-
+                if span.get_text() == 'LA': continue
+                if span.get_text() == 'P': continue
+                if span.get_text() == 'E': continue
+                
+                print(span.get_text())
+                # if span.parent.find_next_sibling('big', recursive=False): # evo condition
+                #     if span.parent.find_next_sibling('big', recursive=False).get_text() == '←': continue
+                #     print('|',span.get_text(),'|')
+                # elif len(span.parent.find_next_siblings('small', recursive=False)) > 1: # pokemon with a form
+                #     print(span.parent.find_next_sibling('small').get_text(),span.get_text())
+                # else: # pokemon
+                #     print(span.get_text())
+                
 # trList = evoTables.find_all('tr', recursive=False)
 # print(trList,len(trList))
 # for tr in trList:

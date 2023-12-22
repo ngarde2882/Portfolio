@@ -68,7 +68,7 @@ def ability_string_to_list(s):
             out.append(temp[:-4])
             temp = ''
         if c == '(': # second ability done
-            out.append(temp[:-2111])
+            out.append(temp[:-2])
             temp = ''
             break # no more abilities in string
     if temp: # case of single ability or no forms, temp has ability left in it
@@ -89,6 +89,7 @@ all_matches = soup.find_all('table', attrs={'class':'roundy'})
 # for i in range(9):
 #     all_matches[i] = all_matches[i].getText()
 typeList = set(['Normal', 'Fire', 'Fighting', 'Water', 'Flying', 'Grass', 'Poison', 'Electric', 'Ground', 'Psychic', 'Ghost', 'Rock', 'Ice', 'Bug', 'Dragon', 'Dark', 'Steel', 'Fairy', 'Unknown', '???'])
+formDrop = set(['One form', 'Meadow Pattern', 'Natural Form', 'Type: Normal', 'Apex Build', 'Ultimate Mode', 'Meteor Form', 'Red Core', 'Neautral Mode', 'Active Mode', 'Disguised Form', 'Busted Form', 'Ordinary Form', 'Gulping Form', 'Gorging Form', 'Ice Face', 'Noice Face', 'Zero Form', 'Hero Form'])
 pokedex = {}
 for j in range(9):
     gen = list(filter(''.__ne__,all_matches[j].getText().split('\n'))) # all_matches[8] is paldea (last)
@@ -127,11 +128,27 @@ for j in range(9):
                     pokemon['Name'] = i
                 else:
                     pokemon['Name'] = i[:index] # this cuts off Nidoran♀/♂ as well as any form names that are in the base version of a pokemon (CastformNormal or UnownOne form or KyogreKyogre)
-                    # print('Cut Name:',pokemon['Name'])
+                    form = i[len(pokemon['Name']):] # form just in case its something that needs to be stored (IndeedeeMale/IndeedeeFemale, TornadusTherian/TornadusIncarnate)
+                    
+                    if form==pokemon['Name']:
+                        form = None
+                        continue
+                    elif len(form) < 3:
+                        form = None
+                        continue
+                    elif form in formDrop:
+                        form = None
+                        continue
+                    else:
+                        pokemon['Forms'] = [form]
             else: # form or variant found
                 form = i[len(pokemon['Name']):] # set form to the name of the form
                 while form in pokemon: # duplicate form name (different forms) add underscores until a new form is made
                     form += '_'
+                if 'Forms' in pokemon:
+                    pokemon['Forms'].append(form)
+                else:
+                    pokemon['Forms'] = [form]
                 print('FormName:',form, pokemon['Name'])
     pokedex[pokemon['Number']] = pokemon # add last pokemon to pokedex
 print(pokedex)
@@ -161,6 +178,8 @@ for i in range(1,152):
         s = s.replace(u'\xa0',u' ') # replace unicode nowrap space with regular space
         s = s.replace('Gen IV+','') # delete gen4+ qualifier
         s = s.replace('\n','') # delete extra newlines
+        if i==52:
+            print(s)
         if 'Cacophony' in s: # Cacophony is used as a placeholder on source pages
             continue
         if 'Mega '+pokedex[i]['Name'] in s:
@@ -254,20 +273,26 @@ for i in range(1,152):
     pokedex[i]['XP'] = xp
 
     # STAT TABLE
-    stats = []
-    stats.append(int(soup.find('a', string='HP').parent.next_sibling.get_text()))
-    stats.append(int(soup.find('a', string='Attack').parent.next_sibling.get_text()))
-    stats.append(int(soup.find('a', string='Defense').parent.next_sibling.get_text()))
-    stats.append(int(soup.find('a', string='Sp. Atk').parent.next_sibling.get_text()))
-    stats.append(int(soup.find('a', string='Sp. Def').parent.next_sibling.get_text()))
-    stats.append(int(soup.find('a', string='Speed').parent.next_sibling.get_text()))
-    pokedex[i]['Stats'] = stats
+    # stats = []
+    # stats.append(int(soup.find('a', string='HP').parent.next_sibling.get_text()))
+    # stats.append(int(soup.find('a', string='Attack').parent.next_sibling.get_text()))
+    # stats.append(int(soup.find('a', string='Defense').parent.next_sibling.get_text()))
+    # stats.append(int(soup.find('a', string='Sp. Atk').parent.next_sibling.get_text()))
+    # stats.append(int(soup.find('a', string='Sp. Def').parent.next_sibling.get_text()))
+    # stats.append(int(soup.find('a', string='Speed').parent.next_sibling.get_text()))
+    # pokedex[i]['Stats'] = stats
+
+    # EVOLUTION
+    
+    # SPRITES
+
+    # ALT NAMES
 
     print(pokedex[i])
 
 # print(pokedex)
-# ref = db.reference('/dex2')
-# ref.set(pokedex)
+ref = db.reference('/dex2')
+ref.set(pokedex)
 
 
 
