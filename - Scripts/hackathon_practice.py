@@ -63,7 +63,6 @@ def factor_pairs(m):
 # print(factor_pairs(12))
 # print(factor_pairs(9))
 
-<<<<<<< Updated upstream
 # s = 'abcba'
 s = 'abccba'
 def expand(l,r):
@@ -97,7 +96,6 @@ def recur(h,l,r):
 # recur(height,0,len(height)-1)
 m = height.index(max(height))
 h = height[m+1:]
-=======
 def miniMaxSum(arr):
     mini = min(arr)
     maxi = max(arr)
@@ -361,7 +359,7 @@ def mergeKLists(lists):
             break
     return out
 
-node = ListNode(1)
+# node = ListNode(1)
 # bus = node
 # bus.next = ListNode(2)
 # bus=bus.next
@@ -376,8 +374,68 @@ node = ListNode(1)
 # bus.next = ListNode(3)
 # bus=bus.next
 # bus.next = ListNode(4)
-i = mergeKLists([node])
-while i:
-    print(i.val)
-    i = i.next
->>>>>>> Stashed changes
+# i = mergeKLists([node])
+# while i:
+#     print(i.val)
+#     i = i.next
+
+def trap(height):
+        a = 0
+        left = 0
+        right = 0
+        l, r = 0, len(height)-1
+        if not height: return 0
+        while l<r:
+            if height[l] <= height[r]:
+                if height[l] > left:
+                    left = height[l]
+                else:
+                    a += left - height[l]
+                l+=1
+            else:
+                if height[r] > right:
+                    right = height[r]
+                else:
+                    a += right - height[r]
+                r-=1
+        return a
+
+def maxSubArray(nums):
+    if not nums: return 0
+    i = 0
+    sumCurrent = 0
+    maxSum = nums[i]
+    while i<len(nums):
+        if sumCurrent+nums[i]<=0:
+            sumCurrent = 0
+            maxSum = max(maxSum, nums[i])
+        else:
+            sumCurrent+=nums[i]
+            maxSum = max(maxSum, sumCurrent)
+        i+=1
+    return maxSum
+
+def spiralOrder(matrix):
+    out = []
+    while matrix:
+        # RIGHT
+        out += matrix.pop(0)
+        if not matrix: return out
+        # DOWN
+        for i in matrix:
+            if i!=[]:
+                out.append(i.pop(-1))
+        if not matrix: return out
+        # LEFT
+        matrix[-1].reverse()
+        out += matrix.pop(-1)
+        if not matrix: return out
+        # UP
+        for i in range(len(matrix)-1,-1,-1):
+            if matrix[i]!=[]:
+                out.append(matrix[i].pop(0))
+    return out
+
+m = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]
+# m = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
+print(spiralOrder(m))
