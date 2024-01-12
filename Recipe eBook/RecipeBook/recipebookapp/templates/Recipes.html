@@ -55,7 +55,7 @@
         <!-- set IDs for all of these positions so you can make functions to change them -->
 
         <ul>
-            {% for R in NameList %}
+            <!-- {% for R in NameList %} -->
             <h1 id="{{ R }}">{{ R }}</h1>
             <p>{{List|lookup_author:R}}</p>
             <h2>Ingredients</h2>
@@ -70,7 +70,7 @@
                 <li>{{ i }}</li>
                 {% endfor %}
             </ol>
-            {% endfor %}
+            <!-- {% endfor %} -->
         </ul>
     </l>
 </div>

@@ -436,6 +436,7 @@ def spiralOrder(matrix):
                 out.append(matrix[i].pop(0))
     return out
 
-m = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]
-# m = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
-print(spiralOrder(m))
+l = [1,2,3,4,5,6]
+print(l[::-1])
+print(l[-2::-1])
+print(l[2::-1])
