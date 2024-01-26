@@ -3,3 +3,5 @@ This folder contains small scripts that I've used.
 AoC was made for Advent of Code questions that I went through last yead
 
 pypy was used for similar challenge scripts, but then was used for testing APIs for some of the consulting work that I did
+
+hackathon_practice is a mix of mostly leetcode and hackathon questions that I test locally and often save

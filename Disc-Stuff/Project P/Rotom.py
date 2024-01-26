@@ -7,6 +7,8 @@ from firebase_admin import db
 
 import klefkeys
 
+# This is a database generator that collects and combines data from dicts in Pokedex.py and learnsets.py to publish to my database
+
 firebase_admin.initialize_app(credentials.Certificate(klefkeys.firebase_cred), {'databaseURL':klefkeys.firebase_url})
 
 firedex = {}

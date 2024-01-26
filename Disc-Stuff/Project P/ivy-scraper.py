@@ -155,7 +155,7 @@ print(pokedex)
 url = 'https://bulbapedia.bulbagarden.net/wiki/'
 tail = '_(Pok%C3%A9mon)'
 # loop
-for i in range(1,152):
+for i in range(1,1026):
     print(i)
     if i==29:
         r = requests.get(url+pokedex[i]['Name']+'♀'+tail)
@@ -167,106 +167,106 @@ for i in range(1,152):
     table = soup.find('table', attrs={'class':'roundy'})
     # img = 'https:' + soup.find('img', attrs={'alt':pokedex[i]['Name']})['src']
     # ABILITIES
-    a = []
-    try:
-        abilitesTable = table.find('b',string='Abilities').parent
-    except:
-        abilitesTable = table.find('b',string='Ability').parent
-        # print(abilitesTable.findAll('td'),len(abilitesTable.findAll('td')))
-    for ability in abilitesTable.findAll('td'):
-        s = ability.getText()
-        s = s.replace(u'\xa0',u' ') # replace unicode nowrap space with regular space
-        s = s.replace('Gen IV+','') # delete gen4+ qualifier
-        s = s.replace('\n','') # delete extra newlines
-        if i==52:
-            print(s)
-        if 'Cacophony' in s: # Cacophony is used as a placeholder on source pages
-            continue
-        if 'Mega '+pokedex[i]['Name'] in s:
-            continue
-        if '('+pokedex[i]['Name']+')' in s: # form based abilities
-            line = s.split(')')
-            for j in line:
-                if j == '':
-                    continue
-                if 'Alolan' in j:
-                    a = ability_string_to_list(j)
-                    pokedex[i]['Alolan Form']['Abilities'] = a
-                    a = []
-                elif 'Galarian' in j:
-                    a = ability_string_to_list(j)
-                    pokedex[i]['Galarian Form']['Abilities'] = a
-                    a = []
-                elif 'Hisuian' in j:
-                    a = ability_string_to_list(j)
-                    pokedex[i]['Hisuian Form']['Abilities'] = a
-                    a = []
-                elif 'Paldean' in j:
-                    a = ability_string_to_list(j)
-                    pokedex[i]['Paldean Form']['Abilities'] = a
-                    a = []
-                else: # base form
-                    a = ability_string_to_list(j)
-                    pokedex[i]['Abilities'] = a
-                    a = []
-        elif 'Hidden Ability' in s: # found HA
-            if '*' in s:
-                continue
-            s = s.replace(' Hidden Ability','')
-            index = lower_to_upper_abilities(s)
-            if not index: # case: 'Chlorophyll Hidden Ability'
-                pokedex[i]['Hidden Ability'] = s
-            else: # either base name or form name tagged on end of ability
-                if s[index:index+len(pokedex[i]['Name'])]==pokedex[i]['Name']: # base name
-                    pokedex[i]['Hidden Ability'] = s[:index]
-                elif s[index:index+3]=='Gen':
-                    pokedex[i]['Hidden Ability'] = s[:index]
-                else: # form name(s), can have multiple in 1 line
-                    if 'Alolan' in s:
-                        pokedex[i]['Alolan Form']['Hidden Ability'] = s[:index]
-                    if 'Galarian' in s:
-                        pokedex[i]['Galarian Form']['Hidden Ability'] = s[:index]
-                    if 'Hisuian' in s:
-                        pokedex[i]['Hisuian Form']['Hidden Ability'] = s[:index]
-                    if 'Paldean' in s:
-                        pokedex[i]['Paldean Form']['Hidden Ability'] = s[:index]
-        else:
-            a = ability_string_to_list(s)
-            # print(a)
-            # check again for alt forms
-            if 'Alolan' in s:
-                pokedex[i]['Alolan Form']['Abilities'] = a
-                a = []
-            elif 'Galarian' in s:
-                pokedex[i]['Galarian Form']['Abilities'] = a
-                a = []
-            elif 'Hisuian' in s:
-                pokedex[i]['Hisuian Form']['Abilities'] = a
-                a = []
-            elif 'Paldean' in s:
-                pokedex[i]['Paldean Form']['Abilities'] = a
-                a = []
-            else: # base form
-                pokedex[i]['Abilities'] = a
-                a = []
+    # a = []
+    # try:
+    #     abilitesTable = table.find('b',string='Abilities').parent
+    # except:
+    #     abilitesTable = table.find('b',string='Ability').parent
+    #     # print(abilitesTable.findAll('td'),len(abilitesTable.findAll('td')))
+    # for ability in abilitesTable.findAll('td'):
+    #     s = ability.getText()
+    #     s = s.replace(u'\xa0',u' ') # replace unicode nowrap space with regular space
+    #     s = s.replace('Gen IV+','') # delete gen4+ qualifier
+    #     s = s.replace('\n','') # delete extra newlines
+    #     if i==52:
+    #         print(s)
+    #     if 'Cacophony' in s: # Cacophony is used as a placeholder on source pages
+    #         continue
+    #     if 'Mega '+pokedex[i]['Name'] in s:
+    #         continue
+    #     if '('+pokedex[i]['Name']+')' in s: # form based abilities
+    #         line = s.split(')')
+    #         for j in line:
+    #             if j == '':
+    #                 continue
+    #             if 'Alolan' in j:
+    #                 a = ability_string_to_list(j)
+    #                 pokedex[i]['Alolan Form']['Abilities'] = a
+    #                 a = []
+    #             elif 'Galarian' in j:
+    #                 a = ability_string_to_list(j)
+    #                 pokedex[i]['Galarian Form']['Abilities'] = a
+    #                 a = []
+    #             elif 'Hisuian' in j:
+    #                 a = ability_string_to_list(j)
+    #                 pokedex[i]['Hisuian Form']['Abilities'] = a
+    #                 a = []
+    #             elif 'Paldean' in j:
+    #                 a = ability_string_to_list(j)
+    #                 pokedex[i]['Paldean Form']['Abilities'] = a
+    #                 a = []
+    #             else: # base form
+    #                 a = ability_string_to_list(j)
+    #                 pokedex[i]['Abilities'] = a
+    #                 a = []
+    #     elif 'Hidden Ability' in s: # found HA
+    #         if '*' in s:
+    #             continue
+    #         s = s.replace(' Hidden Ability','')
+    #         index = lower_to_upper_abilities(s)
+    #         if not index: # case: 'Chlorophyll Hidden Ability'
+    #             pokedex[i]['Hidden Ability'] = s
+    #         else: # either base name or form name tagged on end of ability
+    #             if s[index:index+len(pokedex[i]['Name'])]==pokedex[i]['Name']: # base name
+    #                 pokedex[i]['Hidden Ability'] = s[:index]
+    #             elif s[index:index+3]=='Gen':
+    #                 pokedex[i]['Hidden Ability'] = s[:index]
+    #             else: # form name(s), can have multiple in 1 line
+    #                 if 'Alolan' in s:
+    #                     pokedex[i]['Alolan Form']['Hidden Ability'] = s[:index]
+    #                 if 'Galarian' in s:
+    #                     pokedex[i]['Galarian Form']['Hidden Ability'] = s[:index]
+    #                 if 'Hisuian' in s:
+    #                     pokedex[i]['Hisuian Form']['Hidden Ability'] = s[:index]
+    #                 if 'Paldean' in s:
+    #                     pokedex[i]['Paldean Form']['Hidden Ability'] = s[:index]
+    #     else:
+    #         a = ability_string_to_list(s)
+    #         # print(a)
+    #         # check again for alt forms
+    #         if 'Alolan' in s:
+    #             pokedex[i]['Alolan Form']['Abilities'] = a
+    #             a = []
+    #         elif 'Galarian' in s:
+    #             pokedex[i]['Galarian Form']['Abilities'] = a
+    #             a = []
+    #         elif 'Hisuian' in s:
+    #             pokedex[i]['Hisuian Form']['Abilities'] = a
+    #             a = []
+    #         elif 'Paldean' in s:
+    #             pokedex[i]['Paldean Form']['Abilities'] = a
+    #             a = []
+    #         else: # base form
+    #             pokedex[i]['Abilities'] = a
+    #             a = []
     
     # CATCH RATE
     catchTable = table.find(href='/wiki/Catch_rate').parent.parent
     pokedex[i]['Catch Rate'] = catchTable.find('td').get_text().split(' ')[0]
 
     # GENDER RATIO
-    genderTable = table.find(href="/wiki/List_of_Pok%C3%A9mon_by_gender_ratio").parent.parent
-    genderless = True
-    genderString = ''
-    for g in genderTable.find_all('span')[2:]:
-        genderless = False
-        g = g.get_text()
-        if g == ',':
-            continue
-        genderString+=f'({g})'
-    if genderless:
-        genderString = 'genderless'
-    pokedex[i]['Gender'] = genderString
+    # genderTable = table.find(href="/wiki/List_of_Pok%C3%A9mon_by_gender_ratio").parent.parent
+    # genderless = True
+    # genderString = ''
+    # for g in genderTable.find_all('span')[2:]:
+    #     genderless = False
+    #     g = g.get_text()
+    #     if g == ',':
+    #         continue
+    #     genderString+=f'({g})'
+    # if genderless:
+    #     genderString = 'genderless'
+    # pokedex[i]['Gender'] = genderString
 
     # XP GAIN
     xp = table.find(string="Leveling rate").parent.parent.parent.parent.find('td').get_text()[:-1]
@@ -290,9 +290,13 @@ for i in range(1,152):
 
     print(pokedex[i])
 
+file = open('text.csv','w')
+for key,val in pokedex.items():
+    file.write(f"{key},{val['Name']},{val['Catch Rate']},{val['XP']}\n")
+file.close()
 # print(pokedex)
-ref = db.reference('/dex2')
-ref.set(pokedex)
+# ref = db.reference('/dex2')
+# ref.set(pokedex)
 
 
 

@@ -1,0 +1,31 @@
+Project P is a discord bot that I am making that hosts a game allowing users to catch and play a pokemon game
+
+Files: now that I have a dozen goofy named files, I need to define their purpose
+    ProjectP.py: this file is the Python file that runs the game, it contains the discord commands and game scripts
+    bulba-scraper.py: this file is my first attempt at webscraping the data for my databse, crude and inefficient but it works
+    ivy-scraper.py: this file is my second attempt at webscraping, this one was much more efficient
+        text.csv: this file holds Catch Rate and XP Type of all the pokemon scraped so they can be added to the data in Pokedex.py and learnsets.py and uploaded to the database
+        RotomMow.py: this file is for adding the test.csv data to the database
+    Rotom.py: this file is for taking the data from Pokemon Showdown data files and reorganizing it
+        Pokedex.py: this file is from the Pokemon Showdown GitHub, modified into a Python dictionary, contains pokemon data
+        learnsets.py: this file is from the Pokemon Showdown GitHub, modified into a Python dictionary, contains pokemon learnset data
+    bulbasaur.py: this file is for testing fuctions and scripts outside of their larger files
+
+Extra Notes:
+    bulbasaur
+    Evo Line:
+    |bulbasaur
+    |-l16>ivysaur
+    |--l32>venusaur
+
+    rattata
+    Evo Line:
+    |rattata
+    |-l20>raticate
+
+    ralts
+    Evo Line:
+    |ralts
+    |-l20>kirlia
+    |--l30>gardevoir
+    |--maledawnstone>gallade

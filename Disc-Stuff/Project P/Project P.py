@@ -407,6 +407,13 @@ async def initialization(message):
             },
             'bag':{
                 'PokeDollars':500
+            },
+            'TMs':{
+                'growl':0,
+                'leer':0,
+                'pound':0,
+                'scratch':0,
+                'tackle':0
             }
         })
         await message.channel.send('Trainer Profile Created!')
