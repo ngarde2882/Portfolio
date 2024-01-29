@@ -20,38 +20,47 @@ intents = discord.Intents.all()
 client = commands.Bot(command_prefix = 'p!',intents=intents)
 guilds = {}
 active_spawns = {}
-ref = db.reference("/dex/")
+keymap = db.reference("/map/").get()
+ref = db.reference("/dex3/")
 dex = ref.get()
 
 wild = []
 pokedex = {}
 i = 1
-while(i<1009):
+while(i<1026):
     try:
-        c = int(dex[i]['CapRate'])
-        c = math.ceil(c**2)
+        c = int(dex[i]['catchRate'])
+        c = math.ceil(c**2) # TODO maybe ^3 for better rarity distribution? maybe create a distribution that generates these nums instead of making a list for them
         wild.extend(i for j in range(c))
-        pokedex[dex[i]['Name']['English']]=i
+        pokedex[dex[i]['name']]=i
+        if 'otherFormes' in dex[i]:
+            for form in dex[i]['otherFormes']:
+                pokedex[dex[i][form]['name']] = i
+                if '-Mega' not in form:
+                    c = int(dex[i][form]['catchRate'])
+                    c = math.ceil(c**2) # TODO
+                    wild.extend(i for j in range(c))
     except:
-        pass
+        print(f'error generating wild encounters for num {i}')
     i+=1
 
 def gen_wild():
     global wild
     global dex
     mon = random.choice(wild)
-    print(dex[mon]['Name']['English'])
+    print(dex[mon]['name'])
     return mon
 
-def spawn(num):
+def spawn(key):
     global dex
     embed = discord.Embed(
         title = "A wild pokemon has spawned",
         description = "Say its name first to catch it",
         # url = url+'/swordshield/pokemon/001.png'
     )
-    imageurl = url+dex[num]['Sprite'] # TODO gen random sprites, growlithe meowth show only paldean and hisuan forms
-    embed.set_image(url = imageurl)
+    # imageurl = url+dex[num]['Sprite'] # TODO gen random sprites, growlithe meowth show only paldean and hisuan forms
+    imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{dex[key]['name']}.gif"
+    embed.set_thumbnail(url = imageurl)
     # embed.set_footer(text = 'This is a footer')
     # embed.set_author(name = 'Author name')
     return embed
@@ -158,7 +167,7 @@ def xp(author_id):
         gain = 100
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get()))
     mon = ref.get()
-    xp_speed = dex[mon['number']]['XPSpeed']
+    xp_speed = dex[mon['number']]['xpType']
     xp = mon['xp'] + gain
     level = mon['lvl']
     if level == 100:
@@ -211,19 +220,48 @@ def lower(string_in):
     else:
         raise('ONLY STRINGS AND LISTS OF STRINGS CAN BE INPUT IN THIS FUNCTION')
 
-def make_evostring(arry):
-    s = arry[0]
-    i = 1
-    while(i<len(arry)):
-        s+=' => '+arry[i]
-        i+=1
+
+def evocond(mon):
+    global dex
+    # run a script to look for every possible evo condition so you can personalize all of them
+    if 'evoLevel' in mon:
+        return f"L{mon['evoLevel']}"
+    return 'error'
+def dive(mon, s, depth):
+    global dex
+    global pokedex
+    if not s:
+        s = '|'+mon['name']
+        if 'evos' in mon:
+            for evo in mon:
+                dive(dex[pokedex[evo]],s,depth+1)
+        if 'otherFormes' in mon:
+            for form in mon['otherFormes']:
+                if '-Mega' in form:
+                    dive(mon[form],s,depth+1)
+                else:
+                    dive(mon[form],s,depth)
+    else:
+        if dex[pokedex[evo]]['name'] != evo:
+            mon = dex[pokedex[evo]][evo]
+        s+='\n|'+'-'*depth+evocond(mon)+'>'+mon['name']
+        if 'evos' in mon:
+            for evo in mon:
+                dive(dex[pokedex[evo]],s,depth+1)
+def make_evostring(mon):
+    global dex
+    global pokedex
+    s = ''
+    while 'prevo' in mon:
+        mon = dex[pokedex[mon['prevo']]]
+    dive(mon,s,0)
     return s
 
 def info_caught(author_id, i):
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(i))
     mon = ref.get()
     print(sum(mon['ivs']))
-    types = dex[mon['number']]['Types']
+    types = dex[mon['number']]['types']
     if len(types) == 2:
         typestring = types[0]+', '+types[1]
     else:
@@ -241,43 +279,52 @@ def info_caught(author_id, i):
                         '\nNature: ' + str(mon['nature']) +
                         '\nIVs: ' + str(round(sum(mon['ivs'])/(31*6)*100,4))) # TODO add stats and do a calculation with the ivs
     if mon['shiny']:
-        imageurl = url+dex[mon['number']]['Shiny']
+        imageurl = f"https://play.pokemonshowdown.com/sprites/ani-shiny/{dex[mon['num']]['name']}.gif"
     else:
-        imageurl = url+dex[mon['number']]['Sprite']
+        imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{dex[mon['num']]['name']}.gif"
     embed.set_image(url = imageurl)
     # embed.set_author(name = 'Author name')
     return embed
 
 def info_name(n):
     global pokedex
+    global dex
     num = pokedex[n]
-    ref = db.reference('/dex/'+str(num))
-    # print('HERE:','/dex/'+str(num))
-    mon = ref.get()
-    types = mon['Types']
+    mon = dex[num]
+    types = mon['types']
     if len(types) == 2:
         typestring = types[0]+', '+types[1]
     else:
         typestring = types[0]
     abilitystring = ''
-    for a in mon['Abilities']:
-        abilitystring += a+','
-    if 'HiddenAbility' in mon:
-        abilitystring += f"({mon['HiddenAbility']}),"
-    abilitystring = abilitystring[:-1]
-    abilitystring.replace(',',', ')
-    genderstring = f"\u2642 {mon['Male']}%, \u2640 {mon['Female']}%"
+    for a in mon['abilities']:
+        abilitystring += a+', '
+    abilitystring = abilitystring[:-2]
+    if 'genderRatio' in mon:
+        genderstring = f"\u2642 {mon['genderRatio']['M']}%, \u2640 {mon['genderRatio']['F']}%"
+    elif 'gender' in mon:
+        if mon['gender'] == 'M':
+            genderstring = '\u2642'
+        elif mon['gender'] == 'F':
+            genderstring = '\u2640'
+        elif mon['gender'] == 'U':
+            genderstring = 'Unknown'
+        else:
+            raise(f"dex[{mon['num']}][\'gender\']{mon['gender']}")
+    else:
+        genderstring = "\u2642 50%, \u2640 50%"
     embed = discord.Embed(
-        title = mon['Name'],
-        description = 'Species: ' + str(mon['Name']['English']) +
+        title = mon['name'],
+        description = 'Species: ' + str(mon['name']) +
                         '\nType(s): ' + typestring +
                         '\nNumber: ' + str(num) +
                         '\nAbility(s): ' + abilitystring +
                         '\nGender: ' + genderstring +  # TODO add base stats
-                        '\nEvo Line:\n' + make_evostring(mon['EvoNames']) # TODO add evocondition
+                        f"\nBase Stats:\n\tHP: {mon['baseStats']['hp']}\n\tATK: {mon['baseStats']['atk']}\n\tDEF: {mon['baseStats']['def']}\n\tSPA: {mon['baseStats']['spa']}\n\tSPD: {mon['baseStats']['spd']}\n\tSPE: {mon['baseStats']['spe']}" +
+                        '\nEvo Line:\n' + make_evostring(mon)
         # url = url+'/swordshield/pokemon/001.png'
     )
-    imageurl = url+mon['Sprite']
+    imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{dex[mon['num']]['name']}.gif"
     embed.set_image(url = imageurl)
     # embed.set_author(name = 'Author name')
     return embed
@@ -295,17 +342,17 @@ async def on_message(message):
             guilds[message.guild] += 1
         else:
             guilds[message.guild] = 0
-        update_logs(message.author.id)
+        # update_logs(message.author.id) TODO
 
         channel = message.channel
         try: # TODO make message count spawn on increasing random chance
             print(f"{message.guild.name}: {guilds[message.guild]}")
             # await channel.send(str(guilds[message.guild]))
             
-            # mon = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0 TODO reactivate spawns
-            xp(message.author.id)
-            print('\n')
-            return
+            mon = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0
+            # xp(message.author.id) TODO
+            # print('\n') TODO
+            # return TODO
             global active_spawns
             if message.guild not in active_spawns:
                 active_spawns[message.guild] = []
@@ -316,27 +363,34 @@ async def on_message(message):
         except discord.Forbidden:
             print("Couldn't send message in", message.guild.name,"missing perms")
 
-def gen_ability(n):
-    if(dex[n]['HiddenAbility']!=""):
-        if(random.randint(1, 250)==69):
-            return dex[n]['HiddenAbility']
-    return random.choice(dex[n]['Abilities'])
+def gen_ability(mon):
+    if('H' in mon['abilities']):
+        if(random.randint(1, 250)==77):
+            return mon['H']
+    abilities = []
+    for num, ability in mon['abilities'].items():
+        if num != 'H':
+            abilities.append(ability)
+    return random.choice(abilities)
 
-def gen_der(n):
-    if(dex[n]['Male']=="0"):
-        if(dex[n]['Female']=="0"):
-            return "genderless"
-        return "female"
-    if(random.uniform(0, 100)<float(dex[n]['Male'])):
-        return "male"
-    return "female"
+def gen_der(mon):
+    if 'gender' in mon:
+        return mon['gender']
+    m = .5
+    f = .5
+    if 'genderRatio' in mon:
+        m = mon['genderRatio']['M']
+        f = mon['genderRatio']['F']
+    if(random.uniform(0, 1)<m):
+        return "M"
+    return "F"
 
 def gen_nature():
     natures = ['Hardy', 'Lonely', 'Adamant', 'Naughty', 'Brave', 'Bold', 'Docile', 'Impish', 'Lax', 'Relaxed', 'Modest', 'Mild', 'Bashful', 'Rash', 'Quiet', 'Calm', 'Gentle', 'Careful', 'Quirky', 'Sassy', 'Timid', 'Hasty', 'Jolly', 'Naive', 'Serious']
     return random.choice(natures)
 
 def gen_shiny():
-    if(random.randint(1,8192)==420):
+    if(random.randint(1,8192)==777):
         return True
     return False
 
@@ -359,7 +413,7 @@ async def walk(message):
             db.reference('/trainer/'+str(message.author.id)+'/Walking').set({'pkmn':content})
             await message.channel.send(f"You are now walking {tr['pkmn'][content]['name']}!")
             return
-        await message.channel.send(f"You don\' have a pokemon {content}. You can use \"p!pokemon\" to see a list of your caught pokemon")
+        await message.channel.send(f"You don\'t have a pokemon {content}. You can use \"p!pokemon\" to see a list of your caught pokemon")
         return
     except:
         await message.channel.send(f"Use \"p!walk [number]\" to start levelling a pokemon you've caught (You can use \"p!pokemon\" to see a list of your caught pokemon)\nUse \"p!info [name]\" to see a dex entry for a pokemon")
@@ -392,12 +446,12 @@ async def initialization(message):
             'pkmn':{
                 1:{
                     'number':choice,
-                    'species':dex[choice]['Name']['English'],
-                    'name':dex[choice]['Name']['English'],
+                    'species':dex[choice]['name'],
+                    'name':dex[choice]['name'],
                     'lvl':1,
                     'item':'None',
-                    'ability':gen_ability(choice),
-                    'gender':gen_der(choice),
+                    'ability':gen_ability(dex[choice]),
+                    'gender':gen_der(dex[choice]),
                     'xp':0,
                     'nature':gen_nature(),
                     'ivs':gen_IVs(),
@@ -412,6 +466,7 @@ async def initialization(message):
                 'growl':0,
                 'leer':0,
                 'pound':0,
+                'protect':0,
                 'scratch':0,
                 'tackle':0
             }
@@ -463,8 +518,8 @@ async def catch(message):
                 'name':dex[catch]['Name']['English'],
                 'item':'None',
                 'lvl':1, # TODO: assign random level (normal distribution?)
-                'ability':gen_ability(catch),
-                'gender':gen_der(catch),
+                'ability':gen_ability(dex[catch]),
+                'gender':gen_der(dex[catch]),
                 'xp':0,
                 'nature':gen_nature(),
                 'ivs':gen_IVs(),
