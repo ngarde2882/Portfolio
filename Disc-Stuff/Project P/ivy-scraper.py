@@ -290,6 +290,7 @@ for i in range(1,1026):
 
     print(pokedex[i])
 
+# add catch rate and xp type to file text.csv
 file = open('text.csv','w')
 for key,val in pokedex.items():
     file.write(f"{key},{val['Name']},{val['Catch Rate']},{val['XP']}\n")
