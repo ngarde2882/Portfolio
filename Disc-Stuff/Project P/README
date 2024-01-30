@@ -10,6 +10,7 @@ Files: now that I have a dozen goofy named files, I need to define their purpose
         Pokedex.py: this file is from the Pokemon Showdown GitHub, modified into a Python dictionary, contains pokemon data
         learnsets.py: this file is from the Pokemon Showdown GitHub, modified into a Python dictionary, contains pokemon learnset data
     bulbasaur.py: this file is for testing fuctions and scripts outside of their larger files
+    missingno.py: another file for testing functions, this one was made after the database change and is used primarily for bot functions
 
 Extra Notes:
     bulbasaur

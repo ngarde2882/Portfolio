@@ -7,9 +7,3 @@
 #     return "male"
 # return "female"
 import random
-for i in range(5):
-    r = random.uniform(0,1)
-    if r<0.875:
-        print(True)
-    else:
-        print(r)

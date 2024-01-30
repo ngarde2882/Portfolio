@@ -37,8 +37,6 @@ while(i<1026):
             for form in dex[i]['otherFormes']:
                 pokedex[dex[i][form]['name']] = i
                 if '-Mega' not in form:
-                    c = int(dex[i][form]['catchRate'])
-                    c = math.ceil(c**2) # TODO
                     wild.extend(i for j in range(c))
     except:
         print(f'error generating wild encounters for num {i}')
@@ -51,16 +49,18 @@ def gen_wild():
     print(dex[mon]['name'])
     return mon
 
-def spawn(key):
-    global dex
+def spawn(mon):
     embed = discord.Embed(
         title = "A wild pokemon has spawned",
         description = "Say its name first to catch it",
-        # url = url+'/swordshield/pokemon/001.png'
+        # url = f"https://play.pokemonshowdown.com/sprites/ani/{dex[key]['name']}.gif"
     )
     # imageurl = url+dex[num]['Sprite'] # TODO gen random sprites, growlithe meowth show only paldean and hisuan forms
-    imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{dex[key]['name']}.gif"
-    embed.set_thumbnail(url = imageurl)
+    if mon['shiny']:
+        imageurl = f"https://play.pokemonshowdown.com/sprites/ani-shiny/{mon['name'].lower()}.gif"
+    else:
+        imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{mon['name'].lower()}.gif"
+    embed.set_image(url = imageurl)
     # embed.set_footer(text = 'This is a footer')
     # embed.set_author(name = 'Author name')
     return embed
@@ -190,9 +190,6 @@ def xp(author_id):
         return
     ref.update({'xp':xp})
     # only add xp
-
-        
-    print(mon['ivs'])
 
 def starter_display():
     # starters = {'bulbasaur':1,'charmander':4,'squirtle':7,'pikachu':25,'eevee':133,'totodile':152,'cyndaquil':155,'chikorita':158,'treeko':252,'torchic':255,'mudkip':258,'turtwig':387,'piplup':390,'chimchar':393,'snivy':495,'tepig':498,'oshawott':501,'chespin':650,'fennekin':653,'froakie':656,'rowlet':722,'litten':725,'popplio':728,'grookey':810,'scorbunny':813,'sobble':816}
@@ -348,22 +345,50 @@ async def on_message(message):
         try: # TODO make message count spawn on increasing random chance
             print(f"{message.guild.name}: {guilds[message.guild]}")
             # await channel.send(str(guilds[message.guild]))
-            
-            mon = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0
+            global dex
+            num = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0
+            mon = gen_form(dex[num])
             # xp(message.author.id) TODO
             # print('\n') TODO
             # return TODO
             global active_spawns
             if message.guild not in active_spawns:
-                active_spawns[message.guild] = []
-            active_spawns[message.guild] += [mon]
+                active_spawns[message.guild] = {}
+            active_spawns[message.guild][num] = {
+                'num':num,
+                'species':mon['name'],
+                'name':mon['name'],
+                'item':'None',
+                'lvl':1, # TODO: assign random level (normal distribution?)
+                'ability':gen_ability(mon),
+                'gender':gen_der(mon),
+                'xp':0,
+                'nature':gen_nature(),
+                'ivs':gen_IVs(),
+                'shiny': gen_shiny()
+            }
             print(active_spawns)
-            embed = spawn(mon)
+            embed = spawn(active_spawns[message.guild][num])
             await message.channel.send(embed=embed)
         except discord.Forbidden:
             print("Couldn't send message in", message.guild.name,"missing perms")
 
+def gen_form(mon):
+    forms = []
+    if 'otherFormes' in mon:
+        for form in mon['otherFormes']:
+            if '-Mega' not in form:
+                forms.append(form)
+    if not forms:
+        return mon
+    length = len(forms)
+    r = random.randint(0,length)
+    if(r==length): return mon
+    return mon[form[r]]
+
 def gen_ability(mon):
+    if type(mon['abilities']) == list:
+        return random.choice(mon['abilities'])
     if('H' in mon['abilities']):
         if(random.randint(1, 250)==77):
             return mon['H']
@@ -496,37 +521,17 @@ async def catch(message):
     content = lower(message.message.content[8:])
     global active_spawns
     actives = active_spawns[message.guild]
-    valid_names = []
-    for num in actives:
-        en = dex[num]['Name']['English']
-        fr = dex[num]['Name']['French']
-        ge = dex[num]['Name']['German']
-        ja = dex[num]['Name']['Japan']
-        valid_names += [[num, lower([en,fr,ge,ja])]]
-    for mon in valid_names:
-        if content in mon[1]:
-            active_spawns[message.guild].remove(mon[0])
-            print(f"{message.author} caught a {mon[1][0]}")
+    for num, mon in actives.items():
+        if content == mon['name'].lower():
+            print(f"{message.author} caught a {mon['name']}")
             ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn')
             tr = ref.get()
             length = len(tr)
-            catch = mon[0]
+            mon['OT'] = message.author.name
             ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+str(length))
-            ref.set({
-                'number':catch,
-                'species':dex[catch]['Name']['English'],
-                'name':dex[catch]['Name']['English'],
-                'item':'None',
-                'lvl':1, # TODO: assign random level (normal distribution?)
-                'ability':gen_ability(dex[catch]),
-                'gender':gen_der(dex[catch]),
-                'xp':0,
-                'nature':gen_nature(),
-                'ivs':gen_IVs(),
-                'OT':message.author.name,
-                'shiny': gen_shiny()
-            })
-            await message.channel.send(f"<@{message.author.id}> caught a {mon[1][0]}")
+            ref.set(mon)
+            await message.channel.send(f"<@{message.author.id}> caught a {mon['name']}")
+            del active_spawns[message.guild][num]
             return
 
 @client.command(aliases=['i'])
