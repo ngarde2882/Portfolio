@@ -230,35 +230,42 @@ def dive(mon, s, depth):
     if not s:
         s = '|'+mon['name']
         if 'evos' in mon:
-            for evo in mon:
-                dive(dex[pokedex[evo]],s,depth+1)
+            for evo in mon['evos']:
+                s=dive(dex[pokedex[evo]],s,depth+1)
         if 'otherFormes' in mon:
             for form in mon['otherFormes']:
                 if '-Mega' in form:
-                    dive(mon[form],s,depth+1)
+                    s=dive(mon[form],s,depth+1)
                 else:
-                    dive(mon[form],s,depth)
+                    s=dive(mon[form],s,depth)
     else:
-        if dex[pokedex[evo]]['name'] != evo:
-            mon = dex[pokedex[evo]][evo]
+        # if dex[pokedex[evo]]['name'] != evo:
+        #     mon = dex[pokedex[evo]][evo]
         s+='\n|'+'-'*depth+evocond(mon)+'>'+mon['name']
         if 'evos' in mon:
-            for evo in mon:
-                dive(dex[pokedex[evo]],s,depth+1)
+            for evo in mon['evos']:
+                s=dive(dex[pokedex[evo]],s,depth+1)
+        if 'otherFormes' in mon:
+            for form in mon['otherFormes']:
+                if '-Mega' in form:
+                    s=dive(mon[form],s,depth+1)
+                else:
+                    s=dive(mon[form],s,depth)
+    return s
 def make_evostring(mon):
     global dex
     global pokedex
     s = ''
     while 'prevo' in mon:
         mon = dex[pokedex[mon['prevo']]]
-    dive(mon,s,0)
+    s=dive(mon,s,0)
     return s
 
 def info_caught(author_id, i):
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(i))
     mon = ref.get()
     print(sum(mon['ivs']))
-    types = dex[mon['number']]['types']
+    types = dex[mon['num']]['types']
     if len(types) == 2:
         typestring = types[0]+', '+types[1]
     else:
@@ -267,7 +274,7 @@ def info_caught(author_id, i):
         title = mon['name'],
         description = 'Species: ' + str(mon['species']) +
                         '\nType(s): ' + typestring +
-                        '\nNumber: ' + str(mon['number']) +
+                        '\nNumber: ' + str(mon['num']) +
                         '\nItem: ' + str(mon['item']) +
                         '\nAbility: ' + str(mon['ability']) +
                         '\nGender: ' + str(mon['gender']) +
@@ -276,17 +283,17 @@ def info_caught(author_id, i):
                         '\nNature: ' + str(mon['nature']) +
                         '\nIVs: ' + str(round(sum(mon['ivs'])/(31*6)*100,4))) # TODO add stats and do a calculation with the ivs
     if mon['shiny']:
-        imageurl = f"https://play.pokemonshowdown.com/sprites/ani-shiny/{dex[mon['num']]['name']}.gif"
+        imageurl = f"https://play.pokemonshowdown.com/sprites/ani-shiny/{mon['species'].lower()}.gif"
     else:
-        imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{dex[mon['num']]['name']}.gif"
+        imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{mon['species'].lower()}.gif"
     embed.set_image(url = imageurl)
     # embed.set_author(name = 'Author name')
     return embed
 
 def info_name(n):
-    global pokedex
+    global keymap
     global dex
-    num = pokedex[n]
+    num = keymap[n]
     mon = dex[num]
     types = mon['types']
     if len(types) == 2:
@@ -316,12 +323,12 @@ def info_name(n):
                         '\nType(s): ' + typestring +
                         '\nNumber: ' + str(num) +
                         '\nAbility(s): ' + abilitystring +
-                        '\nGender: ' + genderstring +  # TODO add base stats
+                        '\nGender: ' + genderstring +
                         f"\nBase Stats:\n\tHP: {mon['baseStats']['hp']}\n\tATK: {mon['baseStats']['atk']}\n\tDEF: {mon['baseStats']['def']}\n\tSPA: {mon['baseStats']['spa']}\n\tSPD: {mon['baseStats']['spd']}\n\tSPE: {mon['baseStats']['spe']}" +
                         '\nEvo Line:\n' + make_evostring(mon)
         # url = url+'/swordshield/pokemon/001.png'
     )
-    imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{dex[mon['num']]['name']}.gif"
+    imageurl = f"https://play.pokemonshowdown.com/sprites/ani/{mon['name'].lower()}.gif"
     embed.set_image(url = imageurl)
     # embed.set_author(name = 'Author name')
     return embed
@@ -384,14 +391,14 @@ def gen_form(mon):
     length = len(forms)
     r = random.randint(0,length)
     if(r==length): return mon
-    return mon[form[r]]
+    return mon[forms[r]]
 
 def gen_ability(mon):
     if type(mon['abilities']) == list:
         return random.choice(mon['abilities'])
     if('H' in mon['abilities']):
         if(random.randint(1, 250)==77):
-            return mon['H']
+            return mon['abilities']['H']
     abilities = []
     for num, ability in mon['abilities'].items():
         if num != 'H':
@@ -563,8 +570,9 @@ async def info(message):
         while i<len(content_list):
             content+=' '+content_list[i]
             i+=1
-        if content in list(pokedex.keys()):
-            embed = info_name(content)
+        print(content)
+        if content.lower() in keymap:
+            embed = info_name(content.lower())
             await message.channel.send(embed=embed)
             return
         await message.channel.send(f"I don't know that Pokemon. Try using \"p!info help\"")
