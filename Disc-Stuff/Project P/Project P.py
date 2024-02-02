@@ -86,12 +86,13 @@ def update_logs(id): # remove any datetime from this user's log that is over 5m 
     now = datetime.datetime.now()
     # print(now)
     # print('id:',str(id))
+    if id not in trainer_logs: trainer_logs[id] = []
+    trainer_logs[id].append(now)
     for i in range(len(trainer_logs[id])): # store oldest at 0 and newest at append
         if trainer_logs[id][0] > now - datetime.timedelta(minutes=5):
             break
         else:
             trainer_logs[id].pop(0)
-    trainer_logs[id].append(now)
     while len(trainer_logs[id])>5: # ensure max length is 5
         trainer_logs[id].pop(0)
 
@@ -100,70 +101,97 @@ def erratic(lv, xp):
     if nextlv<50:
         xp_nextlv = (nextlv**3 * (100-nextlv))/50
         if xp>=xp_nextlv:
-            return nextlv
+            return erratic(nextlv,xp)
         return lv
     elif nextlv<68:
         xp_nextlv = (nextlv**3 * (150-nextlv))/100
         if xp>=xp_nextlv:
-            return nextlv
+            return erratic(nextlv,xp)
         return lv
     elif nextlv<98:
         xp_nextlv = (nextlv**3 * math.floor((1911-10*nextlv)/3))/500
         if xp>=xp_nextlv:
-            return nextlv
+            return erratic(nextlv,xp)
         return lv
     else:
         xp_nextlv = (nextlv**3 * (160-nextlv))/100
         if xp>=xp_nextlv:
-            return nextlv
+            return erratic(nextlv,xp)
         return lv
 def mediumFast(lv, xp):
     nextlv = lv+1
     xp_nextlv = nextlv**3
     if xp>=xp_nextlv:
-        return nextlv
+        return mediumFast(nextlv,xp)
     return lv
 def fast(lv, xp):
     nextlv = lv+1
     xp_nextlv = 4*(nextlv**3)/5
     if xp>=xp_nextlv:
-        return nextlv
+        return fast(nextlv,xp)
     return lv
 def mediumSlow(lv, xp):
     nextlv = lv+1
     xp_nextlv = (6*nextlv**3)/5 - 15*nextlv**2 + 100*nextlv - 140
     if xp>=xp_nextlv:
-        return nextlv
+        return mediumSlow(nextlv,xp)
     return lv
 def slow(lv, xp):
     nextlv = lv+1
     xp_nextlv = (5*nextlv**3)/4
     if xp>=xp_nextlv:
-        return nextlv
+        return slow(nextlv,xp)
     return lv
 def fluctuating(lv, xp):
     nextlv = lv+1
     if nextlv<15:
         xp_nextlv = (nextlv**3 * math.floor((nextlv+1)/3)+24)/50
         if xp>=xp_nextlv:
-            return nextlv
+            return fluctuating(nextlv,xp)
         return lv
     elif nextlv<36:
         xp_nextlv = (nextlv**3 * (nextlv + 14))/50
         if xp>=xp_nextlv:
-            return nextlv
+            return fluctuating(nextlv,xp)
         return lv
     else:
         xp_nextlv = (nextlv**3 * math.floor(nextlv/2)+32)/50
         if xp>=xp_nextlv:
-            return nextlv
+            return fluctuating(nextlv,xp)
         return lv
 
-
+def check_evo_level(pokemon):
+    global dex
+    global pokedex
+    mon = dex[pokemon['num']]
+    if mon['name'] != pokemon['species']:
+        mon = mon[pokemon['species']]
+    if 'evos' in mon:
+        for evo_name in mon['evos']:
+            evo = dex[pokedex[evo_name]]
+            if evo['name'] != evo_name:
+                evo = evo[evo_name]
+            if 'evoLevel' in evo:
+                if pokemon['lvl']>=evo['evoLevel']:
+                    return evo_name
+            elif 'evoType' in evo: # TODO evoRegion is currently unused
+                match evo['evoType']:
+                    case 'levelHold':
+                        if pokemon['item'] == evo['evoItem']:
+                            return evo_name
+                    case 'levelExtra':
+                        return f"L {evo['evoCondition']}" # TODO
+                    case 'levelFriendship':
+                        if pokemon['friendship'] == 220:
+                            return evo_name
+                    case 'levelMove':
+                        if evo['evoMove'] in pokemon['moves']:
+                            return evo_name
+    return None
 def xp(author_id):
-    timeout = timeout(author_id)
+    to = timeout(author_id)
     gain = 500
-    if timeout: # TODO randomize these values
+    if to: # TODO randomize these values
         gain = 100
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get()))
     mon = ref.get()
@@ -186,7 +214,17 @@ def xp(author_id):
         case 'Fluctuating':
             lv = fluctuating(level, xp)
     if lv>level: # level current walking mon up
-        ref.update({'xp':xp,'lvl':lv}) # TODO increase stats and check evo
+        ref.update({'xp':xp,'lvl':lv})
+        mon['lvl'] = lv
+        evo_name = check_evo_level(mon)
+        if evo_name: # TODO find a way to send evolution message
+            evolution = dex[pokedex[evo_name]]
+            if evolution['name']!=evo_name:
+                evolution=evolution[evo_name]
+            if mon['name']==mon['species']:
+                ref.update({'num':evolution['num'],'species':evolution['name'],'name':evolution['name']})
+            else:
+                ref.update({'num':evolution['num'],'species':evolution['name']})
         return
     ref.update({'xp':xp})
     # only add xp
@@ -220,10 +258,31 @@ def lower(string_in):
 
 def evocond(mon):
     global dex
-    # run a script to look for every possible evo condition so you can personalize all of them
     if 'evoLevel' in mon:
         return f"L{mon['evoLevel']}"
+    if 'evoType' in mon: # TODO evoRegion is currently unused
+        match mon['evoType']:
+            case 'levelHold':
+                return f"L holding {mon['evoItem']}"
+            case 'levelExtra':
+                return f"L {mon['evoCondition']}" # TODO
+            case 'levelFriendship':
+                return f"L Friendship"
+            case 'trade':
+                if 'evoCondition' in mon:
+                    return f"Trade {mon['evoCondition']}"
+                elif 'evoItem' in mon:
+                    return f"Trade holding {mon['evoItem']}"
+                else:
+                    return f"Trade"
+            case 'useItem':
+                return f"{mon['evoitem']}"
+            case 'levelMove':
+                return f"L with {mon['evoMove']}"
+            case 'other':
+                return f"???"
     return 'error'
+# dive is used in combination with make_evostring to create an evolution string for a pokemon and all of its forms
 def dive(mon, s, depth):
     global dex
     global pokedex
@@ -261,15 +320,46 @@ def make_evostring(mon):
     s=dive(mon,s,0)
     return s
 
+def nature_table(nature):
+    n = [1,1,1,1,1]
+    # increase
+    table = [['Hardy','Lonely','Adamant','Naughty','Brave'],
+             ['Bold','Docile','Impish','Lax','Relaxed'],
+             ['Modest','Mild','Bashful','Rash','Quiet'],
+             ['Calm','Gentle','Careful','Quirky','Sassy'],
+             ['Timid','Hasty','Jolly','Naive','Serious']]
+    for i in range(len(table)):
+        for j in range(len(table[i])):
+            if nature == table[i][j]:
+                n[i]+=0.1
+                n[j]-=0.1
+                return n
+    raise(F'NATURE NOT FOUND? {nature}')
+
+def stat_calc(base,ivs,evs,level,nature):
+    stats = {'hp':0,'atk':0,'def':0,'spa':0,'spd':0,'spe':0}
+    i=0
+    n = nature_table(nature)
+    for stat in stats.keys():
+        if i == 0:
+            stats[stat] = math.floor((2*base[stat]+ivs[i]+math.floor(evs[i]/4)*level)/100)+level+10
+        else:
+            stats[stat] = math.floor((math.floor((2*base[stat]+ivs[i]+math.floor(evs[i]/4)*level)/100)+5)*n[i-1])
+        i+=1
+    return stats
+
 def info_caught(author_id, i):
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(i))
     mon = ref.get()
-    print(sum(mon['ivs']))
-    types = dex[mon['num']]['types']
+    pokedex_entry = dex[mon['num']]
+    if pokedex_entry['name'] != mon['species']:
+        pokedex_entry = pokedex_entry[mon['species']]
+    types = pokedex_entry['types']
     if len(types) == 2:
         typestring = types[0]+', '+types[1]
     else:
         typestring = types[0]
+    stats = stat_calc(pokedex_entry['baseStats'],mon['ivs'],mon['evs'],mon['lvl'],mon['nature'])
     embed = discord.Embed(
         title = mon['name'],
         description = 'Species: ' + str(mon['species']) +
@@ -281,7 +371,8 @@ def info_caught(author_id, i):
                         '\nLevel: ' + str(mon['lvl']) +
                         '\nXP: ' + str(mon['xp']) +
                         '\nNature: ' + str(mon['nature']) +
-                        '\nIVs: ' + str(round(sum(mon['ivs'])/(31*6)*100,4))) # TODO add stats and do a calculation with the ivs
+                        '\nIVs: ' + str(round(sum(mon['ivs'])/(31*6)*100,4)) + '\n\tHP: '+str(stats['hp'])+'\n\tAtk: '+str(stats['atk'])+'\n\tDef: '+str(stats['def'])+'\n\tSpA: '+str(stats['spa'])+'\n\tSpD: '+str(stats['spd'])+'\n\tSpe: '+str(stats['spe']))
+
     if mon['shiny']:
         imageurl = f"https://play.pokemonshowdown.com/sprites/ani-shiny/{mon['species'].lower()}.gif"
     else:
@@ -324,7 +415,7 @@ def info_name(n):
                         '\nNumber: ' + str(num) +
                         '\nAbility(s): ' + abilitystring +
                         '\nGender: ' + genderstring +
-                        f"\nBase Stats:\n\tHP: {mon['baseStats']['hp']}\n\tATK: {mon['baseStats']['atk']}\n\tDEF: {mon['baseStats']['def']}\n\tSPA: {mon['baseStats']['spa']}\n\tSPD: {mon['baseStats']['spd']}\n\tSPE: {mon['baseStats']['spe']}" +
+                        f"\nBase Stats:\n\tHP: {mon['baseStats']['hp']}\n\tAtk: {mon['baseStats']['atk']}\n\tDef: {mon['baseStats']['def']}\n\tSpA: {mon['baseStats']['spa']}\n\tSpD: {mon['baseStats']['spd']}\n\tSpe: {mon['baseStats']['spe']}" +
                         '\nEvo Line:\n' + make_evostring(mon)
         # url = url+'/swordshield/pokemon/001.png'
     )
@@ -346,7 +437,7 @@ async def on_message(message):
             guilds[message.guild] += 1
         else:
             guilds[message.guild] = 0
-        # update_logs(message.author.id) TODO
+        update_logs(message.author.id)
 
         channel = message.channel
         try: # TODO make message count spawn on increasing random chance
@@ -355,9 +446,7 @@ async def on_message(message):
             global dex
             num = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0
             mon = gen_form(dex[num])
-            # xp(message.author.id) TODO
-            # print('\n') TODO
-            # return TODO
+            xp(message.author.id)
             global active_spawns
             if message.guild not in active_spawns:
                 active_spawns[message.guild] = {}
@@ -369,10 +458,18 @@ async def on_message(message):
                 'lvl':1, # TODO: assign random level (normal distribution?)
                 'ability':gen_ability(mon),
                 'gender':gen_der(mon),
-                'xp':0,
+                'xp':0, # TODO: give base xp of random level
                 'nature':gen_nature(),
                 'ivs':gen_IVs(),
-                'shiny': gen_shiny()
+                'evs':[0,0,0,0,0,0],
+                'shiny': gen_shiny(),
+                'friendship':0,
+                'moves':{
+                        0:'Struggle',
+                        1:'Struggle',
+                        2:'Struggle',
+                        3:'Struggle'
+                    }
             }
             print(active_spawns)
             embed = spawn(active_spawns[message.guild][num])
@@ -487,8 +584,16 @@ async def initialization(message):
                     'xp':0,
                     'nature':gen_nature(),
                     'ivs':gen_IVs(),
+                    'evs':[0,0,0,0,0,0],
                     'OT':message.author.name,
-                    'shiny': gen_shiny()
+                    'shiny': gen_shiny(),
+                    'friendship':20,
+                    'moves':{
+                        0:'Struggle',
+                        1:'Struggle',
+                        2:'Struggle',
+                        3:'Struggle'
+                    }
                 }
             },
             'bag':{
@@ -501,7 +606,8 @@ async def initialization(message):
                 'protect':0,
                 'scratch':0,
                 'tackle':0
-            }
+            },
+            'location':'Kanto'
         })
         await message.channel.send('Trainer Profile Created!')
     else:
@@ -551,7 +657,8 @@ async def info(message):
     ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn')
     tr = ref.get()
     if message.message.content == 'p!info' or message.message.content == 'p!i' or message.message.content == 'p!info latest' or message.message.content == 'p!i latest':
-        embed = info_caught(message.author.id, len(tr)-1)
+        
+        embed = info_caught(message.author.id, max(tr.keys())) # TODO change this to max in keys?
         await message.channel.send(embed=embed)
         return
     if message.message.content == 'p!info help' or message.message.content == 'p!i help':
