@@ -347,7 +347,19 @@ def stat_calc(base,ivs,evs,level,nature):
             stats[stat] = math.floor((math.floor((2*base[stat]+ivs[i]+math.floor(evs[i]/4)*level)/100)+5)*n[i-1])
         i+=1
     return stats
-
+def get_ability(mon):
+    dex_entry = dex[mon['num']]
+    if dex_entry['name']!=mon['species']:
+        dex_entry = dex_entry[mon['species']]
+    if type(dex_entry['abilities'])==list:
+        if mon['ability']=='H':
+            return dex_entry['abilities'][0]
+        if len(dex_entry['abilities'])==1:
+            return dex_entry['abilities'][0]
+        return dex_entry['abilities'][mon['ability']]
+    if mon['ability'] in dex_entry['abilities']:
+        return dex_entry['abilities'][mon['ability']]
+    return dex_entry['abilities'][0]
 def info_caught(author_id, i):
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(i))
     mon = ref.get()
@@ -366,7 +378,7 @@ def info_caught(author_id, i):
                         '\nType(s): ' + typestring +
                         '\nNumber: ' + str(mon['num']) +
                         '\nItem: ' + str(mon['item']) +
-                        '\nAbility: ' + str(mon['ability']) +
+                        '\nAbility: ' + get_ability(mon) +
                         '\nGender: ' + str(mon['gender']) +
                         '\nLevel: ' + str(mon['lvl']) +
                         '\nXP: ' + str(mon['xp']) +
@@ -456,7 +468,7 @@ async def on_message(message):
                 'name':mon['name'],
                 'item':'None',
                 'lvl':1, # TODO: assign random level (normal distribution?)
-                'ability':gen_ability(mon),
+                'ability':gen_ability(),
                 'gender':gen_der(mon),
                 'xp':0, # TODO: give base xp of random level
                 'nature':gen_nature(),
@@ -490,17 +502,10 @@ def gen_form(mon):
     if(r==length): return mon
     return mon[forms[r]]
 
-def gen_ability(mon):
-    if type(mon['abilities']) == list:
-        return random.choice(mon['abilities'])
-    if('H' in mon['abilities']):
-        if(random.randint(1, 250)==77):
-            return mon['abilities']['H']
-    abilities = []
-    for num, ability in mon['abilities'].items():
-        if num != 'H':
-            abilities.append(ability)
-    return random.choice(abilities)
+def gen_ability():
+    if(random.randint(1, 250)==77):
+        return 'H'
+    return random.choice([0,1])
 
 def gen_der(mon):
     if 'gender' in mon:
@@ -579,7 +584,7 @@ async def initialization(message):
                     'name':dex[choice]['name'],
                     'lvl':1,
                     'item':'None',
-                    'ability':gen_ability(dex[choice]),
+                    'ability':gen_ability(),
                     'gender':gen_der(dex[choice]),
                     'xp':0,
                     'nature':gen_nature(),
