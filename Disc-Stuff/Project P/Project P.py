@@ -55,7 +55,6 @@ def spawn(mon):
         description = "Say its name first to catch it",
         # url = f"https://play.pokemonshowdown.com/sprites/ani/{dex[key]['name']}.gif"
     )
-    # imageurl = url+dex[num]['Sprite'] # TODO gen random sprites, growlithe meowth show only paldean and hisuan forms
     if mon['shiny']:
         imageurl = f"https://play.pokemonshowdown.com/sprites/ani-shiny/{mon['name'].lower()}.gif"
     else:
@@ -689,8 +688,98 @@ async def info(message):
             return
         await message.channel.send(f"I don't know that Pokemon. Try using \"p!info help\"")
         
+@client.command(aliases=['g'])
+async def give(message):
+    ref = db.reference('/trainer/'+str(message.author.id))
+    tr = ref.get()
+    if tr is None:
+        await message.channel.send(f"@{message.author} you are not yet registered. Do \"p!init\" to begin your journey!")
+        return
+    ref = db.reference('/trainer/'+str(message.author.id)+'/bag')
+    bag = ref.get()
+    ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn')
+    pkmn = ref.get()
+    if message.message.content == 'p!give' or message.message.content == 'p!g' or message.message.content == 'p!give help' or message.message.content == 'p!g help':
+        await message.channel.send(f"Use \"p!give\" to let one of your pokemon hold an item from your bag\nUse \"p!give [item name] [number]\" You can use p!pokemon to see a list of your caught pokemon, and p!bag to see a list of your items.")
+        return
+    content_list = message.message.content.split(' ')[1:]
+    item = ' '.join(content_list[:-1])
+    if content_list[-1].isnumeric():
+        if content_list[-1] in pkmn:
+            pkmn = pkmn[int(content_list[-1])]
+        else:
+            await message.channel.send(f"I can\'t find that pokemon. You can use p!pokemon to see a list of your caught pokemon.")
+            return
+    else:
+        await message.channel.send(f"Use \"p!give [item name] [number]\" You can use p!pokemon to see a list of your caught pokemon.")
+        return
+    if item in bag:
+        if pkmn['item']:
+            held = pkmn['item']
+            if held in bag:
+                bag[held]+=1
+            else:
+                bag[held]=1
+        bag[item]-=1
+        db.reference('/trainer/'+str(message.author.id)+'/bag').update(bag)
+        db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+content_list[-1]).update({'item':item})
+        await message.channel.send(f"You gave your {pkmn['name']} a {item} to hold.")
+        return
+    else:
+        await message.channel.send(f"I can\'t find that item. You can use p!bag to see a list of your items.")
+        return
+    
 
+@client.command(aliases=['p'])
+async def pokemon(message):
+    ref = db.reference('/trainer/'+str(message.author.id))
+    tr = ref.get()
+    if tr is None:
+        await message.channel.send(f"@{message.author} you are not yet registered. Do \"p!init\" to begin your journey!")
+        return
+    ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn')
+    tr = ref.get()
+    limit = 15
+    i=1
+    out = ''
+    global dex
+    while i<=limit:
+        if i not in tr:
+            limit+=1
+            pass
+        else:
+            out+=f"{i} {tr[i]['name']} ({round(sum(tr[i]['ivs'])/(31*6)*100,4)}% ivs)\n"
+        i+=1
+    out = out[:-1]
+    # TODO use reactions as menu buttons
+    # make into an embed
+    # title {Username}'s Pokemon
+    # header {i}-{limit}
+    # body {out}
+    await message.channel.send(out)
 
+@client.command(aliases=['b'])
+async def bag(message):
+    ref = db.reference('/trainer/'+str(message.author.id))
+    tr = ref.get()
+    if tr is None:
+        await message.channel.send(f"@{message.author} you are not yet registered. Do \"p!init\" to begin your journey!")
+        return
+    ref = db.reference('/trainer/'+str(message.author.id)+'/bag')
+    bag = ref.get()
+    limit = 20
+    i=1
+    out = ''
+    for item,quantity in bag.items():
+        if i=='PokeDollars':
+            continue
+        out += f'{i}: {quantity}\n'
+    out = out[:-1]
+    await message.channel.send(out)
+
+@client.command()
+async def release(message):
+    pass
 
 # client.run('OTk2ODU1MTIyNjI3OTMyMTgw.GX-TgP.IH9_UtW1B3ignnwfScAtdQkyKY35iBwoKkdcO8') old token
 client.run(klefkeys.discord_token)
