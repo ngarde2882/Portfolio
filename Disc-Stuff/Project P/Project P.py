@@ -188,6 +188,10 @@ def check_evo_level(pokemon):
                             return evo_name
     return None
 def xp(author_id):
+    ref = db.reference('/trainer/'+str(author_id))
+    tr = ref.get()
+    if tr is None:
+        return
     to = timeout(author_id)
     gain = 500
     if to: # TODO randomize these values
@@ -458,6 +462,7 @@ async def on_message(message):
             num = gen_wild() # choose randomly when to spawn with an escalating chance, then reset guilds[message.guild] to 0
             mon = gen_form(dex[num])
             xp(message.author.id)
+            # TODO add a friendship increment on message
             global active_spawns
             if message.guild not in active_spawns:
                 active_spawns[message.guild] = {}
@@ -711,7 +716,7 @@ async def give(message):
             await message.channel.send(f"I can\'t find that pokemon. You can use p!pokemon to see a list of your caught pokemon.")
             return
     else:
-        await message.channel.send(f"Use \"p!give [item name] [number]\" You can use p!pokemon to see a list of your caught pokemon.")
+        await message.channel.send(f"Use \"p!give [item name] [number]\" to give an item to your pokemon. You can use p!pokemon to see a list of your caught pokemon.")
         return
     if item in bag:
         if pkmn['item']:
@@ -767,19 +772,47 @@ async def bag(message):
         return
     ref = db.reference('/trainer/'+str(message.author.id)+'/bag')
     bag = ref.get()
-    limit = 20
-    i=1
+    # limit = 20
+    # i=1
     out = ''
     for item,quantity in bag.items():
         if i=='PokeDollars':
             continue
         out += f'{i}: {quantity}\n'
+    if len(out)==0:
+        await message.channel.send('Your bag is empty. :(')
     out = out[:-1]
     await message.channel.send(out)
+    # TODO use reactions as menu buttons
+    # make into an embed
+    # title {Username}'s Bag
+    # header {i} PokeDollars
+    # body {out}
 
 @client.command()
 async def release(message):
-    pass
+    ref = db.reference('/trainer/'+str(message.author.id))
+    tr = ref.get()
+    if tr is None:
+        await message.channel.send(f"@{message.author} you are not yet registered. Do \"p!init\" to begin your journey!")
+        return
+    content_list = message.message.content.split(' ')
+    if not content_list[-1].isnumeric():
+        await message.channel.send(f"Use \"p!release [number]\" to permanently release one of your pokemon. You can use p!pokemon to see a list of your caught pokemon.")
+        return
+    r = content_list[-1]
+    ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn')
+    pkmn = ref.get()
+    if int(r) in pkmn:
+        if len(pkmn)==1:
+            await message.channel.send('You can\'t release your last pokemon.')
+            return
+        db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+r).delete()
+        await message.channel.send(f"{pkmn[r]['name']} has been released.")
+        return
+    else:
+        await message.channel.send(f"I can\'t find that pokemon. You can use p!pokemon to see a list of your pokemon.")
+        return
 
 # client.run('OTk2ODU1MTIyNjI3OTMyMTgw.GX-TgP.IH9_UtW1B3ignnwfScAtdQkyKY35iBwoKkdcO8') old token
 client.run(klefkeys.discord_token)
