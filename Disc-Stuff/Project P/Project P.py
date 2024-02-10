@@ -198,7 +198,8 @@ def xp(author_id):
         gain = 100
     ref = db.reference('/trainer/'+str(author_id)+'/pkmn/'+str(db.reference('/trainer/'+str(author_id)+'/Walking/pkmn').get()))
     mon = ref.get()
-    xp_speed = dex[mon['number']]['xpType']
+    print(mon)
+    xp_speed = dex[mon['num']]['xpType']
     xp = mon['xp'] + gain
     level = mon['lvl']
     if level == 100:
@@ -466,7 +467,7 @@ async def on_message(message):
             global active_spawns
             if message.guild not in active_spawns:
                 active_spawns[message.guild] = {}
-            active_spawns[message.guild][num] = {
+            active_spawns[message.guild][num] = { # TODO turn this into a class maybe? so you can give it a function that changes the embed into despawn?
                 'num':num,
                 'species':mon['name'],
                 'name':mon['name'],
@@ -583,7 +584,7 @@ async def initialization(message):
             },
             'pkmn':{
                 1:{
-                    'number':choice,
+                    'num':choice,
                     'species':dex[choice]['name'],
                     'name':dex[choice]['name'],
                     'lvl':1,
@@ -693,6 +694,35 @@ async def info(message):
             return
         await message.channel.send(f"I don't know that Pokemon. Try using \"p!info help\"")
         
+
+def check_evo_held_item(pokemon):
+    global dex
+    global pokedex
+    mon = dex[pokemon['num']]
+    if mon['name'] != pokemon['species']:
+        mon = mon[pokemon['species']]
+    if 'evos' in mon:
+        for evo_name in mon['evos']:
+            evo = dex[pokedex[evo_name]]
+            if evo['name'] != evo_name:
+                evo = evo[evo_name]
+            if 'evoLevel' in evo:
+                if pokemon['lvl']>=evo['evoLevel']:
+                    return evo_name
+            elif 'evoType' in evo: # TODO evoRegion is currently unused
+                match evo['evoType']:
+                    case 'levelHold':
+                        if pokemon['item'] == evo['evoItem']:
+                            return evo_name
+                    case 'levelExtra':
+                        return f"L {evo['evoCondition']}" # TODO
+                    case 'levelFriendship':
+                        if pokemon['friendship'] == 220:
+                            return evo_name
+                    case 'levelMove':
+                        if evo['evoMove'] in pokemon['moves']:
+                            return evo_name
+    return None
 @client.command(aliases=['g'])
 async def give(message):
     ref = db.reference('/trainer/'+str(message.author.id))
@@ -710,8 +740,11 @@ async def give(message):
     content_list = message.message.content.split(' ')[1:]
     item = ' '.join(content_list[:-1])
     if content_list[-1].isnumeric():
-        if content_list[-1] in pkmn:
+        if int(content_list[-1]) < len(pkmn):
             pkmn = pkmn[int(content_list[-1])]
+            if not pkmn:
+                await message.channel.send(f"I can\'t find that pokemon. You can use p!pokemon to see a list of your caught pokemon.")
+                return
         else:
             await message.channel.send(f"I can\'t find that pokemon. You can use p!pokemon to see a list of your caught pokemon.")
             return
@@ -724,11 +757,18 @@ async def give(message):
             if held in bag:
                 bag[held]+=1
             else:
-                bag[held]=1
+                if held == None or held == 'None':
+                    pass
+                else:
+                    bag[held]=1
         bag[item]-=1
+        if bag[item]==0:
+            del bag[item]
+            print(bag)
         db.reference('/trainer/'+str(message.author.id)+'/bag').update(bag)
         db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+content_list[-1]).update({'item':item})
         await message.channel.send(f"You gave your {pkmn['name']} a {item} to hold.")
+        check_evo_held_item(pkmn)
         return
     else:
         await message.channel.send(f"I can\'t find that item. You can use p!bag to see a list of your items.")
@@ -749,10 +789,12 @@ async def pokemon(message):
     out = ''
     global dex
     while i<=limit:
-        if i not in tr:
-            limit+=1
+        if i >= len(tr) or tr[i]==None:
+            # limit+=1
+            print(i,'passing')
             pass
         else:
+            print(i,tr[i]['name'],round(sum(tr[i]['ivs'])/(31*6)*100,4))
             out+=f"{i} {tr[i]['name']} ({round(sum(tr[i]['ivs'])/(31*6)*100,4)}% ivs)\n"
         i+=1
     out = out[:-1]
@@ -776,11 +818,12 @@ async def bag(message):
     # i=1
     out = ''
     for item,quantity in bag.items():
-        if i=='PokeDollars':
+        if item=='PokeDollars':
             continue
-        out += f'{i}: {quantity}\n'
+        out += f'{item}: {quantity}\n'
     if len(out)==0:
         await message.channel.send('Your bag is empty. :(')
+        return
     out = out[:-1]
     await message.channel.send(out)
     # TODO use reactions as menu buttons
@@ -803,14 +846,20 @@ async def release(message):
     r = content_list[-1]
     ref = db.reference('/trainer/'+str(message.author.id)+'/pkmn')
     pkmn = ref.get()
-    if int(r) in pkmn:
-        if len(pkmn)==1:
+    print(pkmn)
+    try:
+        pkmn[int(r)]
+        counter = 0
+        for i in pkmn:
+            if i: counter+=1
+            if counter>=2: break
+        if counter==1:
             await message.channel.send('You can\'t release your last pokemon.')
             return
         db.reference('/trainer/'+str(message.author.id)+'/pkmn/'+r).delete()
-        await message.channel.send(f"{pkmn[r]['name']} has been released.")
+        await message.channel.send(f"{pkmn[int(r)]['name']} has been released.")
         return
-    else:
+    except:
         await message.channel.send(f"I can\'t find that pokemon. You can use p!pokemon to see a list of your pokemon.")
         return
 
