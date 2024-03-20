@@ -55,8 +55,8 @@ def get():
                     if len(tname)!=1:
                         name = tname
                     else: name = name[:-4]
-        team.append(Pokemon(name,item,ability,tera,nature,moves,evs,ivs))
+        team.append(Pokemon(name,item,ability,tera,nature,moves,evs,ivs,len(team)+1))
         # print(Pokemon(name,item,ability,tera,nature,moves,evs,ivs),'\n')
     f.close()
-    print(team)
+    # print(team)
     return team
