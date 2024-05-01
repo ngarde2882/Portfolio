@@ -435,8 +435,24 @@ def spiralOrder(matrix):
             if matrix[i]!=[]:
                 out.append(matrix[i].pop(0))
     return out
+    
+def permutation(nums):
+    def backtrack(nums,temp,ans):
+        if len(nums) == len(temp):
+            ans.append(temp[:])
+        else:
+            for i in range(len(nums)):
+                if nums[i] in temp: continue
+                temp.append(nums[i])
+                backtrack(nums,temp,ans)
+                temp.pop()
+    ans = []
+    temp = []
+    backtrack(nums,temp,ans)
+    return ans
 
-l = [1,2,3,4,5,6]
-print(l[::-1])
-print(l[-2::-1])
-print(l[2::-1])
+
+# [1,2,3]
+# [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+print(permutation([1,2,3]))
+L = [1,2,3]

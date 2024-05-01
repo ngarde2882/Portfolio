@@ -3,3 +3,9 @@ This folder contains my 2 favorite projects from my AI class at TAMU
 A2 has my code and tests for a Tic-Tac-Toe bot where a user could play against a minimax algorithm (with or without Alpha-Beta pruning)
 
 A4 has my solution to the nqueens problem: fitting n queens on an nxn sized chessboard without any of them being able to attack eachother
+
+Calc is the beginning of another game theory project I am starting
+    Paste contains functions for collecting pre-game data from the user
+
+Notes is a backround script to sync select files between my devices
+    GitHub is a great way to sync my code, but I take a lot of notes that I would rather not keep on GH
