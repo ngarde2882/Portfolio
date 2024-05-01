@@ -1,0 +1,48 @@
+start thinking about art projects:
+
+prime numbers plotted polar
+	increase/decrease zoom
+		depicts swirl then 'hyperspace' lines
+		speeds will have to differ between states
+	zoomed in
+		0  swirl
+		1  mw
+		2 lines
+	zoomed out
+	
+	set on timer with clock
+		[0,0],[12,1],[24,2] nothing at 0, infinity at 24
+		[0,0],[6,1],[12,2],[18,1],[24,0] pulse
+
+lissajous curves
+	photo
+	plotting a line that decays with time
+
+z(θ)=e^(θi)+e^(piθi)
+
+dance of earth and venus
+	line between centers
+	really just a comparison of speed and radii from sun
+	greek name about gods
+
+servo motor panels
+	zachary aie project
+	tile sound important
+
+1 build an engine to display a graph on a set background (blank) and display points (dots)
+2 polar graph
+3 zoom
+	3a plot additional
+	3b delete memory under radius
+		3bi if n points under radius, replace with radius circle
+		3bii n increments as r gets larger
+4 leave a line behind from a point
+5 decaying line
+
+
+Research
+tkinter
+romhacks
+kruskal-szekeres diagram
+penrose diagram
+ergosphere

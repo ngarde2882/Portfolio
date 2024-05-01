@@ -1,0 +1,118 @@
+career center summer suggestions
+csce
+221
+314
+411
+career center was more of an echo chamber for my opinions because these were chosen with my interpritations of these classes. whether that's better or worse is up to interpritation
+
+kaiser (cs grad advisor) summer suggestions
+313 more important (than 314) for grad school
+411 get an A
+221 mb mbnot
+314 got brought up (honorable mention)
+I don't like kaiser's suggestion for 313 over 314 because 313, while 313 is more challenging, is computer engineering related rather than strictly computer science. I am applying to computer science graduate programs, and I belive that distinction is more important
+I do like kaiser's suggestion to drop 221 since it is introductory. 411 will show mastery of 221
+
+course data
+h ### Name ↵ Description + hours
+3 433 Formal Languages and Automata
+	abstract languages + acceptors
+	Chromsky hierarchy
+	solvability and recursive function theory
+	application of theoretical results to practical problems
+	3h lec.
+4 431 Software Engineering
+	software design/development
+	life cycle models
+	software requirements and specification
+	conceptual model design
+	detailed design
+	validation/verification
+	design quality assurance
+	environments
+	project management
+	2h lec 2h lab
+S 3 421 Machine Learning
+	Theory ML
+	pattern rec, predictive models, classifiers from data
+	supervised/unseupervised learning:
+	decision trees, linear discriminants
+	neural networks, Gaussian models
+	non-parametric models, clustering
+	dimensionality reduction, deep learning
+	optimization procedures
+	statistical interference
+	3h lec.
+S 3 411*Design and Analysis of Algorithms
+	numeric and non-numeric problems
+	design paradigms, time and space req.
+	NP-completeness and undecidability
+	3h lec.
+S 3 314*Programming Languages
+	in-depth study of 2 programming languages
+	(haskell and java last time :/)
+	functional and obj-oriented
+	3h lec.
+H 5 313*Intro to Computer Systems
+	Computer Engineering Oriented
+	system support for application programs
+	OS app interface, inter-process comm
+	system and network programming
+	simple security concepts
+	3h lec. 2h lab
+S 5 221*Data Structures and Algorithms
+	stacks, queues, lists, sorting and selection
+	searching, graphs, hashing
+	C++
+	3h lec. 2h lab
+
+purpose
+*:retaking a C
+433: 627 Theory of Computability prereq
+431: career experience
+	would prevent me from taking 606 Software Engineering for credit
+	wouldn't be a useful credit in grad ai degree
+	(I would prefer to take 604 Programing Languages instead)
+421: general interest
+	(I would prefer taking 633 Machine Learning, and 421 prevents me)
+
+plans (in preferred order)
+h  plan class						purpose ↵*problems
+-----------------------------------------------------------------------------------------------------
+9  433	Formal Languages and Automata			retake upper-level CS C's on transcript
+   411	*Design and Analysis of Algorithms		take a new class i'm interested in
+   314	*Programming Languages				partial kaiser approval
+	415/135 = 3.074		Δ 0.112
+	no lab
+-----------------------------------------------------------------------------------------------------
+9  421	Machine Learning				retake upper-level CS C's on transcript
+   411	*Design and Analysis of Algorithms		take a ML showing interest in AI, but prevent myself from taking 600 level
+   314	*Programming Languages				partial kaiser approval
+	415/135 = 3.074		Δ 0.112
+	no lab
+-----------------------------------------------------------------------------------------------------
+10 431	Software Engineering				retake upper-level CS C's on transcript
+   411	*Design and Analysis of Algorithms		take a class that will help me even if grad school doesn't work
+   314	*Programming Languages				*feels like a cop-out right now. I am confident, and it is still available during grad school
+	419/136 = 3.081		Δ 0.119
+	2h lab
+-----------------------------------------------------------------------------------------------------
+11 411	*Design and Analysis of Algorithms		retake all major CS C's on transcript
+   314	*Programming Languages				*ignoring kaiser's suggestion in order to focus on CS classes rather than CE (CS masters)
+   221	*Data Structures and Algorithms			*ignoring kaiser's suggestion against 221
+	411/132 = 3.114		Δ 0.152
+	3h lab
+
+deadline (summer): mar-1
+full-time(summer): 8h
+	3 classes or 5h+3h
+goal: all A's
+
+decision
+I like the 9-hour plans the most, although it gives the lowest GPA bump I believe that they show the most improvement/interest in CS. 411 should do a good job at covering for 221 (but perhaps should be mentioned on apps)
+433 seems like a fun theory class and it will allow me to take another fun theory class at graduate level (627)
+I would only consider taking 421 if I could take it with Dr. Ioger. I would prefer to take it at graduate level rather than post-bacc/undergrad, especially since I would gain more from a full semester
+431 would be my choice in the situation where 433/421 isn't offered during the summer
+221 if I cannot fill a third class with anything above/interesting over the summer
+
+I can also take both summer semesters, and take more classes for a better GPA jump
