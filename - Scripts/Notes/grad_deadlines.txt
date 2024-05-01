@@ -1,0 +1,42 @@
+TAMU engineeringcas2024
+(cant pick both MCS+MS)
+(cant pick ECEN F24qa+MCS F24d)
+	[MCS] or MS
+		F24distance
+		6/1
+		S25
+		9/1
+		[S25 quick admit]
+		10/15
+	ECEN
+		[F24 quick admit]
+		8/1
+		S25
+		9/1
+CO School of Mines
+	MS CS - ML
+		F24
+		8/1
+OSU
+	AI
+		F25
+		1/5
+Northeastern
+	AI
+		F24
+		8/1
+Wahington State University engineeringcas2024
+	[CS]/[CENG]
+		S25
+		7/1
+UH
+	CS
+		F24
+		6/1
+
+UH - 6/1
+WSU- 7/1
+TAMU-8/1
+CSM- 8/1
+NE - 8/1
+OSU- +
