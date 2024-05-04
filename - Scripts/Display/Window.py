@@ -1,6 +1,6 @@
 from tkinter import *
 root = Tk()
-root.title('Hello, my Name is _____')
+# root.title('Hello, my Name is _____')
 # root. iconbitmap('c:/gui/codemy.ico')
 
 w, l = 400, 300
