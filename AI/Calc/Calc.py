@@ -10,6 +10,7 @@ def expert_belt(dmg): return dmg*4915/4096
 def metronome(dmg,successes): return dmg*(1+successes*819/4096)
 # Calc Flags will hold multiplier functions above for different flags
 # This should result in faster and cleaner throughput for the damage function
+# TODO each multiplier in a function that throughputs the multiplier variable based on the flag called
 CALC_FLAGS = {
     'Targets':0.75, # if 2 pokemon targeted
     'Parental Bond':1.25, # on ability, .25 on second strike
