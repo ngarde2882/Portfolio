@@ -59,8 +59,10 @@ xd2 = x / 2
 torch.matmul(torch.tensor([[2,3],[4,5],[6,7]]),torch.tensor([[8,9,10],[11,12,13]])) # dot product : tensor([[49,54,59],[87,96,105],[125,138,151]])
 torch.tensor([[2,3],[4,5],[6,7]]) @ torch.tensor([[8,9,10],[11,12,13]]) # same thing ^
 torch.rand(4,5) @ torch.rand(5,6) # inner dimensions must match (5,5), returns shape of outer dimensions (4,6)
+x = torch.rand(3,3,2)
 x.T # transpose matrix
 x.min(),x.max(),x.mean() # stats functions
+x.argmax(), x.argmin() # index of max/min
 # reshaping, view, stack (combine), squeeze (remove 1 dimenstion), unsqueeze (add 1 dimension), permute
 # reshape
 x = torch.arange(1,10) # [1,2,..,8,9] list of 9
@@ -77,7 +79,7 @@ s = torch.stack([x,x,x], dim=1) # shaped [9,3], apends the tensors together by i
 x = torch.arange(1,10) # shape is [9]
 xr = x.reshape(1,9) # shape is [1,9]
 sq = xr.squeeze() # squeeze trims dim=1, shape is [9]
-sq.unsqueeze() # adds the dimension back [1,9]
+sq.unsqueeze(0) # adds the dimension back [1,9]
 sq.unsqueeze(dim=1) # makes the shape [9,1]
 # permute (rearrange dimensions and share memory like view)
 # torch.permute(tensor, (dimension indecies)) : x.shape=[2,3,5], torch.permute(x,(2,0,1)).shape=[5,2,3]
@@ -88,14 +90,50 @@ p = random_image_tensor.permute(2,0,1) # cc,H,W
 # torch.from_numpy(arry) numpy default type is float64, pytorch default is float32
 ### REPEATABILITY ###
 # NNs start with random numbers, perform tensor operations, update random numbers, repeat
-seed = 42
+torch.manual_seed(0)
 a = torch.rand(3,4)
 b = torch.rand(3,4)
 # most likeley all false
-seed = 42
+torch.manual_seed(0)
 a = torch.rand(3,4)
-seed = 42
+torch.manual_seed(0)
 b = torch.rand(3,4)
 # all true
 ### GPUs ###
+torch.cuda.is_available() # check for GPU access
+device = 'cuda' if torch.cuda.is_available() else 'cpu' # device agnostic code
+torch.cuda.device_count() # number of devices
+TENSOR = torch.tensor([2,3,2,2], device=device)
+# TENSOR.to(device) # move a tensor to device
+cpuTENSOR = TENSOR.cpu() # copy tensor to cpu
+# modules like numpy dont work on gpu, but if you copy to cpu you can use them
 
+### EXCERCISE 0 ###
+# Create a random tensor with shape (7, 7)
+a = torch.rand(7,7)
+# Perform a matrix multiplication on the tensor above with another random tensor with shape (1, 7)
+b = torch.rand(1,7)
+print(torch.matmul(a,b.T))
+# Set the random seed to 0 and do exercises above over again
+torch.manual_seed(0)
+a = torch.rand(7,7)
+b = torch.rand(1,7)
+print(a,b.T)
+# set the GPU random seed to 1234
+# Create two random tensors of shape (2, 3) and send them both to the GPU
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+torch.cuda.manual_seed(1234)
+a = torch.rand(2,3,device=device)
+b = torch.rand(2,3,device=device)
+# Perform a matrix multiplication on the tensors you created
+c = torch.matmul(a,b.T)
+# find max and min of c
+c.max(), c.min()
+# and indicies
+c.argmax(), c.argmin()
+# Set the seed to 7, Make a random tensor with shape (1, 1, 1, 10) and then create a new tensor with all the 1 dimensions removed to be left with a tensor of shape (10).
+torch.cuda.manual_seed(7)
+q = torch.rand(1,1,1,10, device=device)
+x = q.squeeze()
+print(q,q.shape)
+print(x,x.shape)
