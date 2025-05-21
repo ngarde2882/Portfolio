@@ -1,0 +1,10 @@
+timestep,opponent,wins
+50000,RandomPlayer,80
+50000,MaxDamagePlayer,23
+50000,SimpleHeuristicsPlayer,11
+100000,RandomPlayer,86
+100000,MaxDamagePlayer,53
+100000,SimpleHeuristicsPlayer,24
+250000,RandomPlayer,94
+250000,MaxDamagePlayer,60
+250000,SimpleHeuristicsPlayer,23

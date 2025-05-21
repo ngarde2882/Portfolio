@@ -107,7 +107,7 @@ epochs = 1 # each epoch is a loop through the data
 for epoch in range(epochs): # 0. loop through data
     model0.train() # set to training mode, turns on gradient tracking
     # 1. forward pass
-    ypredict = model(xtrain) # this calls forward
+    ypredict = model0(xtrain) # this calls forward
     # 2. calc loss
     loss = lossfn(ypredict,ytrain) # input, target
     # 3. optimizer zero grad
@@ -116,4 +116,4 @@ for epoch in range(epochs): # 0. loop through data
     loss.backward()
     # 5. step optimizer
     optimizer.step() # optimizer changes accumulate, zero them in step 3. for next iteration
-    # model0.eval() # set to testing mode, turns off gradient tracking
+    model0.eval() # set to testing mode, turns off gradient tracking

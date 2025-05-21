@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | KitchenApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <div class="text-center mb-4">
+            <!-- Replace with your own image path -->
+            <img src="https://via.placeholder.com/150x50?text=KitchenApp" alt="KitchenApp Logo" class="img-fluid">
+        </div>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="password" required>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Log In</button>
+                <a href="/signup" class="btn btn-outline-secondary">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

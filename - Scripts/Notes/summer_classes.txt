@@ -119,3 +119,9 @@ I can also take both summer semesters, and take more classes for a better GPA ju
 
 OFFERED:
 221,313,314,411,421
+
+#	ΔA	ΔB	Class
+221	.0606	.0303	Data Structures and Algorithms
+313	.0606	.0303	Intro to Computer Systems
+314	.04545	.0227	Programming Languages
+411	.04545	.0227	Design and Analysis of Algorithms

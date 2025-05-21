@@ -8,3 +8,12 @@ AI/Calc/Paste.txt
 *.pyc
 AI/Notes/keys.py
 AI/Calc/keys.py
+data/cgm_test.csv
+data/cgm_train.csv
+data/demo_viome_test.csv
+data/demo_viome_train.csv
+data/img_test.csv
+data/img_train.csv
+data/label_test_breakfast_only.csv
+data/label_train.csv
+*.zip
