@@ -1,36 +1,69 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 def init_db():
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("app.db")
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             email TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            theme_color TEXT DEFAULT '#4285f4'
         );
     """)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS recipes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
+            author_id INTEGER,
             name TEXT NOT NULL,
             ingredients TEXT NOT NULL,
             directions TEXT NOT NULL,
             image_path TEXT,
+            published BOOLEAN DEFAULT 0,
+            likes INTEGER DEFAULT 0,
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (author_id) REFERENCES users(id)
+        );
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS inventory (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            item_name TEXT NOT NULL,
+            quantity INTEGER,
+            units TEXT,
+            parishable TEXT,
             FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+    """)
+    cursor.execute(""" 
+        CREATE TABLE IF NOT EXISTS grocery_lists (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            item_name TEXT NOT NULL,
+            quantity INTEGER,
+            units TEXT,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+    """)
+    cursor.execute(""" 
+        CREATE TABLE IF NOT EXISTS schedules (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            recipe_id INTEGER NOT NULL,
+            scheduled_date TEXT NOT NULL, -- format: YYYY-MM-DD
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (recipe_id) REFERENCES recipes(id)
         );
     """)
     conn.commit()
     conn.close()
-
-
-# Call this once at app startup
 init_db()
 
 
@@ -44,15 +77,16 @@ def login():
         identifier = request.form["identifier"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("app.db")
         cursor = conn.cursor()
-        cursor.execute("SELECT id, username, password FROM users WHERE username = ? OR email = ?", (identifier, identifier))
+        cursor.execute("SELECT id, username, password, theme_color FROM users WHERE username = ? OR email = ?", (identifier, identifier))
         user = cursor.fetchone()
         conn.close()
 
-        if user:
+        if user and check_password_hash(user[2], password):
             session["user_id"] = user[0]
             session["username"] = user[1]
+            session["theme_color"] = user[3] or "#4285f4"
             return redirect(url_for("dashboard"))
 
         return "Invalid credentials", 401
@@ -70,7 +104,7 @@ def signup():
         return "All fields are required", 400
 
     try:
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("app.db")
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
@@ -86,11 +120,12 @@ def signup():
 def dashboard():
     user_id = session.get("user_id")
     username = session.get("username")
+    theme_color = session.get("theme_color", "#4285f4")
 
     if not user_id:
         return redirect(url_for("login"))
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("app.db")
     cursor = conn.cursor()
     cursor.execute("""
         SELECT id, name, ingredients, directions, image_path
@@ -108,16 +143,18 @@ def dashboard():
     } for row in rows]
 
     selected = recipes[0] if recipes else None
-    return render_template("dashboard.html", recipes=recipes, selected=selected, username=username)
+    return render_template("dashboard.html", recipes=recipes, selected=selected, username=username, theme_color=theme_color)
 
 @app.route("/recipes/<int:recipe_id>")
 def view_recipe(recipe_id):
     user_id = session.get("user_id")
     username = session.get("username")
+    theme_color = session.get("theme_color", "#4285f4")
+    session["selected"] = recipe_id
     if not user_id:
         return redirect(url_for("login"))
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("app.db")
     cursor = conn.cursor()
 
     # Get all recipes for sidebar
@@ -145,7 +182,7 @@ def view_recipe(recipe_id):
         "image": row[4] or "https://via.placeholder.com/400x200?text=No+Image"
     }
 
-    return render_template("dashboard.html", recipes=recipes, selected=selected, username=username)
+    return render_template("dashboard.html", recipes=recipes, selected=selected, username=username, theme_color=theme_color)
 
 @app.route("/recipes/create", methods=["POST"])
 def create_recipe():
@@ -170,7 +207,7 @@ def create_recipe():
         image_path = filepath
 
     # Insert recipe
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("app.db")
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO recipes (user_id, name, ingredients, directions, image_path)
