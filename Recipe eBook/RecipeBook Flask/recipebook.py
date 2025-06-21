@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -116,8 +117,8 @@ def signup():
     except sqlite3.IntegrityError:
         return "Username or email already taken", 400
 
-@app.route("/dashboard")
-def dashboard():
+@app.route("/recipes")
+def recipes():
     user_id = session.get("user_id")
     username = session.get("username")
     theme_color = session.get("theme_color", "#4285f4")
@@ -127,10 +128,13 @@ def dashboard():
 
     conn = sqlite3.connect("app.db")
     cursor = conn.cursor()
+
     cursor.execute("""
         SELECT id, name, ingredients, directions, image_path
-        FROM recipes WHERE user_id = ?
+        FROM recipes
+        WHERE user_id = ?
     """, (user_id,))
+    
     rows = cursor.fetchall()
     conn.close()
 
@@ -143,46 +147,55 @@ def dashboard():
     } for row in rows]
 
     selected = recipes[0] if recipes else None
-    return render_template("dashboard.html", recipes=recipes, selected=selected, username=username, theme_color=theme_color)
 
-@app.route("/recipes/<int:recipe_id>")
-def view_recipe(recipe_id):
-    user_id = session.get("user_id")
-    username = session.get("username")
-    theme_color = session.get("theme_color", "#4285f4")
-    session["selected"] = recipe_id
-    if not user_id:
-        return redirect(url_for("login"))
+    return render_template(
+        "recipes.html",
+        recipes=recipes,
+        recipes_json=json.dumps(recipes),
+        selected=selected,
+        username=username,
+        theme_color=theme_color
+    )
 
-    conn = sqlite3.connect("app.db")
-    cursor = conn.cursor()
+# this was for displaying 1 recipe at a time, but now we load all recipes and selectively display on the frontend
+# @app.route("/recipes/<int:recipe_id>")
+# def view_recipe(recipe_id):
+#     user_id = session.get("user_id")
+#     username = session.get("username")
+#     theme_color = session.get("theme_color", "#4285f4")
+#     session["selected"] = recipe_id
+#     if not user_id:
+#         return redirect(url_for("login"))
 
-    # Get all recipes for sidebar
-    cursor.execute("SELECT id, name FROM recipes WHERE user_id = ?", (user_id,))
-    recipe_rows = cursor.fetchall()
-    recipes = [{"id": row[0], "name": row[1]} for row in recipe_rows]
+#     conn = sqlite3.connect("app.db")
+#     cursor = conn.cursor()
 
-    # Get selected recipe
-    cursor.execute("""
-        SELECT id, name, ingredients, directions, image_path
-        FROM recipes
-        WHERE id = ? AND user_id = ?
-    """, (recipe_id, user_id))
-    row = cursor.fetchone()
-    conn.close()
+#     # Get all recipes for sidebar
+#     cursor.execute("SELECT id, name FROM recipes WHERE user_id = ?", (user_id,))
+#     recipe_rows = cursor.fetchall()
+#     recipes = [{"id": row[0], "name": row[1]} for row in recipe_rows]
 
-    if row is None:
-        return "Recipe not found or unauthorized", 404
+#     # Get selected recipe
+#     cursor.execute("""
+#         SELECT id, name, ingredients, directions, image_path
+#         FROM recipes
+#         WHERE id = ? AND user_id = ?
+#     """, (recipe_id, user_id))
+#     row = cursor.fetchone()
+#     conn.close()
 
-    selected = {
-        "id": row[0],
-        "name": row[1],
-        "ingredients": row[2].splitlines(),
-        "directions": row[3],
-        "image": row[4] or "https://via.placeholder.com/400x200?text=No+Image"
-    }
+#     if row is None:
+#         return "Recipe not found or unauthorized", 404
 
-    return render_template("dashboard.html", recipes=recipes, selected=selected, username=username, theme_color=theme_color)
+#     selected = {
+#         "id": row[0],
+#         "name": row[1],
+#         "ingredients": row[2].splitlines(),
+#         "directions": row[3],
+#         "image": row[4] or "https://via.placeholder.com/400x200?text=No+Image"
+#     }
+
+#     return render_template("dashboard.html", recipes=recipes, selected=selected, username=username, theme_color=theme_color)
 
 @app.route("/recipes/create", methods=["POST"])
 def create_recipe():
@@ -217,6 +230,17 @@ def create_recipe():
     conn.close()
 
     return redirect(url_for("dashboard"))
+
+@app.route("/schedule")
+def schedule():
+    user_id = session.get("user_id")
+    username = session.get("username")
+    theme_color = session.get("theme_color", "#4285f4")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    return render_template("schedule.html", username=username, theme_color=theme_color)
 
 if __name__ == "__main__":
     app.run(debug=True)
