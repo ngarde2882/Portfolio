@@ -17,3 +17,5 @@ data/img_train.csv
 data/label_test_breakfast_only.csv
 data/label_train.csv
 *.zip
+/Station
+/AI-Portfolio
